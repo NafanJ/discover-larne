@@ -30,6 +30,22 @@ const images = [
   { src: portrait5, alt: "Coastal hiker portrait" },
 ];
 
+const Tile = ({ src, alt, label, className = "" }: { src: string; alt: string; label?: string; className?: string }) => (
+  <div className={`relative overflow-hidden rounded-2xl shadow ${className}`}>
+    <img
+      src={src}
+      alt={`${alt} – Discover Larne`}
+      loading="lazy"
+      className="w-full h-full object-cover transition-transform duration-200 hover:scale-105"
+    />
+    {label ? (
+      <span className="absolute bottom-2 left-2 rounded-full bg-background/80 text-foreground text-xs px-2 py-1 shadow-sm border">
+        {label}
+      </span>
+    ) : null}
+  </div>
+);
+
 const Hero = () => {
   const { toast } = useToast();
   const [category, setCategory] = useState<string>("all");
@@ -80,20 +96,39 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 lg:gap-5 animate-slide-in-right">
-          {images.map((img, idx) => (
-            <div
-              key={idx}
-              className={`overflow-hidden rounded-2xl shadow ${idx % 7 === 0 ? 'col-span-2 row-span-2' : ''}`}
-            >
-              <img
-                src={img.src}
-                alt={`${img.alt} – Discover Larne`}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-200 hover:scale-105"
-              />
+        <div className="relative animate-slide-in-right">
+          <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 lg:gap-5">
+              {/* Column 1 */}
+              <div className="flex flex-col gap-4">
+                <Tile src={portrait1} alt="Local resident portrait" className="h-32" />
+                <Tile src={place1} alt="Causeway coastal cliffs" className="h-48" label="The Black Arch" />
+                <Tile src={portrait2} alt="Fisherman portrait" className="h-40" />
+                <Tile src={place3} alt="Historic stone building" className="h-36" />
+              </div>
+              {/* Column 2 */}
+              <div className="flex flex-col gap-4 mt-8">
+                <Tile src={portrait3} alt="Café owner portrait" className="h-40" />
+                <Tile src={place2} alt="Larne harbour scene" className="h-32" label="Chaine Memorial Tower" />
+                <Tile src={portrait4} alt="Artisan portrait" className="h-48" />
+                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-36" />
+              </div>
+              {/* Column 3 */}
+              <div className="flex flex-col gap-4 mt-16">
+                <Tile src={place2} alt="Larne harbour scene" className="h-44" />
+                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-32" />
+                <Tile src={portrait1} alt="Local resident portrait" className="h-40" />
+                <Tile src={place1} alt="Causeway coastal cliffs" className="h-36" />
+              </div>
+              {/* Column 4 - hidden on very small screens */}
+              <div className="hidden sm:flex flex-col gap-4 mt-24">
+                <Tile src={portrait2} alt="Fisherman portrait" className="h-36" />
+                <Tile src={place3} alt="Historic stone building" className="h-44" />
+                <Tile src={portrait3} alt="Café owner portrait" className="h-32" />
+                <Tile src={portrait4} alt="Artisan portrait" className="h-40" />
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
