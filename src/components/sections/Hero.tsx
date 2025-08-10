@@ -96,9 +96,9 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative animate-slide-in-right lg:ml-16 xl:ml-28 2xl:ml-36">
-          <div className="relative rotate-0 lg:rotate-[14deg] origin-center lg:scale-[0.92] xl:scale-[0.96] [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] before:pointer-events-none before:absolute before:inset-0 before:bg-gradient-to-b before:from-background/60 before:via-transparent before:to-background/60 after:pointer-events-none after:absolute after:inset-0 after:bg-gradient-to-l after:from-transparent after:to-background/70">
-            <div className="grid w-full max-w-[980px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
+        <div className="relative animate-slide-in-right lg:ml-8 xl:ml-16">
+          <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
               <div className="flex flex-col gap-2 md:gap-3">
                 <Tile src={portrait1} alt="Local resident portrait" className="h-24" />
