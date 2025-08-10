@@ -100,7 +100,7 @@ const Hero = () => {
         </div>
 
         <div className="relative w-full animate-slide-in-right lg:ml-0 xl:ml-4">
-          <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
+          <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
               <div className="flex flex-col gap-2 md:gap-3">
