@@ -18,7 +18,6 @@ const Navbar = () => {
             alt="Discover Larne logo"
             className="h-8 w-auto md:h-10"
             loading="eager"
-            fetchPriority="high"
             decoding="async"
           />
           <span className="sr-only">Discover Larne</span>
@@ -27,28 +26,9 @@ const Navbar = () => {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
-                  <NavigationMenuContent className="p-4">
-                    <div className="grid grid-cols-2 gap-6 w-[480px]">
-                      <div>
-                        <p className="text-xs font-medium opacity-70 mb-2">By Category</p>
-                        <ul className="space-y-1">
-                          <li><Link to="/explore/category/things-to-do" className="story-link">Things to Do</Link></li>
-                          <li><Link to="/explore/category/events" className="story-link">Events</Link></li>
-                          <li><Link to="/explore/category/eat-and-drink" className="story-link">Eat &amp; Drink</Link></li>
-                          <li><Link to="/explore/category/stays" className="story-link">Stays</Link></li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium opacity-70 mb-2">By Location</p>
-                        <ul className="space-y-1">
-                          <li><Link to="/explore/location/larne-town" className="story-link">Larne Town</Link></li>
-                          <li><Link to="/explore/location/coastal-route" className="story-link">Coastal Route</Link></li>
-                          <li><Link to="/explore/location/surrounding-areas" className="story-link">Surrounding Areas</Link></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </NavigationMenuContent>
+                  <NavigationMenuLink asChild>
+                    <Link to="/explore/listings" className="story-link">Explore</Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
 
 
