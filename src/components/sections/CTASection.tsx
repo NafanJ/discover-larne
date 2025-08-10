@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CTASection = () => {
   return (
@@ -9,8 +10,8 @@ const CTASection = () => {
           <p className="opacity-90 mt-1">Browse categories, discover locals, and plan your next visit.</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="secondary" size="lg" className="rounded-lg">Explore Stories</Button>
-          <Button variant="outline" size="lg" className="rounded-lg">Browse Categories</Button>
+          <Button asChild variant="secondary" size="lg" className="rounded-lg"><Link to="/explore">Explore Stories</Link></Button>
+          <Button asChild variant="secondary" size="lg" className="rounded-lg"><Link to="/explore">Browse Categories</Link></Button>
         </div>
       </div>
     </section>
