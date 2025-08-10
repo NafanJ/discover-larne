@@ -66,7 +66,7 @@ const Hero = () => {
     });
   };
   return <section className="container py-8 md:py-12 lg:py-14 max-h-[70vh] overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.25fr] gap-10 xl:gap-14 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 xl:gap-14 items-center">
         <div className="space-y-6 animate-fade-in relative z-10 self-start">
           <div className="flex gap-3 flex-wrap">
             <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">18,853 People</div>
