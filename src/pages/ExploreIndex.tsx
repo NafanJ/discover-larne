@@ -28,6 +28,7 @@ const ExploreIndex = () => {
           <article>
             <h2 className="text-xl font-medium mb-3">By Category</h2>
             <ul className="grid gap-2">
+              <li><Link to="/explore/listings" className="story-link">All Listings</Link></li>
               <li><Link to="/explore/category/things-to-do" className="story-link">Things to Do</Link></li>
               <li><Link to="/explore/category/events" className="story-link">Events</Link></li>
               <li><Link to="/explore/category/eat-and-drink" className="story-link">Eat &amp; Drink</Link></li>
