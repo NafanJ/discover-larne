@@ -96,7 +96,7 @@ const Hero = () => {
               />
               <span className="h-6 w-px bg-border" aria-hidden="true" />
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="h-12 border-0 bg-transparent shadow-none rounded-full px-3 focus-visible:ring-0 focus-visible:ring-offset-0">
+                <SelectTrigger className="h-12 w-36 md:w-44 border-0 bg-transparent shadow-none rounded-full px-3 text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
                   <SelectValue placeholder="Categories" />
                 </SelectTrigger>
                 <SelectContent>
