@@ -5,7 +5,7 @@ import portrait3 from "@/assets/larne/portrait-3.jpg";
 import place2 from "@/assets/larne/place-2.jpg";
 
 const items = [
-  { title: "Meet Aoife", subtitle: "Local Café Owner", img: portrait3 },
+  { title: "Meet Connor", subtitle: "Local Café Owner", img: portrait3 },
   { title: "Coastal Cliffs", subtitle: "Causeway Route", img: place1 },
   { title: "Harbour Life", subtitle: "Boats at Dawn", img: place2 },
   { title: "Community Stories", subtitle: "People of Larne", img: portrait1 },
