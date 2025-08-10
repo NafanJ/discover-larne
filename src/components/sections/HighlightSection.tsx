@@ -94,9 +94,10 @@ const HighlightSection = () => {
             </div>
             <CardHeader className="space-y-1">
               <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2 min-w-0">
-                  <CardTitle className="text-base truncate">{item.name}</CardTitle>
-                  <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
+                <CardTitle className="text-base truncate">{item.name}</CardTitle>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Badge variant="secondary" className="text-xs">{item.category}</Badge>
+                  <div className="flex items-center gap-1 text-muted-foreground">
                     <Star className="h-4 w-4 text-primary" aria-hidden="true" />
                     <span className="text-sm">{item.rating.toFixed(1)}</span>
                   </div>
@@ -105,8 +106,6 @@ const HighlightSection = () => {
             </CardHeader>
             <CardContent className="-mt-2">
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <Badge variant="secondary" className="shrink-0 text-xs">{item.category}</Badge>
-                <span className="h-1 w-1 rounded-full bg-border" />
                 <div className="flex min-w-0 items-center gap-1">
                   <MapPin className="h-4 w-4 opacity-70" />
                   <span className="truncate">{item.address}</span>
