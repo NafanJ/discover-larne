@@ -3,8 +3,6 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
@@ -34,15 +32,6 @@ const Navbar = () => {
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Plan Your Trip</NavigationMenuTrigger>
-                  <NavigationMenuContent className="p-4">
-                    <ul className="w-56 space-y-1">
-                      <li><Link to="/plan" className="story-link">Plan Overview</Link></li>
-                      <li><Link to="/itineraries" className="story-link">Popular Itineraries</Link></li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
 
@@ -65,13 +54,6 @@ const Navbar = () => {
                 <nav className="mt-4 grid gap-2">
                   <SheetClose asChild>
                     <Link to="/explore/listings" className="story-link">Explore</Link>
-                  </SheetClose>
-                  <div className="mt-2 text-xs text-muted-foreground">Plan Your Trip</div>
-                  <SheetClose asChild>
-                    <Link to="/plan" className="story-link">Plan Overview</Link>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <Link to="/itineraries" className="story-link">Popular Itineraries</Link>
                   </SheetClose>
                   <SheetClose asChild>
                     <Link to="/about" className="story-link">About</Link>
