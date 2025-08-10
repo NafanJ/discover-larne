@@ -85,7 +85,7 @@ const Hero = () => {
           </p>
 
           <form onSubmit={onSearch} className="grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-3 bg-card border rounded-xl p-3 shadow-sm animate-scale-in">
-            <Select value={category} onValueChange={setCategory} className="text-[#062c59]">
+            <Select value={category} onValueChange={setCategory}>
               <SelectTrigger className="rounded-lg">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
@@ -97,7 +97,7 @@ const Hero = () => {
               </SelectContent>
             </Select>
             <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search people, places or stories" className="rounded-lg" aria-label="Search people, places or stories" />
-            <Button type="submit" size="lg" className="rounded-lg sm:col-span-2">Search</Button>
+            <Button type="submit" size="lg" variant="brand" className="rounded-lg sm:col-span-2">Search</Button>
           </form>
         </div>
 
