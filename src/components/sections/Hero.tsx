@@ -101,7 +101,7 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative w-full animate-slide-in-right -ml-3 sm:-ml-4 lg:-ml-6 xl:-ml-8 mx-0">
+        <div className="relative w-full overflow-hidden animate-slide-in-right -ml-3 sm:-ml-4 lg:-ml-6 xl:-ml-8 mx-0">
           <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
@@ -121,7 +121,7 @@ const Hero = () => {
                 <Tile src={place1} alt="Causeway coastal cliffs" className="h-[10.5rem]" />
               </div>
               {/* Column 3 */}
-              <div className="flex flex-col gap-2 md:gap-3 mt-8">
+              <div className="flex flex-col gap-2 md:gap-3">
                 <Tile src={place3} alt="Historic stone building" className="h-[10.5rem]" />
                 <Tile src={portrait3} alt="Café owner portrait" className="h-36" />
                 <Tile src={portrait4} alt="Artisan portrait" className="h-[10.5rem]" />
@@ -129,7 +129,7 @@ const Hero = () => {
                 <Tile src={portrait5} alt="Coastal hiker portrait" className="h-[10.5rem]" />
               </div>
               {/* Column 4 - shows from sm up */}
-              <div className="hidden sm:flex flex-col gap-2 md:gap-3 mt-12">
+              <div className="hidden sm:flex flex-col gap-2 md:gap-3 mt-4">
                 <Tile src={portrait2} alt="Fisherman portrait" className="h-36" />
                 <Tile src={place3} alt="Historic stone building" className="h-[10.5rem]" />
                 <Tile src={portrait3} alt="Café owner portrait" className="h-36" />
@@ -137,7 +137,7 @@ const Hero = () => {
                 <Tile src={place1} alt="Causeway coastal cliffs" className="h-36" />
               </div>
               {/* Column 5 - shows from lg up */}
-              <div className="hidden lg:flex flex-col gap-2 md:gap-3 mt-16">
+              <div className="hidden lg:flex flex-col gap-2 md:gap-3">
                 <Tile src={portrait1} alt="Local resident portrait" className="h-[10.5rem]" />
                 <Tile src={place2} alt="Larne harbour scene" className="h-36" />
                 <Tile src={portrait2} alt="Fisherman portrait" className="h-[10.5rem]" />
@@ -145,7 +145,7 @@ const Hero = () => {
                 <Tile src={portrait3} alt="Café owner portrait" className="h-[10.5rem]" />
               </div>
               {/* Column 6 - shows from xl up */}
-              <div className="hidden xl:flex flex-col gap-2 md:gap-3 mt-20">
+              <div className="hidden xl:flex flex-col gap-2 md:gap-3 mt-4">
                 <Tile src={portrait4} alt="Artisan portrait" className="h-36" />
                 <Tile src={place2} alt="Larne harbour scene" className="h-[10.5rem]" />
                 <Tile src={portrait5} alt="Coastal hiker portrait" className="h-36" />
