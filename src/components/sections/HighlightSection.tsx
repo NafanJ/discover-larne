@@ -51,7 +51,8 @@ const items = [
     address: "Causeway Coastal",
     wheelchair: true,
     img: "/lovable-uploads/27f10492-eea7-426f-92aa-2830b4f34ab7.png",
-  }    {
+  },
+  {
     name: "Chaine Memorial Tower",
     category: "Landmark",
     rating: 4.7,
@@ -66,7 +67,7 @@ const items = [
     address: "County Down",
     wheelchair: false,
     img: "/lovable-uploads/774caacf-4765-4d50-8206-83c474f64e99.png",
-  },
+  }
 ];
 
 const HighlightSection = () => {
