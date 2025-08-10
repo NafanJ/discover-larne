@@ -58,7 +58,7 @@ const Hero = () => {
 
   return (
     <section className="container py-12 md:py-16 lg:py-20">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-14 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.25fr] gap-10 xl:gap-14 items-center">
         <div className="space-y-6 animate-fade-in relative z-10">
           <div className="flex gap-3 flex-wrap">
             <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">18,853 People</div>
@@ -99,62 +99,62 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative animate-slide-in-right lg:ml-8 xl:ml-16">
+        <div className="relative w-full animate-slide-in-right lg:ml-0 xl:ml-4">
           <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
               <div className="flex flex-col gap-2 md:gap-3">
-                <Tile src={portrait1} alt="Local resident portrait" className="h-24" />
-                <Tile src={place1} alt="Causeway coastal cliffs" className="h-28" label="The Black Arch" />
-                <Tile src={portrait2} alt="Fisherman portrait" className="h-24" />
-                <Tile src={place3} alt="Historic stone building" className="h-28" />
-                <Tile src={portrait3} alt="Café owner portrait" className="h-24" />
-                <Tile src={place2} alt="Larne harbour scene" className="h-28" />
+                <Tile src={portrait1} alt="Local resident portrait" className="h-48" />
+                <Tile src={place1} alt="Causeway coastal cliffs" className="h-56" label="The Black Arch" />
+                <Tile src={portrait2} alt="Fisherman portrait" className="h-48" />
+                <Tile src={place3} alt="Historic stone building" className="h-56" />
+                <Tile src={portrait3} alt="Café owner portrait" className="h-48" />
+                <Tile src={place2} alt="Larne harbour scene" className="h-56" />
               </div>
               {/* Column 2 */}
               <div className="flex flex-col gap-2 md:gap-3 mt-4">
-                <Tile src={portrait4} alt="Artisan portrait" className="h-28" />
-                <Tile src={place2} alt="Larne harbour scene" className="h-24" label="Chaine Memorial Tower" />
-                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-28" />
-                <Tile src={portrait1} alt="Local resident portrait" className="h-24" />
-                <Tile src={place1} alt="Causeway coastal cliffs" className="h-28" />
-                <Tile src={portrait2} alt="Fisherman portrait" className="h-24" />
+                <Tile src={portrait4} alt="Artisan portrait" className="h-56" />
+                <Tile src={place2} alt="Larne harbour scene" className="h-48" label="Chaine Memorial Tower" />
+                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-56" />
+                <Tile src={portrait1} alt="Local resident portrait" className="h-48" />
+                <Tile src={place1} alt="Causeway coastal cliffs" className="h-56" />
+                <Tile src={portrait2} alt="Fisherman portrait" className="h-48" />
               </div>
               {/* Column 3 */}
               <div className="flex flex-col gap-2 md:gap-3 mt-8">
-                <Tile src={place3} alt="Historic stone building" className="h-28" />
-                <Tile src={portrait3} alt="Café owner portrait" className="h-24" />
-                <Tile src={portrait4} alt="Artisan portrait" className="h-28" />
-                <Tile src={place2} alt="Larne harbour scene" className="h-24" />
-                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-28" />
-                <Tile src={portrait1} alt="Local resident portrait" className="h-24" />
+                <Tile src={place3} alt="Historic stone building" className="h-56" />
+                <Tile src={portrait3} alt="Café owner portrait" className="h-48" />
+                <Tile src={portrait4} alt="Artisan portrait" className="h-56" />
+                <Tile src={place2} alt="Larne harbour scene" className="h-48" />
+                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-56" />
+                <Tile src={portrait1} alt="Local resident portrait" className="h-48" />
               </div>
               {/* Column 4 - shows from sm up */}
               <div className="hidden sm:flex flex-col gap-2 md:gap-3 mt-12">
-                <Tile src={portrait2} alt="Fisherman portrait" className="h-24" />
-                <Tile src={place3} alt="Historic stone building" className="h-28" />
-                <Tile src={portrait3} alt="Café owner portrait" className="h-24" />
-                <Tile src={portrait4} alt="Artisan portrait" className="h-28" />
-                <Tile src={place1} alt="Causeway coastal cliffs" className="h-24" />
-                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-28" />
+                <Tile src={portrait2} alt="Fisherman portrait" className="h-48" />
+                <Tile src={place3} alt="Historic stone building" className="h-56" />
+                <Tile src={portrait3} alt="Café owner portrait" className="h-48" />
+                <Tile src={portrait4} alt="Artisan portrait" className="h-56" />
+                <Tile src={place1} alt="Causeway coastal cliffs" className="h-48" />
+                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-56" />
               </div>
               {/* Column 5 - shows from lg up */}
               <div className="hidden lg:flex flex-col gap-2 md:gap-3 mt-16">
-                <Tile src={portrait1} alt="Local resident portrait" className="h-28" />
-                <Tile src={place2} alt="Larne harbour scene" className="h-24" />
-                <Tile src={portrait2} alt="Fisherman portrait" className="h-28" />
-                <Tile src={place3} alt="Historic stone building" className="h-24" />
-                <Tile src={portrait3} alt="Café owner portrait" className="h-28" />
-                <Tile src={place1} alt="Causeway coastal cliffs" className="h-24" />
+                <Tile src={portrait1} alt="Local resident portrait" className="h-56" />
+                <Tile src={place2} alt="Larne harbour scene" className="h-48" />
+                <Tile src={portrait2} alt="Fisherman portrait" className="h-56" />
+                <Tile src={place3} alt="Historic stone building" className="h-48" />
+                <Tile src={portrait3} alt="Café owner portrait" className="h-56" />
+                <Tile src={place1} alt="Causeway coastal cliffs" className="h-48" />
               </div>
               {/* Column 6 - shows from xl up */}
               <div className="hidden xl:flex flex-col gap-2 md:gap-3 mt-20">
-                <Tile src={portrait4} alt="Artisan portrait" className="h-24" />
-                <Tile src={place2} alt="Larne harbour scene" className="h-28" />
-                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-24" />
-                <Tile src={portrait1} alt="Local resident portrait" className="h-28" />
-                <Tile src={place3} alt="Historic stone building" className="h-24" />
-                <Tile src={portrait2} alt="Fisherman portrait" className="h-28" />
+                <Tile src={portrait4} alt="Artisan portrait" className="h-48" />
+                <Tile src={place2} alt="Larne harbour scene" className="h-56" />
+                <Tile src={portrait5} alt="Coastal hiker portrait" className="h-48" />
+                <Tile src={portrait1} alt="Local resident portrait" className="h-56" />
+                <Tile src={place3} alt="Historic stone building" className="h-48" />
+                <Tile src={portrait2} alt="Fisherman portrait" className="h-56" />
               </div>
             </div>
           </div>
