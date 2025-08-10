@@ -1,77 +1,40 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Star, Accessibility } from "lucide-react";
-import portrait1 from "@/assets/larne/portrait-1.jpg";
-import place1 from "@/assets/larne/place-1.jpg";
-import portrait3 from "@/assets/larne/portrait-3.jpg";
-import place2 from "@/assets/larne/place-2.jpg";
 
 // Minimal, relevant business fields for highlights
 const items = [
   {
-    name: "Meet Connor",
-    category: "Café",
-    rating: 4.6,
-    address: "Harbour Rd",
-    wheelchair: true,
-    img: portrait3,
-  },
-  {
-      name: "Coastal Cliffs",
-      category: "Attraction",
-      rating: 4.8,
-      address: "Causeway Route",
-      wheelchair: false,
-      img: "/lovable-uploads/822027a9-a517-4e5b-8133-c9419382880e.png",
-    },
-  {
-    name: "Harbour Life",
-    category: "Scenic Spot",
-    rating: 4.5,
+    name: "Chaine Memorial Tower",
+    category: "Landmark",
+    rating: 4.7,
     address: "Larne Harbour",
     wheelchair: true,
-    img: place2,
+    img: "/lovable-uploads/11c67c4c-f7fb-4290-8f45-874ba43b85f9.png",
   },
   {
-    name: "Community Stories",
-    category: "People",
-    rating: 4.7,
-    address: "Town Centre",
-    wheelchair: true,
-    img: portrait1,
-  },
-  // Duplicates to fill grid (can later be replaced with real data)
-  {
-    name: "Coastal Cliffs",
-    category: "Attraction",
+    name: "Mourne Mountains View",
+    category: "Viewpoint",
     rating: 4.8,
-    address: "Causeway Route",
+    address: "County Down",
     wheelchair: false,
-    img: place1,
+    img: "/lovable-uploads/774caacf-4765-4d50-8206-83c474f64e99.png",
   },
   {
-    name: "Meet Connor",
-    category: "Café",
-    rating: 4.6,
-    address: "Harbour Rd",
-    wheelchair: true,
-    img: portrait3,
-  },
-  {
-    name: "Community Stories",
-    category: "People",
-    rating: 4.7,
-    address: "Town Centre",
-    wheelchair: true,
-    img: portrait1,
-  },
-  {
-    name: "Harbour Life",
-    category: "Scenic Spot",
+    name: "Winter Village Aerial",
+    category: "Scenic",
     rating: 4.5,
-    address: "Larne Harbour",
+    address: "Countryside",
+    wheelchair: false,
+    img: "/lovable-uploads/5c56be04-d2ae-485e-bcd3-c8337a1d7106.png",
+  },
+  {
+    name: "Antrim Coast Road",
+    category: "Coastal Route",
+    rating: 4.9,
+    address: "Causeway Coastal",
     wheelchair: true,
-    img: place2,
+    img: "/lovable-uploads/27f10492-eea7-426f-92aa-2830b4f34ab7.png",
   },
 ];
 
