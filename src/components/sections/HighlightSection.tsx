@@ -77,7 +77,7 @@ const items = [
 
 const HighlightSection = () => {
   return (
-    <section className="container py-8 md:py-12">
+    <section className="container pt-1 md:pt-2 pb-8 md:pb-12">
       <div className="flex items-end justify-between mb-6">
         <h2 className="text-2xl md:text-3xl font-semibold">Featured People & Places</h2>
       </div>
