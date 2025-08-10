@@ -46,8 +46,8 @@ const Tile = ({
   alt: string;
   label?: string;
   className?: string;
-}) => <div className={`relative overflow-hidden rounded-2xl shadow ${className}`}>
-    <img src={src} alt={`${alt} – Discover Larne`} loading="lazy" className="w-full h-full object-cover transition-transform duration-200 scale-75 hover:scale-90" />
+}) => <div className={`relative overflow-hidden rounded-2xl shadow scale-75 transition-transform duration-200 ${className}`}>
+    <img src={src} alt={`${alt} – Discover Larne`} loading="lazy" className="w-full h-full object-cover transition-transform duration-200 hover:scale-105" />
     {label ? <span className="absolute bottom-2 left-2 rounded-full bg-background/80 text-foreground text-xs px-2 py-1 shadow-sm border">
         {label}
       </span> : null}
