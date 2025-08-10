@@ -112,7 +112,7 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative w-full overflow-hidden animate-slide-in-right mx-0 px-0 hidden sm:block">
+        <div className="relative w-full overflow-hidden animate-slide-in-right mx-0 px-0 hidden lg:block">
           <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
               {/* Column 1 */}
