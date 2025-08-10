@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { Search as SearchIcon } from "lucide-react";
 import portrait1 from "@/assets/larne/portrait-1.jpg";
 import portrait2 from "@/assets/larne/portrait-2.jpg";
 import portrait3 from "@/assets/larne/portrait-3.jpg";
@@ -84,20 +85,32 @@ const Hero = () => {
            on the Causeway Coastal Route.
           </p>
 
-          <form onSubmit={onSearch} className="grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-3 bg-card border rounded-xl p-3 shadow-sm animate-scale-in">
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger className="rounded-lg">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="people">People</SelectItem>
-                <SelectItem value="places">Places</SelectItem>
-                <SelectItem value="stories">Stories</SelectItem>
-              </SelectContent>
-            </Select>
-            <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search people, places or stories" className="rounded-lg" aria-label="Search people, places or stories" />
-            <Button type="submit" size="lg" variant="brand" className="rounded-lg sm:col-span-2">Search</Button>
+          <form onSubmit={onSearch} className="space-y-3 animate-scale-in">
+            <div className="flex items-center gap-2 bg-card border rounded-full px-3 py-1 shadow-sm">
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="What are you looking for?"
+                aria-label="What are you looking for?"
+                className="flex-1 h-12 border-0 bg-transparent shadow-none px-3 focus-visible:ring-0 focus-visible:ring-offset-0"
+              />
+              <span className="h-6 w-px bg-border" aria-hidden="true" />
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger className="h-12 border-0 bg-transparent shadow-none rounded-full px-3 focus-visible:ring-0 focus-visible:ring-offset-0">
+                  <SelectValue placeholder="Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="people">People</SelectItem>
+                  <SelectItem value="places">Places</SelectItem>
+                  <SelectItem value="stories">Stories</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Button type="submit" size="lg" variant="brand" className="rounded-full h-12 px-6">
+              <SearchIcon className="h-5 w-5 mr-2" />
+              Search
+            </Button>
           </form>
         </div>
 
