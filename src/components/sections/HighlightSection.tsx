@@ -36,6 +36,30 @@ const items = [
     wheelchair: true,
     img: "/lovable-uploads/27f10492-eea7-426f-92aa-2830b4f34ab7.png",
   },
+    {
+    name: "Meet Connor",
+    category: "Café",
+    rating: 4.6,
+    address: "Harbour Rd",
+    wheelchair: true,
+    img: portrait3,
+  },
+  {
+      name: "Coastal Cliffs",
+      category: "Attraction",
+      rating: 4.8,
+      address: "Causeway Route",
+      wheelchair: false,
+      img: "/lovable-uploads/822027a9-a517-4e5b-8133-c9419382880e.png",
+    },
+  {
+    name: "Harbour Life",
+    category: "Scenic Spot",
+    rating: 4.5,
+    address: "Larne Harbour",
+    wheelchair: true,
+    img: place2,
+  }
 ];
 
 const HighlightSection = () => {
