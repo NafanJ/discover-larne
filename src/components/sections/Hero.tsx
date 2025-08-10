@@ -76,9 +76,7 @@ const Hero = () => {
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             Discover Larne
-          </h1>
-             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            People & Places
+            <span className="block">People & Places</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-prose">
            on the Causeway Coastal Route.
@@ -101,9 +99,9 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative w-full overflow-y-hidden overflow-x-visible animate-slide-in-right mx-0 px-0">
-          <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
+          <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-y-hidden overflow-x-visible animate-slide-in-right">
+            <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
               <div className="flex flex-col gap-2 md:gap-3">
                 <Tile src={portrait1} alt="Local resident portrait" className="h-36" />
