@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-
 import portrait1 from "@/assets/larne/portrait-1.jpg";
 import portrait2 from "@/assets/larne/portrait-2.jpg";
 import portrait3 from "@/assets/larne/portrait-3.jpg";
@@ -70,14 +69,14 @@ const Hero = () => {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
         <div className="space-y-6 animate-fade-in relative z-10 self-center">
           <div className="flex gap-3 flex-wrap">
-            <div className="rounded-full px-4 py-2"><span className="text-primary">18,853</span> People</div>
-            <div className="rounded-full px-4 py-2"><span className="text-primary">1000+</span> Stories</div>
+            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">18,853 People</div>
+            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">1000+ Stories</div>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             Discover Larne
           </h1>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#062c59]">
             People & Places
           </h1>
           <h5 className="text-1xl md:text-2xl lg:text-2xl font-bold leading-tight">
@@ -86,13 +85,7 @@ const Hero = () => {
 
           <form onSubmit={onSearch} className="space-y-2 md:space-y-3 animate-scale-in">
             <div className="flex items-center md:gap-2 gap-1.5 bg-card border rounded-full px-2 md:px-3 py-0.5 md:py-1 shadow-sm">
-              <Input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="What are you looking for?"
-                aria-label="What are you looking for?"
-                className="flex-1 h-10 md:h-12 border-0 bg-transparent shadow-none px-2 md:px-3 text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0"
-              />
+              <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="What are you looking for?" aria-label="What are you looking for?" className="flex-1 h-10 md:h-12 border-0 bg-transparent shadow-none px-2 md:px-3 text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0" />
               <span className="h-5 md:h-6 w-px bg-border" aria-hidden="true" />
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger className="h-10 md:h-12 w-28 sm:w-32 md:w-44 border-0 bg-transparent shadow-none rounded-full px-2 md:px-3 text-xs sm:text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
