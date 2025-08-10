@@ -17,44 +17,50 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    /* Primary brand: Deep Navy Blue */
+    --primary: 213 87% 19%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary: Coastal Teal */
+    --secondary: 179 53% 36%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted surfaces: Warm Sand */
+    --muted: 41 40% 94%;
+    --muted-foreground: 222.2 47.4% 11.2%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent: Sunrise Orange */
+    --accent: 28 80% 52%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 213 87% 19%;
 
+    /* Explicit brand token for components (e.g., Button variant="brand") */
     --brand: 213 87% 19%;
     --brand-foreground: 210 40% 98%;
+
+    /* Extended palette from style guide */
+    --ocean: 201 58% 59%;
+    --coastal-teal: 179 53% 36%;
+    --warm-sand: 41 40% 94%;
+    --sunrise: 28 80% 52%;
+    --deep-teal: 179 57% 24%;
+    --light-sage: 106 25% 70%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
