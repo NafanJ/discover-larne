@@ -24,25 +24,12 @@ const ExploreIndex = () => {
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Explore Larne</h1>
           <p className="mt-2 text-muted-foreground max-w-2xl">Browse by category or location to discover the best of Larne and the Causeway Coast.</p>
         </header>
-        <section className="grid md:grid-cols-2 gap-8">
-          <article>
-            <h2 className="text-xl font-medium mb-3">By Category</h2>
-            <ul className="grid gap-2">
-              <li><Link to="/explore/listings" className="story-link">All Listings</Link></li>
-              <li><Link to="/explore/category/things-to-do" className="story-link">Things to Do</Link></li>
-              <li><Link to="/explore/category/events" className="story-link">Events</Link></li>
-              <li><Link to="/explore/category/eat-and-drink" className="story-link">Eat &amp; Drink</Link></li>
-              <li><Link to="/explore/category/stays" className="story-link">Stays</Link></li>
-            </ul>
-          </article>
-          <article>
-            <h2 className="text-xl font-medium mb-3">By Location</h2>
-            <ul className="grid gap-2">
-              <li><Link to="/explore/location/larne-town" className="story-link">Larne Town</Link></li>
-              <li><Link to="/explore/location/coastal-route" className="story-link">Coastal Route</Link></li>
-              <li><Link to="/explore/location/surrounding-areas" className="story-link">Surrounding Areas</Link></li>
-            </ul>
-          </article>
+        <section>
+          <h2 className="text-xl font-medium mb-3">Start exploring</h2>
+          <p className="text-muted-foreground mb-4">Browse all listings with filters and sorting.</p>
+          <div>
+            <Link to="/explore/listings" className="story-link">Browse all listings</Link>
+          </div>
         </section>
       </main>
       <Footer />
