@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -106,9 +107,114 @@ const ExploreListings = () => {
           </p>
         </header>
 
+        {/* Mobile controls */}
+        <div className="md:hidden flex items-center gap-3 mb-6">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="sm" aria-label="Open filters">Filters</Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-full sm:max-w-sm">
+              <SheetHeader>
+                <SheetTitle>Filters</SheetTitle>
+              </SheetHeader>
+              <div className="mt-4 space-y-6">
+                <div>
+                  <Label className="text-sm">Sort by</Label>
+                  <Select value={sortBy} onValueChange={(v) => setSortBy(v as any)}>
+                    <SelectTrigger className="mt-2">
+                      <SelectValue placeholder="Sort" />
+                    </SelectTrigger>
+                    <SelectContent className="z-50 bg-background border shadow-md">
+                      <SelectItem value="relevance">Relevance</SelectItem>
+                      <SelectItem value="rating_desc">Rating (High to Low)</SelectItem>
+                      <SelectItem value="rating_asc">Rating (Low to High)</SelectItem>
+                      <SelectItem value="name_asc">Name (A to Z)</SelectItem>
+                      <SelectItem value="name_desc">Name (Z to A)</SelectItem>
+                      <SelectItem value="category">Category</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-sm">Categories</Label>
+                  <div className="mt-3 space-y-2">
+                    {uniqueCategories.map((cat) => {
+                      const checked = selectedCategories.includes(cat);
+                      return (
+                        <label key={cat} className="flex items-center gap-2 text-sm">
+                          <Checkbox
+                            checked={checked}
+                            onCheckedChange={(v) => {
+                              setSelectedCategories((prev) =>
+                                v ? [...prev, cat] : prev.filter((c) => c !== cat)
+                              );
+                            }}
+                          />
+                          <span>{cat}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-sm">Accessibility</Label>
+                  <div className="mt-3 space-y-2">
+                    <label className="flex items-center gap-2 text-sm">
+                      <Checkbox
+                        checked={wheelchairOnly}
+                        onCheckedChange={(v) => setWheelchairOnly(!!v)}
+                      />
+                      <span>Wheelchair accessible only</span>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-sm">Minimum rating: {minRating.toFixed(1)}</Label>
+                  <div className="mt-3">
+                    <Slider
+                      max={5}
+                      min={0}
+                      step={0.5}
+                      value={[minRating]}
+                      onValueChange={(v) => setMinRating(v[0] ?? 0)}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button variant="secondary" onClick={clearFilters}>Clear filters</Button>
+                  <div className="text-xs text-muted-foreground ml-auto">
+                    {sorted.length} result{sorted.length === 1 ? "" : "s"}
+                  </div>
+                </div>
+                <SheetClose asChild>
+                  <Button className="w-full" aria-label="Show results">Show results</Button>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
+          <div className="flex items-center gap-2">
+            <Label className="text-sm">Sort</Label>
+            <Select value={sortBy} onValueChange={(v) => setSortBy(v as any)}>
+              <SelectTrigger className="h-9 w-44">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
+              <SelectContent className="z-50 bg-background border shadow-md">
+                <SelectItem value="relevance">Relevance</SelectItem>
+                <SelectItem value="rating_desc">Rating (High to Low)</SelectItem>
+                <SelectItem value="rating_asc">Rating (Low to High)</SelectItem>
+                <SelectItem value="name_asc">Name (A to Z)</SelectItem>
+                <SelectItem value="name_desc">Name (Z to A)</SelectItem>
+                <SelectItem value="category">Category</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="ml-auto text-xs text-muted-foreground">
+            {sorted.length} result{sorted.length === 1 ? "" : "s"}
+          </div>
+        </div>
+
         <section className="grid md:grid-cols-4 gap-8">
           {/* Filters */}
-          <aside className="md:col-span-1">
+          <aside className="hidden md:block md:col-span-1">
             <div className="rounded-lg border p-4 space-y-6">
               <div>
                 <Label className="text-sm">Sort by</Label>
@@ -116,7 +222,7 @@ const ExploreListings = () => {
                   <SelectTrigger className="mt-2">
                     <SelectValue placeholder="Sort" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-50 bg-background border shadow-md">
                     <SelectItem value="relevance">Relevance</SelectItem>
                     <SelectItem value="rating_desc">Rating (High to Low)</SelectItem>
                     <SelectItem value="rating_asc">Rating (Low to High)</SelectItem>
