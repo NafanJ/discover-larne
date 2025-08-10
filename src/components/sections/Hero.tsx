@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { Search as SearchIcon } from "lucide-react";
+
 import portrait1 from "@/assets/larne/portrait-1.jpg";
 import portrait2 from "@/assets/larne/portrait-2.jpg";
 import portrait3 from "@/assets/larne/portrait-3.jpg";
@@ -66,7 +66,7 @@ const Hero = () => {
       description: `Category: ${category} • Query: ${query}`
     });
   };
-  return <section className="container min-h-[70vh] py-8 md:py-12 lg:py-14 overflow-y-hidden overflow-x-visible">
+  return <section className="container min-h-[60vh] py-8 md:py-12 lg:py-14 overflow-y-hidden overflow-x-visible">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
         <div className="space-y-6 animate-fade-in relative z-10 self-center">
           <div className="flex gap-3 flex-wrap">
@@ -108,7 +108,6 @@ const Hero = () => {
               </Select>
             </div>
             <Button type="submit" size="lg" variant="brand" className="rounded-full h-12 px-6">
-              <SearchIcon className="h-5 w-5 mr-2" />
               Search
             </Button>
           </form>
