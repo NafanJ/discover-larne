@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import { listings } from "@/data/listings";
 import { Badge } from "@/components/ui/badge";
+import Footer from "@/components/layout/Footer";
 
 const ListingDetail = () => {
   const { slug } = useParams();
@@ -16,6 +17,7 @@ const ListingDetail = () => {
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Listing not found</h1>
           <p className="mt-2 text-muted-foreground">We couldn't find this listing.</p>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -130,6 +132,7 @@ const ListingDetail = () => {
           </section>
         )}
       </main>
+      <Footer />
     </div>
   );
 };
