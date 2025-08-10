@@ -51,16 +51,6 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Deals</NavigationMenuTrigger>
-                  <NavigationMenuContent className="p-4">
-                    <ul className="w-56 space-y-1">
-                      <li><Link to="/deals" className="story-link">All Deals</Link></li>
-                      <li><Link to="/deals/featured" className="story-link">Featured Deals</Link></li>
-                      <li><Link to="/deals/latest" className="story-link">Latest Offers</Link></li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Plan Your Trip</NavigationMenuTrigger>

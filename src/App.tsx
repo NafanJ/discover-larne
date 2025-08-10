@@ -9,9 +9,6 @@ import NotFound from "./pages/NotFound";
 import ExploreIndex from "./pages/ExploreIndex";
 import ExploreCategory from "./pages/ExploreCategory";
 import ExploreLocation from "./pages/ExploreLocation";
-import DealsIndex from "./pages/DealsIndex";
-import DealsFeatured from "./pages/DealsFeatured";
-import DealsLatest from "./pages/DealsLatest";
 import Plan from "./pages/Plan";
 import GuideDetail from "./pages/GuideDetail";
 import Itineraries from "./pages/Itineraries";
@@ -33,9 +30,6 @@ const App = () => (
             <Route path="/explore" element={<ExploreIndex />} />
             <Route path="/explore/category/:slug" element={<ExploreCategory />} />
             <Route path="/explore/location/:slug" element={<ExploreLocation />} />
-            <Route path="/deals" element={<DealsIndex />} />
-            <Route path="/deals/featured" element={<DealsFeatured />} />
-            <Route path="/deals/latest" element={<DealsLatest />} />
             <Route path="/plan" element={<Plan />} />
             <Route path="/guides/:slug" element={<GuideDetail />} />
             <Route path="/itineraries" element={<Itineraries />} />
