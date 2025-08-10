@@ -80,9 +80,9 @@ const Hero = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             People & Places
           </h1>
-          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+          <h5 className="text-1xl md:text-2xl lg:text-2xl font-bold leading-tight">
            on the Causeway Coastal Route
-          </h3>
+          </h5>
 
           <form onSubmit={onSearch} className="space-y-2 md:space-y-3 animate-scale-in">
             <div className="flex items-center md:gap-2 gap-1.5 bg-card border rounded-full px-2 md:px-3 py-0.5 md:py-1 shadow-sm">
