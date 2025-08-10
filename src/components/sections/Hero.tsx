@@ -65,7 +65,7 @@ const Hero = () => {
       description: `Category: ${category} • Query: ${query}`
     });
   };
-  return <section className="container py-8 md:py-12 lg:py-14 overflow-hidden">
+  return <section className="container py-8 md:py-12 lg:py-14 overflow-x-visible overflow-y-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 xl:gap-14 items-center">
         <div className="space-y-6 animate-fade-in relative z-10 self-start">
           <div className="flex gap-3 flex-wrap">
@@ -98,7 +98,7 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] overflow-hidden animate-slide-in-right">
+        <div className="relative w-full overflow-y-hidden overflow-x-visible animate-slide-in-right mr-[-1rem] sm:mr-[-1.5rem] lg:mr-[-2rem]">
           <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
