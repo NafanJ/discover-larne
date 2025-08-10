@@ -77,12 +77,12 @@ const Hero = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             Discover Larne
           </h1>
-             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             People & Places
           </h1>
-          <p className="text-muted-foreground text-lg max-w-prose">
-           on the Causeway Coastal Route.
-          </p>
+          <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+           on the Causeway Coastal Route
+          </h3>
 
           <form onSubmit={onSearch} className="space-y-2 md:space-y-3 animate-scale-in">
             <div className="flex items-center md:gap-2 gap-1.5 bg-card border rounded-full px-2 md:px-3 py-0.5 md:py-1 shadow-sm">
