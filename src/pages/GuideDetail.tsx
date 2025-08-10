@@ -14,7 +14,7 @@ const GuideDetail = () => {
       <Navbar />
       <main className="container py-10">
         <Helmet>
-          <title>{`${title} | Larne Guides`}</title>
+          <title>{`Discover Larne | ${title}`}</title>
           <meta name="description" content={`Read our guide: ${toTitle(slug)}.`} />
           <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : `/guides/${slug}`} />
           <script type="application/ld+json">{JSON.stringify({

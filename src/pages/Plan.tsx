@@ -7,7 +7,7 @@ const Plan = () => (
     <Navbar />
     <main className="container py-10">
       <Helmet>
-        <title>Plan Your Trip to Larne | Guides & Tips</title>
+        <title>Discover Larne | Plan</title>
         <meta name="description" content="Plan your trip with guides, FAQs, and practical tips for visiting Larne." />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : '/plan'} />
         <script type="application/ld+json">{JSON.stringify({

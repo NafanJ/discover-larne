@@ -14,7 +14,7 @@ const ExploreCategory = () => {
       <Navbar />
       <main className="container py-10">
         <Helmet>
-          <title>{`${toTitle(slug)} | Explore Larne`}</title>
+          <title>{`Discover Larne | ${toTitle(slug)}`}</title>
           <meta name="description" content={`Discover ${toTitle(slug)} across Larne and the Causeway Coast.`} />
           <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : `/explore/category/${slug}`} />
           <script type="application/ld+json">{JSON.stringify({

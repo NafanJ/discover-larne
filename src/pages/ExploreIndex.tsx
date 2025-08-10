@@ -8,7 +8,7 @@ const ExploreIndex = () => {
       <Navbar />
       <main className="container py-10">
         <Helmet>
-          <title>Explore Larne | Categories & Locations</title>
+          <title>Discover Larne | Explore</title>
           <meta name="description" content="Explore things to do, events, food & drink, and places to stay in Larne by category and location." />
           <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : '/explore'} />
           <script type="application/ld+json">{JSON.stringify({

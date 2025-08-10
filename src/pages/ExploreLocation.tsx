@@ -14,7 +14,7 @@ const ExploreLocation = () => {
       <Navbar />
       <main className="container py-10">
         <Helmet>
-          <title>{`${toTitle(slug)} | Explore by Location`}</title>
+          <title>{`Discover Larne | ${toTitle(slug)}`}</title>
           <meta name="description" content={`Explore highlights around ${toTitle(slug)} in Larne.`} />
           <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : `/explore/location/${slug}`} />
           <script type="application/ld+json">{JSON.stringify({

@@ -38,7 +38,7 @@ const Contact = () => {
       <Navbar />
       <main className="container py-10">
         <Helmet>
-          <title>Contact Discover Larne | People & Places</title>
+          <title>Discover Larne | Contact</title>
           <meta name="description" content="Contact Discover Larne for media, partnerships, or general enquiries about Larne’s people and places." />
           <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : '/contact'} />
           <script type="application/ld+json">{JSON.stringify({

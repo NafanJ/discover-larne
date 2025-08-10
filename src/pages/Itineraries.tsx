@@ -6,7 +6,7 @@ const Itineraries = () => (
     <Navbar />
     <main className="container py-10">
       <Helmet>
-        <title>Popular Itineraries | Larne</title>
+        <title>Discover Larne | Itineraries</title>
         <meta name="description" content="Browse curated itineraries for exploring Larne and the Causeway Coast." />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : '/itineraries'} />
         <script type="application/ld+json">{JSON.stringify({

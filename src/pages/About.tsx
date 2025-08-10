@@ -12,7 +12,7 @@ const About = () => (
     <Navbar />
     <main className="container py-10">
       <Helmet>
-        <title>About Discover Larne | People & Places</title>
+        <title>Discover Larne | About</title>
         <meta name="description" content="Discover Larne’s mission: celebrating people, places, and stories along the Causeway Coastal Route." />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : '/about'} />
         <script type="application/ld+json">{JSON.stringify({
