@@ -7,6 +7,9 @@ import {
   NavigationMenuContent,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -31,7 +34,6 @@ const Navbar = () => {
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
-
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Plan Your Trip</NavigationMenuTrigger>
                   <NavigationMenuContent className="p-4">
@@ -46,7 +48,40 @@ const Navbar = () => {
 
             <Link to="/about" className="hover-scale story-link">About</Link>
             <Link to="/contact" className="hover-scale story-link">Contact</Link>
-            
+          </div>
+
+          {/* Mobile menu */}
+          <div className="md:hidden ml-auto">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" aria-label="Open menu">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-full sm:max-w-sm">
+                <SheetHeader>
+                  <SheetTitle>Menu</SheetTitle>
+                </SheetHeader>
+                <nav className="mt-4 grid gap-2">
+                  <SheetClose asChild>
+                    <Link to="/explore/listings" className="story-link">Explore</Link>
+                  </SheetClose>
+                  <div className="mt-2 text-xs text-muted-foreground">Plan Your Trip</div>
+                  <SheetClose asChild>
+                    <Link to="/plan" className="story-link">Plan Overview</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/itineraries" className="story-link">Popular Itineraries</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/about" className="story-link">About</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/contact" className="story-link">Contact</Link>
+                  </SheetClose>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
       </nav>
     </header>
