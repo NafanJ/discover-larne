@@ -65,7 +65,7 @@ const Hero = () => {
       description: `Category: ${category} • Query: ${query}`
     });
   };
-  return <section className="container py-8 md:py-12 lg:py-14 max-h-[70vh] overflow-hidden">
+  return <section className="container py-8 md:py-12 lg:py-14 max-h-[70vh] overflow-y-hidden overflow-x-visible">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 xl:gap-14 items-center">
         <div className="space-y-6 animate-fade-in relative z-10 self-start">
           <div className="flex gap-3 flex-wrap">
@@ -101,7 +101,7 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative w-full overflow-hidden animate-slide-in-right -ml-3 sm:-ml-4 lg:-ml-6 xl:-ml-8 mx-0">
+        <div className="relative w-full overflow-y-hidden overflow-x-visible animate-slide-in-right mx-0">
           <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
@@ -156,8 +156,6 @@ const Hero = () => {
           </div>
           {/* Edge fades to softly clip overflow */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-background via-background/80 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-background via-background/80 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background via-background/80 to-transparent" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-b from-transparent via-background/70 to-background" />
         </div>
       </div>
