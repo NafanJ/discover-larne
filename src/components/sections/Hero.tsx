@@ -58,8 +58,14 @@ const Hero = () => {
 
   return (
     <section className="container py-12 md:py-16 lg:py-20">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div className="space-y-6 animate-fade-in">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-14 items-center">
+        <div className="space-y-6 animate-fade-in relative z-10">
+          <div className="flex gap-3 flex-wrap">
+            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">120+ People</div>
+            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">300+ Stories</div>
+            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">45+ Places</div>
+          </div>
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             Discover Larne – People & Places on the Causeway Coastal Route
           </h1>
@@ -67,13 +73,7 @@ const Hero = () => {
             Explore the stories of local people and the beautiful locations that make Larne special.
           </p>
 
-          <div className="flex gap-3 flex-wrap">
-            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">120+ People</div>
-            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">300+ Stories</div>
-            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">45+ Places</div>
-          </div>
-
-          <form onSubmit={onSearch} className="grid grid-cols-1 sm:grid-cols-[160px_1fr_auto] gap-3 bg-card border rounded-xl p-3 shadow-sm animate-scale-in">
+          <form onSubmit={onSearch} className="grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-3 bg-card border rounded-xl p-3 shadow-sm animate-scale-in">
             <Select value={category} onValueChange={setCategory}>
               <SelectTrigger className="rounded-lg">
                 <SelectValue placeholder="Category" />
@@ -92,11 +92,11 @@ const Hero = () => {
               className="rounded-lg"
               aria-label="Search people, places or stories"
             />
-            <Button type="submit" size="lg" className="rounded-lg">Search</Button>
+            <Button type="submit" size="lg" className="rounded-lg sm:col-span-2">Search</Button>
           </form>
         </div>
 
-        <div className="relative animate-slide-in-right">
+        <div className="relative animate-slide-in-right lg:ml-8 xl:ml-16">
           <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 lg:gap-5">
               {/* Column 1 */}
