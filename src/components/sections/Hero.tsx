@@ -84,18 +84,18 @@ const Hero = () => {
            on the Causeway Coastal Route.
           </p>
 
-          <form onSubmit={onSearch} className="space-y-3 animate-scale-in">
-            <div className="flex items-center gap-2 bg-card border rounded-full px-3 py-1 shadow-sm">
+          <form onSubmit={onSearch} className="space-y-2 md:space-y-3 animate-scale-in">
+            <div className="flex items-center md:gap-2 gap-1.5 bg-card border rounded-full px-2 md:px-3 py-0.5 md:py-1 shadow-sm">
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="What are you looking for?"
                 aria-label="What are you looking for?"
-                className="flex-1 h-12 border-0 bg-transparent shadow-none px-3 focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="flex-1 h-10 md:h-12 border-0 bg-transparent shadow-none px-2 md:px-3 text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0"
               />
-              <span className="h-6 w-px bg-border" aria-hidden="true" />
+              <span className="h-5 md:h-6 w-px bg-border" aria-hidden="true" />
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="h-12 w-36 md:w-44 border-0 bg-transparent shadow-none rounded-full px-3 text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
+                <SelectTrigger className="h-10 md:h-12 w-28 sm:w-32 md:w-44 border-0 bg-transparent shadow-none rounded-full px-2 md:px-3 text-xs sm:text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
                   <SelectValue placeholder="Categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -106,7 +106,7 @@ const Hero = () => {
                 </SelectContent>
               </Select>
             </div>
-            <Button type="submit" size="lg" variant="brand" className="rounded-full h-12 px-6">
+            <Button type="submit" variant="brand" className="rounded-full h-10 md:h-12 px-5 md:px-6 text-sm md:text-base">
               Search
             </Button>
           </form>
