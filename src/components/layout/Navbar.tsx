@@ -66,7 +66,7 @@ const Navbar = () => {
 
             <Link to="/about" className="hover-scale story-link">About</Link>
             <Link to="/contact" className="hover-scale story-link">Contact</Link>
-            <Link to="/account" className="hover-scale story-link">Account</Link>
+            
           </div>
       </nav>
     </header>
