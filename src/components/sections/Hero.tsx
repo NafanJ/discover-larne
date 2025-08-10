@@ -67,7 +67,10 @@ const Hero = () => {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Discover Larne\nPeople & Places
+            Discover Larne
+          </h1>
+             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            People & Places
           </h1>
           <p className="text-muted-foreground text-lg max-w-prose">
            on the Causeway Coastal Route.
