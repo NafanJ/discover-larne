@@ -66,7 +66,7 @@ const Hero = () => {
       description: `Category: ${category} • Query: ${query}`
     });
   };
-  return <section className="container min-h-[60vh] py-8 md:py-12 lg:py-14 overflow-y-hidden overflow-x-visible">
+  return <section className="container min-h-[40vh] py-8 md:py-12 lg:py-14 overflow-y-hidden overflow-x-visible">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
         <div className="space-y-6 animate-fade-in relative z-10 self-center">
           <div className="flex gap-3 flex-wrap">
