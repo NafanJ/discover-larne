@@ -9,6 +9,10 @@ const items = [
   { title: "Coastal Cliffs", subtitle: "Causeway Route", img: place1 },
   { title: "Harbour Life", subtitle: "Boats at Dawn", img: place2 },
   { title: "Community Stories", subtitle: "People of Larne", img: portrait1 },
+    { title: "Meet Connor", subtitle: "Local Café Owner", img: portrait3 },
+  { title: "Coastal Cliffs", subtitle: "Causeway Route", img: place1 },
+  { title: "Harbour Life", subtitle: "Boats at Dawn", img: place2 },
+  { title: "Community Stories", subtitle: "People of Larne", img: portrait1 },
 ];
 
 const HighlightSection = () => {
