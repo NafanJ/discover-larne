@@ -70,8 +70,8 @@ const Hero = () => {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
         <div className="space-y-6 animate-fade-in relative z-10 self-center">
           <div className="flex gap-3 flex-wrap">
-            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">18,853 People</div>
-            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">1000+ Stories</div>
+            <div className="rounded-full px-4 py-2"><span className="text-primary">18,853</span> People</div>
+            <div className="rounded-full px-4 py-2"><span className="text-primary">1000+</span> Stories</div>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
