@@ -67,7 +67,7 @@ const Hero = () => {
   };
   return <section className="container min-h-[28vh] md:min-h-[32vh] lg:min-h-[40vh] pt-12 md:pt-12 lg:pt-14 pb-0 overflow-y-hidden overflow-x-visible">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
-        <div className="space-y-6 animate-fade-in relative z-10 self-center -mt-8 md:-mt-12 lg:-mt-16">
+        <div className="space-y-6 animate-fade-in relative z-10 self-center -mt-8 md:mt-0 lg:-mt-16">
             <div className="flex gap-3 flex-wrap" style={{ ["--stat-number" as any]: "213 88% 19%" }}>
               <div className="bg-transparent border border-border rounded-full px-4 py-2 text-foreground">
                 <span className="font-semibold text-[hsl(var(--stat-number))]">18,853</span> People
