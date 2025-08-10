@@ -1,5 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import { Helmet } from "react-helmet-async";
+import Footer from "@/components/layout/Footer";
+
 
 const Account = () => (
   <div className="min-h-screen bg-background">
@@ -18,7 +20,9 @@ const Account = () => (
       <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Account</h1>
       <p className="mt-2 text-muted-foreground">Sign in and profile management coming soon.</p>
     </main>
+    <Footer />
   </div>
+
 );
 
 export default Account;

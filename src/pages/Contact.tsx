@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
+import Footer from "@/components/layout/Footer";
+
 
 const ContactSchema = z.object({
   name: z.string().min(2, "Please enter your full name"),
@@ -149,7 +151,9 @@ const Contact = () => {
           </aside>
         </section>
       </main>
+      <Footer />
     </div>
+
   );
 };
 

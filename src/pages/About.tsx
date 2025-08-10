@@ -4,6 +4,8 @@ import portrait1 from "@/assets/larne/portrait-1.jpg";
 import portrait2 from "@/assets/larne/portrait-2.jpg";
 import place1 from "@/assets/larne/place-1.jpg";
 import { Users, Map, HeartHandshake } from "lucide-react";
+import Footer from "@/components/layout/Footer";
+
 
 const siteUrl = typeof window !== "undefined" ? window.location.origin : "";
 
@@ -77,7 +79,9 @@ const About = () => (
         <p className="text-sm text-muted-foreground">Have an idea, story, or correction? We’d love to hear from you. Visit our <a href="/contact" className="underline underline-offset-2">contact page</a>.</p>
       </aside>
     </main>
+    <Footer />
   </div>
+
 );
 
 export default About;

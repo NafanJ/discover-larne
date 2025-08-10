@@ -1,6 +1,8 @@
 import Navbar from "@/components/layout/Navbar";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import Footer from "@/components/layout/Footer";
+
 
 const ExploreIndex = () => {
   return (
@@ -42,7 +44,9 @@ const ExploreIndex = () => {
           </article>
         </section>
       </main>
+      <Footer />
     </div>
+
   );
 };
 

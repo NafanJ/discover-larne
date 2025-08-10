@@ -1,5 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import { Helmet } from "react-helmet-async";
+import Footer from "@/components/layout/Footer";
+
 
 const Itineraries = () => (
   <div className="min-h-screen bg-background">
@@ -18,7 +20,9 @@ const Itineraries = () => (
       <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Popular Itineraries</h1>
       <p className="mt-2 text-muted-foreground">Day-by-day plans to see the best of Larne.</p>
     </main>
+    <Footer />
   </div>
+
 );
 
 export default Itineraries;

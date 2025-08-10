@@ -1,6 +1,8 @@
 import Navbar from "@/components/layout/Navbar";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
+import Footer from "@/components/layout/Footer";
+
 
 const toTitle = (slug?: string) =>
   (slug || "").split("-").map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" ");
@@ -27,7 +29,9 @@ const ExploreCategory = () => {
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">{title}</h1>
         <p className="mt-2 text-muted-foreground">Curated places, stories, and highlights for {toTitle(slug)}.</p>
       </main>
+      <Footer />
     </div>
+
   );
 };
 

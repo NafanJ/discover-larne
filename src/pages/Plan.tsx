@@ -1,6 +1,8 @@
 import Navbar from "@/components/layout/Navbar";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import Footer from "@/components/layout/Footer";
+
 
 const Plan = () => (
   <div className="min-h-screen bg-background">
@@ -22,7 +24,9 @@ const Plan = () => (
         <Link className="story-link" to="/itineraries">Popular Itineraries</Link>
       </div>
     </main>
+    <Footer />
   </div>
+
 );
 
 export default Plan;

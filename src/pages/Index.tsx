@@ -4,6 +4,8 @@ import HighlightSection from "@/components/sections/HighlightSection";
 import AboutSection from "@/components/sections/AboutSection";
 import CTASection from "@/components/sections/CTASection";
 import { Helmet } from "react-helmet-async";
+import Footer from "@/components/layout/Footer";
+
 
 const Index = () => {
   return (
@@ -18,7 +20,9 @@ const Index = () => {
         <AboutSection />
         <CTASection />
       </main>
+      <Footer />
     </div>
+
   );
 };
 
