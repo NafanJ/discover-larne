@@ -9,9 +9,9 @@ const CTASection = () => {
           <h3 className="text-2xl md:text-3xl font-semibold">Start exploring stories from Larne</h3>
           <p className="opacity-90 mt-1">Browse categories, discover locals, and plan your next visit.</p>
         </div>
-        <div className="flex gap-3">
-          <Button asChild variant="secondary" size="lg" className="rounded-lg"><Link to="/explore">Explore Stories</Link></Button>
-          <Button asChild variant="secondary" size="lg" className="rounded-lg"><Link to="/explore">Browse Categories</Link></Button>
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <Button asChild variant="secondary" size="lg" className="rounded-lg w-full sm:w-auto"><Link to="/explore">Explore Stories</Link></Button>
+          <Button asChild variant="secondary" size="lg" className="rounded-lg w-full sm:w-auto"><Link to="/explore">Browse Categories</Link></Button>
         </div>
       </div>
     </section>
