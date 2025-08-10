@@ -24,6 +24,7 @@ const Navbar = () => {
           <span className="sr-only">Discover Larne</span>
         </Link>
           <div className="hidden md:flex items-center gap-4 text-sm">
+            <Link to="/" className="hover-scale story-link">Home</Link>
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -52,6 +53,9 @@ const Navbar = () => {
                   <SheetTitle>Menu</SheetTitle>
                 </SheetHeader>
                 <nav className="mt-4 grid gap-2">
+                  <SheetClose asChild>
+                    <Link to="/" className="story-link">Home</Link>
+                  </SheetClose>
                   <SheetClose asChild>
                     <Link to="/explore/listings" className="story-link">Explore</Link>
                   </SheetClose>
