@@ -67,10 +67,10 @@ const Hero = () => {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Discover Larne – People & Places on the Causeway Coastal Route
+            Discover Larne\nPeople & Places
           </h1>
           <p className="text-muted-foreground text-lg max-w-prose">
-            Explore the stories of local people and the beautiful locations that make Larne special.
+           on the Causeway Coastal Route.
           </p>
 
           <form onSubmit={onSearch} className="grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-3 bg-card border rounded-xl p-3 shadow-sm animate-scale-in">
