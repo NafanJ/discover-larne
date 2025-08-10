@@ -99,8 +99,8 @@ const Hero = () => {
           </form>
         </div>
 
-        <div className="relative w-full animate-slide-in-right lg:ml-0 xl:ml-4">
-          <div className="rotate-0 lg:rotate-[12deg] origin-center [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
+        <div className="relative w-full animate-slide-in-right lg:ml-0 xl:ml-4 max-h-[60vh] overflow-hidden">
+          <div className="rotate-[-5deg] origin-top transform-gpu scale-[0.85] [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
               {/* Column 1 */}
               <div className="flex flex-col gap-2 md:gap-3">
