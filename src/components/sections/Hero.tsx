@@ -72,7 +72,6 @@ const Hero = () => {
           <div className="flex gap-3 flex-wrap">
             <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">18,853 People</div>
             <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">1000+ Stories</div>
-            <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2">200+ Places</div>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
