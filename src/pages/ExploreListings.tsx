@@ -252,7 +252,7 @@ const ExploreListings = () => {
                               );
                             }}
                           />
-                          <span>{info.icon} {info.name}</span>
+                          <span>{info.name}</span>
                         </label>
                       );
                     })}
@@ -382,7 +382,7 @@ const ExploreListings = () => {
                             );
                           }}
                         />
-                        <span>{info.icon} {info.name}</span>
+                        <span>{info.name}</span>
                       </label>
                     );
                   })}

@@ -57,13 +57,12 @@ const Hero = () => {
   const {
     toast
   } = useToast();
-  const [category, setCategory] = useState<string>("all");
   const [query, setQuery] = useState<string>("");
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
       title: "Search coming soon",
-      description: `Category: ${category} • Query: ${query}`
+      description: `Query: ${query}`
     });
   };
   return <section className="container min-h-[28vh] md:min-h-[32vh] lg:min-h-[40vh] pt-2 md:pt-4 lg:pt-6 pb-0 overflow-y-hidden overflow-x-visible">
@@ -89,22 +88,8 @@ const Hero = () => {
           </h5>
 
           <form onSubmit={onSearch} className="space-y-2 md:space-y-3 animate-scale-in">
-            <div className="flex items-center md:gap-2 gap-1.5 bg-card border rounded-full px-2 md:px-3 py-0.5 md:py-1 shadow-sm">
+            <div className="flex items-center bg-card border rounded-full px-2 md:px-3 py-0.5 md:py-1 shadow-sm">
               <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="What are you looking for?" aria-label="What are you looking for?" className="flex-1 h-10 md:h-12 border-0 bg-transparent shadow-none px-2 md:px-3 text-xs sm:text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0" />
-              <span className="h-5 md:h-6 w-px bg-border" aria-hidden="true" />
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="h-10 md:h-12 w-14 sm:w-24 md:w-36 border-0 bg-transparent shadow-none rounded-full px-2 md:px-3 text-xs sm:text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
-                  <SelectValue placeholder="Categories" />
-                </SelectTrigger>
-                <SelectContent className="z-50 bg-background border shadow-md">
-                  <SelectItem value="all">All Categories</SelectItem>
-                  {categoryGroups.map((group) => (
-                    <SelectItem key={group.id} value={group.id}>
-                      {group.icon} {group.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
             <Button type="submit" variant="brand" className="rounded-full h-10 md:h-12 px-5 md:px-6 text-sm md:text-base">
               Search

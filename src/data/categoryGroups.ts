@@ -9,7 +9,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'food-dining',
     name: 'Food & Dining',
-    icon: '🍽️',
+    icon: '',
     categories: [
       'bar', 'Bar', 'Bar & Restaurant', 'bar food', 'pub food', 'restaurant', 'Restaurant & Takeaway',
       'cafe', 'Cafe', 'Coffee roasters', 'takeaway', 'chinese takeaway', 'Chinese Takeaway',
@@ -19,7 +19,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'health-wellness',
     name: 'Health & Wellness',
-    icon: '🏥',
+    icon: '',
     categories: [
       'doctor', 'general practitioner', 'dentist', 'pharmacy', 'physiotherapist', 'chiropractor',
       'medical clinic', 'health center', 'gym', 'fitness center', 'spa', 'massage',
@@ -29,7 +29,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'retail-shopping',
     name: 'Retail & Shopping',
-    icon: '🛍️',
+    icon: '',
     categories: [
       'clothing store', 'department store', 'grocery store', 'supermarket', 'convenience store',
       'gift shop', 'jewelry store', 'furniture store', 'electronics store', 'home improvement store',
@@ -40,7 +40,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'professional-services',
     name: 'Professional Services',
-    icon: '💼',
+    icon: '',
     categories: [
       'lawyer', 'accountant', 'financial advisor', 'Mortgage Advisor', 'insurance agency',
       'real estate agent', 'estate agent', 'business consultant', 'consulting', 'marketing agency',
@@ -50,7 +50,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'home-construction',
     name: 'Home & Construction',
-    icon: '🔨',
+    icon: '',
     categories: [
       'builder', 'construction company', 'electrician', 'plumber', 'painter', 'carpenter',
       'roofer', 'bathroom fitter', 'kitchen fitter', 'flooring contractor', 'fencing contractor',
@@ -60,7 +60,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'automotive',
     name: 'Automotive',
-    icon: '🚗',
+    icon: '',
     categories: [
       'car dealer', 'car repair', 'auto repair', 'mechanic', 'garage', 'car wash', 'tire shop',
       'car rental', 'truck rental'
@@ -69,7 +69,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'hospitality-entertainment',
     name: 'Hospitality & Entertainment',
-    icon: '🎪',
+    icon: '',
     categories: [
       'hotel', 'Hotel & Restaurant', 'bed and breakfast', 'guest house', 'cinema', 'nightclub',
       'casino', 'bowling alley', 'golf club', 'tennis club', 'sports club', 'Wedding venue',
@@ -79,7 +79,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'beauty-personal-care',
     name: 'Beauty & Personal Care',
-    icon: '💄',
+    icon: '',
     categories: [
       'hair salon', 'hairdresser', 'beauty salon', 'nail salon', 'barber', 'tanning salon',
       'tattoo shop', 'piercing studio'
@@ -88,7 +88,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'education-training',
     name: 'Education & Training',
-    icon: '📚',
+    icon: '',
     categories: [
       'school', 'training center', 'driving school', 'language school', 'music school',
       'dance studio', 'martial arts', 'nursery', 'childcare'
@@ -97,7 +97,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'government-community',
     name: 'Government & Community',
-    icon: '🏛️',
+    icon: '',
     categories: [
       'Town Hall', 'post office', 'police station', 'fire station', 'community center',
       'church', 'charity', 'volunteer center', 'Job Centre', 'Historical landmark',
@@ -107,7 +107,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'agriculture-industrial',
     name: 'Agriculture & Industrial',
-    icon: '🏭',
+    icon: '',
     categories: [
       'farm', 'agricultural contractor', 'livestock dealer', 'factory', 'manufacturing',
       'Manufacturer', 'warehouse', 'plant hire', 'engineering company'
@@ -116,7 +116,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     id: 'other-services',
     name: 'Other Services',
-    icon: '🔧',
+    icon: '',
     categories: [
       'courier service', 'removal company', 'printing service', 'photographer', 'wedding photographer',
       'computer repair', 'appliance repair', 'locksmith', 'gardener', 'landscaper', 'tree surgeon',
