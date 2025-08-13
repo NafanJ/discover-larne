@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Accessibility } from "lucide-react";
+import { Accessibility, Star, MapPin } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -346,43 +346,54 @@ const ExploreListings = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {sorted.map((l) => (
-                  <Card key={l.slug} className="overflow-hidden">
-                    <div className="aspect-[4/3] overflow-hidden">
-                      <img
-                        src={l.images[0] || '/placeholder.svg'}
-                        alt={`${l.name} listing photo`}
-                        loading="lazy"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <CardHeader className="pb-2">
-                      <div className="flex items-start justify-between gap-3">
-                        <CardTitle className="text-lg leading-tight">{l.name}</CardTitle>
-                        <Badge variant="secondary">{l.category}</Badge>
+                  <Link
+                    key={l.slug}
+                    to={`/listings/${l.slug}`}
+                    className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                    aria-label={`${l.name} details`}
+                  >
+                    <Card className="overflow-hidden group">
+                      <div className="aspect-[4/3] overflow-hidden">
+                        <img
+                          src={l.images[0] || '/placeholder.svg'}
+                          alt={`${l.name} listing photo`}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                        />
                       </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <div className="text-sm text-muted-foreground space-y-1">
-                        {typeof l.rating === "number" && (
-                          <p>Rating: {l.rating.toFixed(1)}</p>
-                        )}
-                        {l.address && <p>{l.address}</p>}
-                        {l.wheelchair && (
-                          <div className="flex items-center gap-1 pt-1">
-                            <Badge variant="outline" className="gap-1">
-                              <Accessibility className="h-3.5 w-3.5" />
-                              Accessible
-                            </Badge>
+                      <CardHeader className="space-y-1">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <CardTitle className="text-base truncate">{l.name}</CardTitle>
+                            {typeof l.rating === "number" && (
+                              <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
+                                <Star className="h-4 w-4 text-primary" />
+                                <span className="text-sm">{l.rating.toFixed(1)}</span>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                      <div className="mt-4">
-                        <Button asChild size="sm">
-                          <Link to={`/listings/${l.slug}`}>View details</Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+                          <Badge variant="secondary" className="shrink-0 text-xs">{l.category}</Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="-mt-2">
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                          <div className="flex min-w-0 items-center gap-1">
+                            <MapPin className="h-4 w-4 opacity-70" />
+                            <span className="truncate">{l.address || 'No address available'}</span>
+                          </div>
+                          {l.wheelchair && (
+                            <>
+                              <span className="h-1 w-1 rounded-full bg-border" />
+                              <Badge variant="outline" className="gap-1">
+                                <Accessibility className="h-3.5 w-3.5" />
+                                Accessible
+                              </Badge>
+                            </>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             )}
