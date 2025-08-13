@@ -1,8 +1,9 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Helmet } from "react-helmet-async";
-import { listings } from "@/data/listings";
 import { useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,9 +21,41 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const ExploreListings = () => {
+  const { data: businesses = [], isLoading, error } = useQuery({
+    queryKey: ['businesses'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('businesses')
+        .select('*')
+        .order('name');
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Transform businesses data to match the expected listing format
+  const listings = useMemo(() => {
+    return businesses.map((b) => ({
+      slug: b.id,
+      name: b.name,
+      category: b.category || 'Business',
+      rating: b.rating,
+      address: b.full_address,
+      wheelchair: b.wheelchair_accessible,
+      images: b.photo ? [b.photo] : ['/placeholder.svg'],
+      description: b.description || '',
+      contact: {
+        phone: b.phone,
+        website: b.site,
+        address: b.full_address,
+      },
+    }));
+  }, [businesses]);
+
   const uniqueCategories = useMemo(
-    () => Array.from(new Set(listings.map((l) => l.category))).sort(),
-    []
+    () => Array.from(new Set(listings.map((l) => l.category))).filter(Boolean).sort(),
+    [listings]
   );
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -212,9 +245,22 @@ const ExploreListings = () => {
           </div>
         </div>
 
-        <section className="grid md:grid-cols-4 gap-8">
-          {/* Filters */}
-          <aside className="hidden md:block md:col-span-1">
+        {isLoading && (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">Loading listings...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-8">
+            <p className="text-destructive">Error loading listings. Please try again later.</p>
+          </div>
+        )}
+
+        {!isLoading && !error && (
+          <section className="grid md:grid-cols-4 gap-8">
+            {/* Filters */}
+            <aside className="hidden md:block md:col-span-1">
             <div className="rounded-lg border p-4 space-y-6">
               <div>
                 <Label className="text-sm">Sort by</Label>
@@ -302,7 +348,7 @@ const ExploreListings = () => {
                   <Card key={l.slug} className="overflow-hidden">
                     <div className="aspect-[4/3] overflow-hidden">
                       <img
-                        src={l.images[0]}
+                        src={l.images[0] || '/placeholder.svg'}
                         alt={`${l.name} listing photo`}
                         loading="lazy"
                         className="h-full w-full object-cover"
@@ -333,6 +379,7 @@ const ExploreListings = () => {
             )}
           </div>
         </section>
+        )}
       </main>
       <Footer />
     </div>
