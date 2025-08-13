@@ -92,7 +92,7 @@ const Hero = () => {
               <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="What are you looking for?" aria-label="What are you looking for?" className="flex-1 h-10 md:h-12 border-0 bg-transparent shadow-none px-2 md:px-3 text-xs sm:text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0" />
               <span className="h-5 md:h-6 w-px bg-border" aria-hidden="true" />
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="h-10 md:h-12 w-14 sm:w-16 md:w-22 border-0 bg-transparent shadow-none rounded-full px-2 md:px-3 text-xs sm:text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
+                <SelectTrigger className="h-10 md:h-12 w-14 sm:w-24 md:w-33 border-0 bg-transparent shadow-none rounded-full px-2 md:px-3 text-xs sm:text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
                   <SelectValue placeholder="Categories" />
                 </SelectTrigger>
                 <SelectContent>
