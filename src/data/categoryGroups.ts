@@ -114,15 +114,22 @@ export const categoryGroups: CategoryGroup[] = [
     ]
   },
   {
+    id: 'transport',
+    name: 'Transport',
+    icon: '',
+    categories: [
+      'taxi', 'bus company', 'travel agency'
+    ]
+  },
+  {
     id: 'other-services',
     name: 'Other Services',
     icon: '',
     categories: [
       'courier service', 'removal company', 'printing service', 'photographer', 'wedding photographer',
       'computer repair', 'appliance repair', 'locksmith', 'gardener', 'landscaper', 'tree surgeon',
-      'taxi', 'bus company', 'travel agency', 'currency exchange', 'loan company', 'bank',
-      'building society', 'storage facility', 'dry cleaner', 'florist', 'funeral director',
-      'Funeral home', 'petrol station', 'optometrist'
+      'currency exchange', 'loan company', 'bank', 'building society', 'storage facility', 
+      'dry cleaner', 'florist', 'funeral director', 'Funeral home', 'petrol station', 'optometrist'
     ]
   }
 ];
