@@ -69,10 +69,10 @@ const HighlightSection = () => {
                 />
               </div>
               <CardHeader className="space-y-1">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <CardTitle className="text-base truncate">{item.name}</CardTitle>
-                    <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-base leading-tight">{item.name}</CardTitle>
+                    <div className="flex items-center gap-1 mt-1 text-muted-foreground">
                       <Star className="h-4 w-4 text-primary" />
                       <span className="text-sm">{item.rating.toFixed(1)}</span>
                     </div>
