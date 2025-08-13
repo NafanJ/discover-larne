@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ListingsGridSkeleton } from "@/components/ui/loading-skeleton";
 import { useOptimizedImage } from "@/hooks/use-optimized-image";
+import { categoryGroups, getGroupForCategory, getGroupInfo } from "@/data/categoryGroups";
 
 // Utility function to convert text to title case (memoized)
 const toTitleCase = (() => {
@@ -89,12 +90,22 @@ const ExploreListings = () => {
     }));
   }, [businesses]);
 
-  const uniqueCategories = useMemo(
-    () => Array.from(new Set(listings.map((l) => l.category))).filter(Boolean).sort(),
-    [listings]
-  );
+  // Get unique category groups instead of individual categories
+  const uniqueCategoryGroups = useMemo(() => {
+    const groups = new Set<string>();
+    listings.forEach(listing => {
+      const groupId = getGroupForCategory(listing.category);
+      if (groupId) {
+        groups.add(groupId);
+      }
+    });
+    return Array.from(groups).sort().map(groupId => ({
+      id: groupId,
+      info: getGroupInfo(groupId)!
+    }));
+  }, [listings]);
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategoryGroups, setSelectedCategoryGroups] = useState<string[]>([]);
   const [wheelchairOnly, setWheelchairOnly] = useState(false);
   const [minRating, setMinRating] = useState<number>(0);
   const [sortBy, setSortBy] = useState<
@@ -103,13 +114,18 @@ const ExploreListings = () => {
 
   const filtered = useMemo(() => {
     return listings.filter((l) => {
-      if (selectedCategories.length && !selectedCategories.includes(l.category))
-        return false;
+      // Filter by category groups instead of individual categories
+      if (selectedCategoryGroups.length) {
+        const categoryGroup = getGroupForCategory(l.category);
+        if (!categoryGroup || !selectedCategoryGroups.includes(categoryGroup)) {
+          return false;
+        }
+      }
       if (wheelchairOnly && !l.wheelchair) return false;
       if ((l.rating ?? 0) < minRating) return false;
       return true;
     });
-  }, [listings, selectedCategories, wheelchairOnly, minRating]);
+  }, [listings, selectedCategoryGroups, wheelchairOnly, minRating]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -137,7 +153,7 @@ const ExploreListings = () => {
   const currentItems = sorted.slice(startIndex, endIndex);
 
   const clearFilters = useCallback(() => {
-    setSelectedCategories([]);
+    setSelectedCategoryGroups([]);
     setWheelchairOnly(false);
     setMinRating(0);
     setSortBy("relevance");
@@ -152,7 +168,7 @@ const ExploreListings = () => {
   // Reset page when filters change
   useMemo(() => {
     setCurrentPage(1);
-  }, [selectedCategories, wheelchairOnly, minRating, sortBy]);
+  }, [selectedCategoryGroups, wheelchairOnly, minRating, sortBy]);
 
   const title = "Explore Listings in Larne";
   const description = "Browse all Larne listings with filters for category, rating, and accessibility.";
@@ -224,19 +240,19 @@ const ExploreListings = () => {
                 <div>
                   <Label className="text-sm">Categories</Label>
                   <div className="mt-3 space-y-2">
-                    {uniqueCategories.map((cat) => {
-                      const checked = selectedCategories.includes(cat);
+                    {uniqueCategoryGroups.map(({ id, info }) => {
+                      const checked = selectedCategoryGroups.includes(id);
                       return (
-                        <label key={cat} className="flex items-center gap-2 text-sm">
+                        <label key={id} className="flex items-center gap-2 text-sm">
                           <Checkbox
                             checked={checked}
                             onCheckedChange={(v) => {
-                              setSelectedCategories((prev) =>
-                                v ? [...prev, cat] : prev.filter((c) => c !== cat)
+                              setSelectedCategoryGroups((prev) =>
+                                v ? [...prev, id] : prev.filter((c) => c !== id)
                               );
                             }}
                           />
-                          <span>{toTitleCase(cat)}</span>
+                          <span>{info.icon} {info.name}</span>
                         </label>
                       );
                     })}
@@ -354,19 +370,19 @@ const ExploreListings = () => {
               <div>
                 <Label className="text-sm">Categories</Label>
                 <div className="mt-3 space-y-2">
-                  {uniqueCategories.map((cat) => {
-                    const checked = selectedCategories.includes(cat);
+                  {uniqueCategoryGroups.map(({ id, info }) => {
+                    const checked = selectedCategoryGroups.includes(id);
                     return (
-                      <label key={cat} className="flex items-center gap-2 text-sm">
+                      <label key={id} className="flex items-center gap-2 text-sm">
                         <Checkbox
                           checked={checked}
                           onCheckedChange={(v) => {
-                            setSelectedCategories((prev) =>
-                              v ? [...prev, cat] : prev.filter((c) => c !== cat)
+                            setSelectedCategoryGroups((prev) =>
+                              v ? [...prev, id] : prev.filter((c) => c !== id)
                             );
                           }}
                         />
-                        <span>{toTitleCase(cat)}</span>
+                        <span>{info.icon} {info.name}</span>
                       </label>
                     );
                   })}

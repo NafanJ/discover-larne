@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { categoryGroups } from "@/data/categoryGroups";
 import portrait1 from "@/assets/larne/portrait-1.jpg";
 import portrait2 from "@/assets/larne/portrait-2.jpg";
 import portrait3 from "@/assets/larne/portrait-3.jpg";
@@ -95,11 +96,13 @@ const Hero = () => {
                 <SelectTrigger className="h-10 md:h-12 w-14 sm:w-24 md:w-36 border-0 bg-transparent shadow-none rounded-full px-2 md:px-3 text-xs sm:text-sm shrink-0 focus-visible:ring-0 focus-visible:ring-offset-0">
                   <SelectValue placeholder="Categories" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="people">People</SelectItem>
-                  <SelectItem value="places">Places</SelectItem>
-                  <SelectItem value="stories">Stories</SelectItem>
+                <SelectContent className="z-50 bg-background border shadow-md">
+                  <SelectItem value="all">All Categories</SelectItem>
+                  {categoryGroups.map((group) => (
+                    <SelectItem key={group.id} value={group.id}>
+                      {group.icon} {group.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
