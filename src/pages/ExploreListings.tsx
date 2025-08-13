@@ -21,6 +21,13 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
+// Utility function to convert text to title case
+const toTitleCase = (str: string) => {
+  return str.replace(/\w\S*/g, (txt) => 
+    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  );
+};
+
 const ExploreListings = () => {
   const { data: businesses = [], isLoading, error } = useQuery({
     queryKey: ['businesses'],
@@ -40,7 +47,7 @@ const ExploreListings = () => {
     return businesses.map((b) => ({
       slug: b.id,
       name: b.name,
-      category: b.category || 'Business',
+      category: toTitleCase(b.category || 'Business'),
       rating: b.rating,
       address: b.full_address,
       wheelchair: b.wheelchair_accessible,
@@ -183,7 +190,7 @@ const ExploreListings = () => {
                               );
                             }}
                           />
-                          <span>{cat}</span>
+                          <span>{toTitleCase(cat)}</span>
                         </label>
                       );
                     })}
@@ -295,7 +302,7 @@ const ExploreListings = () => {
                             );
                           }}
                         />
-                        <span>{cat}</span>
+                        <span>{toTitleCase(cat)}</span>
                       </label>
                     );
                   })}
