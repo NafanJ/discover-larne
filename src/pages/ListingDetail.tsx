@@ -1,15 +1,55 @@
 import Navbar from "@/components/layout/Navbar";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
-import { listings } from "@/data/listings";
 import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/layout/Footer";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ListingDetail = () => {
   const { slug } = useParams();
-  const listing = listings.find((l) => l.slug === slug);
+  
+  const { data: listing, isLoading, error } = useQuery({
+    queryKey: ['listing', slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('businesses')
+        .select('*')
+        .eq('id', slug)
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!slug,
+  });
 
-  if (!listing) {
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="container py-10">
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <Skeleton className="h-8 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+            <Skeleton className="h-64 w-full" />
+            <div className="space-y-4">
+              <Skeleton className="h-6 w-1/4" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !listing) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
@@ -23,26 +63,33 @@ const ListingDetail = () => {
   }
 
   const metaTitle = `${listing.name} | Discover Larne`;
-  const metaDescription = `${listing.description}`.slice(0, 155);
-  const canonical = typeof window !== "undefined" ? window.location.href : `/listings/${listing.slug}`;
+  const metaDescription = `${listing.description || ''}`.slice(0, 155);
+  const canonical = typeof window !== "undefined" ? window.location.href : `/listings/${listing.id}`;
 
   const jsonLd: Record<string, any> = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: listing.name,
     url: canonical,
-    image: listing.images,
-    telephone: listing.contact?.phone,
-    sameAs: listing.contact?.website ? [listing.contact.website] : undefined,
+    image: listing.photo ? [listing.photo] : undefined,
+    telephone: listing.phone,
+    address: listing.full_address,
   };
 
-  if (listing.hours && listing.hours.length) {
-    jsonLd.openingHoursSpecification = listing.hours.map((h) => ({
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: h.day,
-      opens: h.closed ? undefined : h.open,
-      closes: h.closed ? undefined : h.close,
-    }));
+  if (listing.working_hours) {
+    try {
+      const hours = JSON.parse(listing.working_hours as string);
+      if (Array.isArray(hours)) {
+        jsonLd.openingHoursSpecification = hours.map((h: any) => ({
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: h.day,
+          opens: h.closed ? undefined : h.open,
+          closes: h.closed ? undefined : h.close,
+        }));
+      }
+    } catch (e) {
+      // Invalid JSON, skip hours
+    }
   }
 
   return (
@@ -63,74 +110,63 @@ const ListingDetail = () => {
             {typeof listing.rating === 'number' && (
               <span className="text-sm">Rating: {listing.rating.toFixed(1)}</span>
             )}
-            {listing.address && <span className="text-sm">• {listing.address}</span>}
+            {listing.full_address && <span className="text-sm">• {listing.full_address}</span>}
           </div>
         </header>
 
-        <section aria-label="Gallery" className="mb-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {listing.images.map((src, i) => (
-              <div key={i} className="overflow-hidden rounded-md">
-                <img
-                  src={src}
-                  alt={`${listing.name} image ${i + 1}`}
-                  loading="lazy"
-                  className="h-44 md:h-56 w-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </section>
+        {listing.photo && (
+          <section aria-label="Gallery" className="mb-8">
+            <div className="overflow-hidden rounded-md">
+              <img
+                src={listing.photo}
+                alt={`${listing.name} - ${listing.category} in Larne`}
+                loading="lazy"
+                className="h-64 md:h-96 w-full object-cover"
+              />
+            </div>
+          </section>
+        )}
 
         <section className="grid md:grid-cols-3 gap-8">
           <article className="md:col-span-2 space-y-4">
             <h2 className="text-xl font-semibold">About</h2>
-            <p className="text-muted-foreground">{listing.description}</p>
+            <p className="text-muted-foreground">{listing.description || 'No description available.'}</p>
           </article>
 
           <aside className="space-y-6">
             <div>
               <h2 className="text-xl font-semibold">Contact</h2>
               <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                {listing.contact?.phone && <li>Phone: <a className="underline underline-offset-4" href={`tel:${listing.contact.phone}`}>{listing.contact.phone}</a></li>}
-                {listing.contact?.email && <li>Email: <a className="underline underline-offset-4" href={`mailto:${listing.contact.email}`}>{listing.contact.email}</a></li>}
-                {listing.contact?.website && <li>Website: <a className="underline underline-offset-4" href={listing.contact.website} target="_blank" rel="noopener noreferrer">{listing.contact.website}</a></li>}
-                {listing.contact?.address && <li>Address: {listing.contact.address}</li>}
+                {listing.phone && <li>Phone: <a className="underline underline-offset-4" href={`tel:${listing.phone}`}>{listing.phone}</a></li>}
+                {listing.full_address && <li>Address: {listing.full_address}</li>}
               </ul>
             </div>
 
-            {listing.hours && (
-              <div>
-                <h2 className="text-xl font-semibold">Business hours</h2>
-                <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
-                  {listing.hours.map((h, i) => (
-                    <li key={i} className="flex justify-between">
-                      <span>{h.day}</span>
-                      <span>{h.closed ? 'Closed' : `${h.open} – ${h.close}`}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {listing.working_hours && (() => {
+              try {
+                const hours = JSON.parse(listing.working_hours as string);
+                if (Array.isArray(hours)) {
+                  return (
+                    <div>
+                      <h2 className="text-xl font-semibold">Business hours</h2>
+                      <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
+                        {hours.map((h: any, i: number) => (
+                          <li key={i} className="flex justify-between">
+                            <span>{h.day}</span>
+                            <span>{h.closed ? 'Closed' : `${h.open} – ${h.close}`}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                }
+              } catch (e) {
+                return null;
+              }
+            })()}
           </aside>
         </section>
 
-        {listing.reviews && (
-          <section className="mt-10">
-            <h2 className="text-xl font-semibold mb-3">Reviews</h2>
-            <div className="space-y-4">
-              {listing.reviews.map((r, i) => (
-                <div key={i} className="rounded-lg border p-4">
-                  <div className="flex items-center justify-between">
-                    <p className="font-medium">{r.author}</p>
-                    <p className="text-sm text-muted-foreground">{typeof r.rating === 'number' ? `${r.rating.toFixed(1)}/5` : ''}</p>
-                  </div>
-                  <p className="mt-1 text-muted-foreground">{r.comment}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
       </main>
       <Footer />
     </div>
