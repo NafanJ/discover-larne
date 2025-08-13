@@ -122,7 +122,7 @@ export const categoryGroups: CategoryGroup[] = [
     ]
   },
   {
-    id: 'other-services',
+    id: 'other-services',  
     name: 'Other Services',
     icon: '',
     categories: [
