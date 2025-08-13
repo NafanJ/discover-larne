@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Accessibility } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -366,6 +367,14 @@ const ExploreListings = () => {
                           <p>Rating: {l.rating.toFixed(1)}</p>
                         )}
                         {l.address && <p>{l.address}</p>}
+                        {l.wheelchair && (
+                          <div className="flex items-center gap-1 pt-1">
+                            <Badge variant="outline" className="gap-1">
+                              <Accessibility className="h-3.5 w-3.5" />
+                              Accessible
+                            </Badge>
+                          </div>
+                        )}
                       </div>
                       <div className="mt-4">
                         <Button asChild size="sm">
