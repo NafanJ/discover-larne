@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useMemo, useState, useCallback, memo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -62,6 +63,8 @@ OptimizedImage.displayName = "OptimizedImage";
 const ITEMS_PER_PAGE = 24;
 
 const ExploreListings = () => {
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
   const [currentPage, setCurrentPage] = useState(1);
   
   const { data: businesses = [], isLoading, error } = useQuery({
@@ -114,7 +117,18 @@ const ExploreListings = () => {
 
   const filtered = useMemo(() => {
     return listings.filter((l) => {
-      // Filter by category groups instead of individual categories
+      // Search functionality - check name, category, and address
+      if (searchQuery) {
+        const searchLower = searchQuery.toLowerCase();
+        const matchesSearch = 
+          l.name.toLowerCase().includes(searchLower) ||
+          l.category.toLowerCase().includes(searchLower) ||
+          (l.address && l.address.toLowerCase().includes(searchLower));
+        
+        if (!matchesSearch) return false;
+      }
+      
+      // Filter by category groups
       if (selectedCategoryGroups.length) {
         const categoryGroup = getGroupForCategory(l.category);
         if (!categoryGroup || !selectedCategoryGroups.includes(categoryGroup)) {
@@ -125,7 +139,7 @@ const ExploreListings = () => {
       if ((l.rating ?? 0) < minRating) return false;
       return true;
     });
-  }, [listings, selectedCategoryGroups, wheelchairOnly, minRating]);
+  }, [listings, searchQuery, selectedCategoryGroups, wheelchairOnly, minRating]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -204,9 +218,14 @@ const ExploreListings = () => {
         </Helmet>
 
         <header className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">{title}</h1>
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            {searchQuery ? `Search results for "${searchQuery}"` : title}
+          </h1>
           <p className="mt-2 text-muted-foreground max-w-2xl">
-            Use filters to narrow by category, accessibility, and rating. Sort to find the perfect spot.
+            {searchQuery 
+              ? `Found ${sorted.length} result${sorted.length === 1 ? '' : 's'} matching your search.`
+              : 'Use filters to narrow by category, accessibility, and rating. Sort to find the perfect spot.'
+            }
           </p>
         </header>
 

@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { categoryGroups } from "@/data/categoryGroups";
+import { useNavigate } from "react-router-dom";
 import portrait1 from "@/assets/larne/portrait-1.jpg";
 import portrait2 from "@/assets/larne/portrait-2.jpg";
 import portrait3 from "@/assets/larne/portrait-3.jpg";
@@ -54,16 +55,19 @@ const Tile = ({
       </span> : null}
   </div>;
 const Hero = () => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const [query, setQuery] = useState<string>("");
+  
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Search coming soon",
-      description: `Query: ${query}`
-    });
+    if (query.trim()) {
+      // Navigate to explore listings with search query
+      navigate(`/explore/listings?search=${encodeURIComponent(query.trim())}`);
+    } else {
+      // If no query, just go to explore listings
+      navigate('/explore/listings');
+    }
   };
   return <section className="container min-h-[28vh] md:min-h-[32vh] lg:min-h-[40vh] pt-2 md:pt-4 lg:pt-6 pb-0 overflow-y-hidden overflow-x-visible">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
