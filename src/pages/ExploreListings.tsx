@@ -1,7 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Helmet } from "react-helmet-async";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback, memo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Accessibility, Star, MapPin } from "lucide-react";
+import { Accessibility, Star, MapPin, ChevronDown } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -20,29 +20,63 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { ListingsGridSkeleton } from "@/components/ui/loading-skeleton";
+import { useOptimizedImage } from "@/hooks/use-optimized-image";
 
-// Utility function to convert text to title case
-const toTitleCase = (str: string) => {
-  return str.replace(/\w\S*/g, (txt) => 
-    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+// Utility function to convert text to title case (memoized)
+const toTitleCase = (() => {
+  const cache = new Map<string, string>();
+  return (str: string): string => {
+    if (cache.has(str)) return cache.get(str)!;
+    const result = str.replace(/\w\S*/g, (txt) => 
+      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+    cache.set(str, result);
+    return result;
+  };
+})();
+
+// Optimized image component
+const OptimizedImage = memo(({ src, alt, className }: { src: string; alt: string; className: string }) => {
+  const { imageSrc, isLoading } = useOptimizedImage({ src });
+  
+  return (
+    <div className="relative">
+      <img
+        src={imageSrc}
+        alt={alt}
+        loading="lazy"
+        className={className}
+        style={{ opacity: isLoading ? 0.7 : 1, transition: 'opacity 0.3s' }}
+      />
+      {isLoading && (
+        <div className="absolute inset-0 bg-muted animate-pulse" />
+      )}
+    </div>
   );
-};
+});
+
+OptimizedImage.displayName = "OptimizedImage";
+
+const ITEMS_PER_PAGE = 24;
 
 const ExploreListings = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  
   const { data: businesses = [], isLoading, error } = useQuery({
     queryKey: ['businesses'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('businesses')
-        .select('*')
+        .select('id, name, category, rating, full_address, wheelchair_accessible, photo')
         .order('name');
       
       if (error) throw error;
-      return data;
+      return data || [];
     },
   });
 
-  // Transform businesses data to match the expected listing format
+  // Transform businesses data to match the expected listing format (optimized)
   const listings = useMemo(() => {
     return businesses.map((b) => ({
       slug: b.id,
@@ -51,13 +85,7 @@ const ExploreListings = () => {
       rating: b.rating,
       address: b.full_address,
       wheelchair: b.wheelchair_accessible,
-      images: b.photo ? [b.photo] : ['/placeholder.svg'],
-      description: b.description || '',
-      contact: {
-        phone: b.phone,
-        website: b.site,
-        address: b.full_address,
-      },
+      image: b.photo || '/placeholder.svg',
     }));
   }, [businesses]);
 
@@ -81,7 +109,7 @@ const ExploreListings = () => {
       if ((l.rating ?? 0) < minRating) return false;
       return true;
     });
-  }, [selectedCategories, wheelchairOnly, minRating]);
+  }, [listings, selectedCategories, wheelchairOnly, minRating]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -101,12 +129,30 @@ const ExploreListings = () => {
     }
   }, [filtered, sortBy]);
 
-  const clearFilters = () => {
+  // Pagination logic
+  const totalItems = sorted.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
+  const currentItems = sorted.slice(startIndex, endIndex);
+
+  const clearFilters = useCallback(() => {
     setSelectedCategories([]);
     setWheelchairOnly(false);
     setMinRating(0);
     setSortBy("relevance");
-  };
+    setCurrentPage(1);
+  }, []);
+
+  // Reset page when filters change
+  const resetPage = useCallback(() => {
+    setCurrentPage(1);
+  }, []);
+
+  // Reset page when filters change
+  useMemo(() => {
+    setCurrentPage(1);
+  }, [selectedCategories, wheelchairOnly, minRating, sortBy]);
 
   const title = "Explore Listings in Larne";
   const description = "Browse all Larne listings with filters for category, rating, and accessibility.";
@@ -222,9 +268,9 @@ const ExploreListings = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Button variant="secondary" onClick={clearFilters}>Clear filters</Button>
-                  <div className="text-xs text-muted-foreground ml-auto">
-                    {sorted.length} result{sorted.length === 1 ? "" : "s"}
-                  </div>
+                   <div className="text-xs text-muted-foreground ml-auto">
+                     {totalItems} result{totalItems === 1 ? "" : "s"}
+                   </div>
                 </div>
                 <SheetClose asChild>
                   <Button className="w-full" aria-label="Show results">Show results</Button>
@@ -248,15 +294,33 @@ const ExploreListings = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="ml-auto text-xs text-muted-foreground">
-            {sorted.length} result{sorted.length === 1 ? "" : "s"}
-          </div>
+           <div className="ml-auto text-xs text-muted-foreground">
+             {totalItems} result{totalItems === 1 ? "" : "s"}
+           </div>
         </div>
 
         {isLoading && (
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Loading listings...</p>
-          </div>
+          <section className="grid md:grid-cols-4 gap-8">
+            <aside className="hidden md:block md:col-span-1">
+              <div className="rounded-lg border p-4 space-y-6">
+                <div className="space-y-3">
+                  <div className="h-4 bg-muted animate-pulse rounded" />
+                  <div className="h-10 bg-muted animate-pulse rounded" />
+                </div>
+                <div className="space-y-3">
+                  <div className="h-4 bg-muted animate-pulse rounded" />
+                  <div className="space-y-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <div key={i} className="h-4 bg-muted animate-pulse rounded" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </aside>
+            <div className="md:col-span-3">
+              <ListingsGridSkeleton count={12} />
+            </div>
+          </section>
         )}
 
         {error && (
@@ -339,72 +403,87 @@ const ExploreListings = () => {
                 <Button variant="secondary" onClick={clearFilters} aria-label="Clear filters">
                   Clear filters
                 </Button>
-                <div className="text-xs text-muted-foreground ml-auto">
-                  {sorted.length} result{sorted.length === 1 ? "" : "s"}
-                </div>
+                 <div className="text-xs text-muted-foreground ml-auto">
+                   {totalItems} result{totalItems === 1 ? "" : "s"}
+                 </div>
               </div>
             </div>
           </aside>
 
-          {/* Results */}
-          <div className="md:col-span-3">
-            {sorted.length === 0 ? (
-              <p className="text-muted-foreground">No listings match your filters.</p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sorted.map((l) => (
-                  <Link
-                    key={l.slug}
-                    to={`/listings/${l.slug}`}
-                    className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
-                    aria-label={`${l.name} details`}
-                  >
-                    <Card className="overflow-hidden group">
-                      <div className="aspect-[4/3] overflow-hidden">
-                        <img
-                          src={l.images[0] || '/placeholder.svg'}
-                          alt={`${l.name} listing photo`}
-                          loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                        />
-                      </div>
-                      <CardHeader className="space-y-1">
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-2 min-w-0">
-                            <CardTitle className="text-base truncate">{l.name}</CardTitle>
-                            {typeof l.rating === "number" && (
-                              <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
-                                <Star className="h-4 w-4 text-primary" />
-                                <span className="text-sm">{l.rating.toFixed(1)}</span>
-                              </div>
-                            )}
-                          </div>
-                          <Badge variant="secondary" className="shrink-0 text-xs">{l.category}</Badge>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="-mt-2">
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                          <div className="flex min-w-0 items-center gap-1">
-                            <MapPin className="h-4 w-4 opacity-70" />
-                            <span className="truncate">{l.address || 'No address available'}</span>
-                          </div>
-                          {l.wheelchair && (
-                            <>
-                              <span className="h-1 w-1 rounded-full bg-border" />
-                              <Badge variant="outline" className="gap-1">
-                                <Accessibility className="h-3.5 w-3.5" />
-                                Accessible
-                              </Badge>
-                            </>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+           {/* Results */}
+           <div className="md:col-span-3">
+             {totalItems === 0 ? (
+               <p className="text-muted-foreground">No listings match your filters.</p>
+             ) : (
+               <>
+                 <div className="flex items-center justify-between mb-4">
+                   <p className="text-sm text-muted-foreground">
+                     Showing {startIndex + 1}-{endIndex} of {totalItems} results
+                   </p>
+                   {totalPages > 1 && (
+                     <p className="text-sm text-muted-foreground">
+                       Page {currentPage} of {totalPages}
+                     </p>
+                   )}
+                 </div>
+                 
+                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                   {currentItems.map((l) => (
+                     <ListingCard key={l.slug} listing={l} />
+                   ))}
+                 </div>
+
+                 {totalPages > 1 && (
+                   <div className="flex items-center justify-center gap-2 mt-8">
+                     <Button
+                       variant="outline"
+                       disabled={currentPage === 1}
+                       onClick={() => setCurrentPage(currentPage - 1)}
+                       className="px-4"
+                     >
+                       Previous
+                     </Button>
+                     
+                     <div className="flex items-center gap-1">
+                       {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                         let pageNum;
+                         if (totalPages <= 5) {
+                           pageNum = i + 1;
+                         } else if (currentPage <= 3) {
+                           pageNum = i + 1;
+                         } else if (currentPage >= totalPages - 2) {
+                           pageNum = totalPages - 4 + i;
+                         } else {
+                           pageNum = currentPage - 2 + i;
+                         }
+                         
+                         return (
+                           <Button
+                             key={pageNum}
+                             variant={currentPage === pageNum ? "default" : "outline"}
+                             size="sm"
+                             onClick={() => setCurrentPage(pageNum)}
+                             className="w-10 h-10"
+                           >
+                             {pageNum}
+                           </Button>
+                         );
+                       })}
+                     </div>
+
+                     <Button
+                       variant="outline"
+                       disabled={currentPage === totalPages}
+                       onClick={() => setCurrentPage(currentPage + 1)}
+                       className="px-4"
+                     >
+                       Next
+                     </Button>
+                   </div>
+                 )}
+               </>
+             )}
+           </div>
         </section>
         )}
       </main>
@@ -412,5 +491,57 @@ const ExploreListings = () => {
     </div>
   );
 };
+
+// Memoized listing card component for better performance
+const ListingCard = memo(({ listing }: { listing: any }) => (
+  <Link
+    to={`/listings/${listing.slug}`}
+    className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+    aria-label={`${listing.name} details`}
+  >
+    <Card className="overflow-hidden group">
+      <div className="aspect-[4/3] overflow-hidden">
+        <OptimizedImage
+          src={listing.image}
+          alt={`${listing.name} listing photo`}
+          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+        />
+      </div>
+      <CardHeader className="space-y-1">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <CardTitle className="text-base truncate">{listing.name}</CardTitle>
+            {typeof listing.rating === "number" && (
+              <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
+                <Star className="h-4 w-4 text-primary" />
+                <span className="text-sm">{listing.rating.toFixed(1)}</span>
+              </div>
+            )}
+          </div>
+          <Badge variant="secondary" className="shrink-0 text-xs">{listing.category}</Badge>
+        </div>
+      </CardHeader>
+      <CardContent className="-mt-2">
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          <div className="flex min-w-0 items-center gap-1">
+            <MapPin className="h-4 w-4 opacity-70" />
+            <span className="truncate">{listing.address || 'No address available'}</span>
+          </div>
+          {listing.wheelchair && (
+            <>
+              <span className="h-1 w-1 rounded-full bg-border" />
+              <Badge variant="outline" className="gap-1">
+                <Accessibility className="h-3.5 w-3.5" />
+                Accessible
+              </Badge>
+            </>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  </Link>
+));
+
+ListingCard.displayName = "ListingCard";
 
 export default ExploreListings;
