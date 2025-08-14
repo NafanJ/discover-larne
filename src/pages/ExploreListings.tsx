@@ -457,7 +457,7 @@ const ListingCard = memo(({
 }: {
   listing: any;
 }) => <Link to={`/listings/${listing.slug}`} className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" aria-label={`${listing.name} details`}>
-    <Card className="overflow-hidden group w-full max-w-full sm:max-w-none max-w-[220px]">
+    <Card className="overflow-hidden group w-full max-w-full sm:max-w-none max-w-[280px]">
       <div className="aspect-[4/3] overflow-hidden">
         <OptimizedImage src={listing.image} alt={`${listing.name} listing photo`} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
       </div>
