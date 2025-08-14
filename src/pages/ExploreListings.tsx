@@ -410,7 +410,7 @@ const ExploreListings = () => {
                    {totalPages > 1}
                  </div>
                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 justify-items-center">
                     {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
                   </div>
 
