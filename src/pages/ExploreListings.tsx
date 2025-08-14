@@ -410,39 +410,39 @@ const ExploreListings = () => {
                    {totalPages > 1}
                  </div>
                  
-                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                   {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
-                 </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 justify-items-center place-items-center">
+                    {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
+                  </div>
 
-                 {totalPages > 1 && <div className="flex items-center justify-center gap-2 mt-8">
-                     <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} className="px-4">
-                       Previous
-                     </Button>
-                     
-                     <div className="flex items-center gap-1">
-                       {Array.from({
-                  length: Math.min(5, totalPages)
-                }, (_, i) => {
-                  let pageNum;
-                  if (totalPages <= 5) {
-                    pageNum = i + 1;
-                  } else if (currentPage <= 3) {
-                    pageNum = i + 1;
-                  } else if (currentPage >= totalPages - 2) {
-                    pageNum = totalPages - 4 + i;
-                  } else {
-                    pageNum = currentPage - 2 + i;
-                  }
-                  return <Button key={pageNum} variant={currentPage === pageNum ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(pageNum)} className="w-10 h-10">
+                  {totalPages > 1 && <div className="flex items-center justify-center gap-1 sm:gap-2 mt-8">
+                      <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} className="px-2 sm:px-4 text-sm">
+                        Previous
+                      </Button>
+                      
+                      <div className="flex items-center gap-0.5 sm:gap-1">
+                        {Array.from({
+                   length: Math.min(5, totalPages)
+                 }, (_, i) => {
+                   let pageNum;
+                   if (totalPages <= 5) {
+                     pageNum = i + 1;
+                   } else if (currentPage <= 3) {
+                     pageNum = i + 1;
+                   } else if (currentPage >= totalPages - 2) {
+                     pageNum = totalPages - 4 + i;
+                   } else {
+                     pageNum = currentPage - 2 + i;
+                   }
+                   return <Button key={pageNum} variant={currentPage === pageNum ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(pageNum)} className="w-8 h-8 sm:w-10 sm:h-10 text-sm">
                              {pageNum}
                            </Button>;
-                })}
-                     </div>
+                 })}
+                      </div>
 
-                     <Button variant="outline" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)} className="px-4">
-                       Next
-                     </Button>
-                   </div>}
+                      <Button variant="outline" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)} className="px-2 sm:px-4 text-sm">
+                        Next
+                      </Button>
+                    </div>}
                </>}
            </div>
         </section>}
@@ -457,31 +457,31 @@ const ListingCard = memo(({
 }: {
   listing: any;
 }) => <Link to={`/listings/${listing.slug}`} className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" aria-label={`${listing.name} details`}>
-    <Card className="overflow-hidden group">
+    <Card className="overflow-hidden group w-full max-w-full sm:max-w-none max-w-[220px]">
       <div className="aspect-[4/3] overflow-hidden">
         <OptimizedImage src={listing.image} alt={`${listing.name} listing photo`} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
       </div>
-      <CardHeader className="space-y-1">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 min-w-0">
-            <CardTitle className="text-base truncate">{listing.name}</CardTitle>
+      <CardHeader className="space-y-1 min-w-0">
+        <div className="flex items-center justify-between gap-3 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <CardTitle className="text-base truncate min-w-0">{listing.name}</CardTitle>
             {typeof listing.rating === "number" && <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
                 <Star className="h-4 w-4 text-primary" />
                 <span className="text-sm">{listing.rating.toFixed(1)}</span>
               </div>}
           </div>
-          <Badge variant="secondary" className="shrink-0 text-xs">{listing.category}</Badge>
+          <Badge variant="secondary" className="shrink-0 text-xs max-w-[80px] truncate">{listing.category}</Badge>
         </div>
       </CardHeader>
-      <CardContent className="-mt-2">
-        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-          <div className="flex min-w-0 items-center gap-1">
-            <MapPin className="h-4 w-4 opacity-70" />
-            <span className="truncate">{listing.address || 'No address available'}</span>
+      <CardContent className="-mt-2 min-w-0">
+        <div className="flex items-center gap-3 text-sm text-muted-foreground min-w-0">
+          <div className="flex min-w-0 items-center gap-1 flex-1">
+            <MapPin className="h-4 w-4 opacity-70 shrink-0" />
+            <span className="truncate min-w-0">{listing.address || 'No address available'}</span>
           </div>
           {listing.wheelchair && <>
-              <span className="h-1 w-1 rounded-full bg-border" />
-              <Badge variant="outline" className="gap-1">
+              <span className="h-1 w-1 rounded-full bg-border shrink-0" />
+              <Badge variant="outline" className="gap-1 shrink-0 text-xs">
                 <Accessibility className="h-3.5 w-3.5" />
                 Accessible
               </Badge>
