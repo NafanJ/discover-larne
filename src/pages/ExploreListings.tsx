@@ -410,9 +410,9 @@ const ExploreListings = () => {
                    {totalPages > 1}
                  </div>
                  
-                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 justify-items-center sm:justify-items-stretch">
-                   {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
-                 </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 justify-items-center place-items-center">
+                    {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
+                  </div>
 
                  {totalPages > 1 && <div className="flex items-center justify-center gap-2 mt-8">
                      <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} className="px-4">
