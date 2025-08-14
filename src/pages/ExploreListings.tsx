@@ -414,35 +414,35 @@ const ExploreListings = () => {
                     {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
                   </div>
 
-                 {totalPages > 1 && <div className="flex items-center justify-center gap-2 mt-8">
-                     <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} className="px-4">
-                       Previous
-                     </Button>
-                     
-                     <div className="flex items-center gap-1">
-                       {Array.from({
-                  length: Math.min(5, totalPages)
-                }, (_, i) => {
-                  let pageNum;
-                  if (totalPages <= 5) {
-                    pageNum = i + 1;
-                  } else if (currentPage <= 3) {
-                    pageNum = i + 1;
-                  } else if (currentPage >= totalPages - 2) {
-                    pageNum = totalPages - 4 + i;
-                  } else {
-                    pageNum = currentPage - 2 + i;
-                  }
-                  return <Button key={pageNum} variant={currentPage === pageNum ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(pageNum)} className="w-10 h-10">
+                  {totalPages > 1 && <div className="flex items-center justify-center gap-1 sm:gap-2 mt-8">
+                      <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} className="px-2 sm:px-4 text-sm">
+                        Previous
+                      </Button>
+                      
+                      <div className="flex items-center gap-0.5 sm:gap-1">
+                        {Array.from({
+                   length: Math.min(5, totalPages)
+                 }, (_, i) => {
+                   let pageNum;
+                   if (totalPages <= 5) {
+                     pageNum = i + 1;
+                   } else if (currentPage <= 3) {
+                     pageNum = i + 1;
+                   } else if (currentPage >= totalPages - 2) {
+                     pageNum = totalPages - 4 + i;
+                   } else {
+                     pageNum = currentPage - 2 + i;
+                   }
+                   return <Button key={pageNum} variant={currentPage === pageNum ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(pageNum)} className="w-8 h-8 sm:w-10 sm:h-10 text-sm">
                              {pageNum}
                            </Button>;
-                })}
-                     </div>
+                 })}
+                      </div>
 
-                     <Button variant="outline" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)} className="px-4">
-                       Next
-                     </Button>
-                   </div>}
+                      <Button variant="outline" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)} className="px-2 sm:px-4 text-sm">
+                        Next
+                      </Button>
+                    </div>}
                </>}
            </div>
         </section>}
