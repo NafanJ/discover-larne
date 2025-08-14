@@ -474,7 +474,7 @@ const ExploreListings = () => {
                    )}
                  </div>
                  
-                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 justify-items-center sm:justify-items-stretch">
                    {currentItems.map((l) => (
                      <ListingCard key={l.slug} listing={l} />
                    ))}
@@ -546,7 +546,7 @@ const ListingCard = memo(({ listing }: { listing: any }) => (
     className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
     aria-label={`${listing.name} details`}
   >
-    <Card className="overflow-hidden group w-full max-w-full">
+    <Card className="overflow-hidden group w-full max-w-full sm:max-w-none max-w-[220px]">
       <div className="aspect-[4/3] overflow-hidden">
         <OptimizedImage
           src={listing.image}
