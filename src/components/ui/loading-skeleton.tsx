@@ -4,7 +4,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 const ListingCardSkeleton = () => (
   <Card className="overflow-hidden">
     <div className="aspect-[4/3] overflow-hidden">
-      <Skeleton className="w-full h-full" />
+      <div className="relative">
+        <Skeleton className="w-full h-full" />
+        <div className="absolute inset-0 bg-muted animate-pulse" />
+      </div>
     </div>
     <CardHeader className="space-y-1">
       <div className="flex items-center justify-between gap-3">
