@@ -102,10 +102,15 @@ const ExploreListings = () => {
         groups.add(groupId);
       }
     });
-    return Array.from(groups).sort().map(groupId => ({
-      id: groupId,
-      info: getGroupInfo(groupId)!
-    }));
+    // Sort by the order in categoryGroups array instead of alphabetically
+    const groupsArray = Array.from(groups);
+    const orderedGroups = categoryGroups
+      .filter(group => groupsArray.includes(group.id))
+      .map(group => ({
+        id: group.id,
+        info: group
+      }));
+    return orderedGroups;
   }, [listings]);
 
   const [selectedCategoryGroups, setSelectedCategoryGroups] = useState<string[]>([]);
