@@ -410,9 +410,9 @@ const ExploreListings = () => {
                    {totalPages > 1}
                  </div>
                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 justify-items-center place-items-center">
-                    {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
-                  </div>
+                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+                     {currentItems.map(l => <ListingCard key={l.slug} listing={l} />)}
+                   </div>
 
                   {totalPages > 1 && <div className="flex items-center justify-center gap-1 sm:gap-2 mt-8">
                       <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} className="px-2 sm:px-4 text-sm">
@@ -457,7 +457,7 @@ const ListingCard = memo(({
 }: {
   listing: any;
 }) => <Link to={`/listings/${listing.slug}`} className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" aria-label={`${listing.name} details`}>
-    <Card className="overflow-hidden group w-full max-w-full sm:max-w-none max-w-[220px]">
+    <Card className="overflow-hidden group w-full h-full">
       <div className="aspect-[4/3] overflow-hidden">
         <OptimizedImage src={listing.image} alt={`${listing.name} listing photo`} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
       </div>
