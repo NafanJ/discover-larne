@@ -102,10 +102,17 @@ const ExploreListings = () => {
         groups.add(groupId);
       }
     });
-    // Sort by the order in categoryGroups array instead of alphabetically
+    // Sort alphabetically but keep "Other Services" at the bottom
     const groupsArray = Array.from(groups);
     const orderedGroups = categoryGroups
       .filter(group => groupsArray.includes(group.id))
+      .sort((a, b) => {
+        // Keep "Other Services" at the bottom
+        if (a.id === 'other-services') return 1;
+        if (b.id === 'other-services') return -1;
+        // Sort others alphabetically
+        return a.name.localeCompare(b.name);
+      })
       .map(group => ({
         id: group.id,
         info: group
