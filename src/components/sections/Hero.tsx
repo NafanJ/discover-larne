@@ -56,10 +56,11 @@ const Tile = ({
       </span> : null}
   </div>;
 const Hero = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const navigate = useNavigate();
   const [query, setQuery] = useState<string>("");
-  
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
@@ -73,7 +74,9 @@ const Hero = () => {
   return <section className="container min-h-[28vh] md:min-h-[32vh] lg:min-h-[40vh] pt-2 md:pt-4 lg:pt-6 pb-0 overflow-y-hidden overflow-x-visible">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
         <div className="space-y-4 md:space-y-6 animate-fade-in relative z-10 self-center mt-2 md:mt-0 lg:-mt-16">
-            <div className="flex gap-2 md:gap-3 flex-wrap" style={{ ["--stat-number" as any]: "213 88% 19%" }}>
+            <div className="flex gap-2 md:gap-3 flex-wrap" style={{
+          ["--stat-number" as any]: "213 88% 19%"
+        }}>
               <div className="bg-transparent border border-border rounded-full px-3 py-1.5 md:px-4 md:py-2 text-foreground">
                 <span className="font-semibold text-[hsl(var(--stat-number))]">18,853</span> People
               </div>
@@ -94,28 +97,9 @@ const Hero = () => {
 
           <form onSubmit={onSearch} className="animate-scale-in">
             <div className="flex items-center bg-card border rounded-2xl px-2 md:px-3 py-1 md:py-2 shadow-sm w-full">
-              <Button 
-                type="button" 
-                variant="ghost" 
-                size="sm" 
-                className="p-2 h-8 w-8 rounded-full hover:bg-muted shrink-0"
-                aria-label="Filter search"
-              >
-                <Filter className="h-4 w-4" />
-              </Button>
-              <Input 
-                value={query} 
-                onChange={e => setQuery(e.target.value)} 
-                placeholder="What are you looking for?" 
-                aria-label="What are you looking for?" 
-                className="flex-1 h-8 md:h-10 border-0 bg-transparent shadow-none px-2 md:px-3 text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0" 
-              />
-              <Button 
-                type="submit" 
-                variant="default" 
-                size="sm" 
-                className="rounded-xl h-8 md:h-10 px-4 md:px-6 text-sm md:text-base shrink-0 ml-2"
-              >
+              
+              <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="What are you looking for?" aria-label="What are you looking for?" className="flex-1 h-8 md:h-10 border-0 bg-transparent shadow-none px-2 md:px-3 text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0" />
+              <Button type="submit" variant="default" size="sm" className="rounded-xl h-8 md:h-10 px-4 md:px-6 text-sm md:text-base shrink-0 ml-2">
                 <Search className="h-4 w-4 mr-1 md:mr-2" />
                 <span className="hidden sm:inline">Search</span>
               </Button>
