@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { categoryGroups } from "@/data/categoryGroups";
 import { useNavigate } from "react-router-dom";
+import { Search, Filter } from "lucide-react";
 import portrait1 from "@/assets/larne/portrait-1.jpg";
 import portrait2 from "@/assets/larne/portrait-2.jpg";
 import portrait3 from "@/assets/larne/portrait-3.jpg";
@@ -71,33 +72,54 @@ const Hero = () => {
   };
   return <section className="container min-h-[28vh] md:min-h-[32vh] lg:min-h-[40vh] pt-2 md:pt-4 lg:pt-6 pb-0 overflow-y-hidden overflow-x-visible">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 xl:gap-5 items-center">
-        <div className="space-y-6 animate-fade-in relative z-10 self-center mt-4 md:mt-0 lg:-mt-16">
-            <div className="flex gap-3 flex-wrap" style={{ ["--stat-number" as any]: "213 88% 19%" }}>
-              <div className="bg-transparent border border-border rounded-full px-4 py-2 text-foreground">
+        <div className="space-y-4 md:space-y-6 animate-fade-in relative z-10 self-center mt-2 md:mt-0 lg:-mt-16">
+            <div className="flex gap-2 md:gap-3 flex-wrap" style={{ ["--stat-number" as any]: "213 88% 19%" }}>
+              <div className="bg-transparent border border-border rounded-full px-3 py-1.5 md:px-4 md:py-2 text-foreground">
                 <span className="font-semibold text-[hsl(var(--stat-number))]">18,853</span> People
               </div>
-              <div className="bg-transparent border border-border rounded-full px-4 py-2 text-foreground">
+              <div className="bg-transparent border border-border rounded-full px-3 py-1.5 md:px-4 md:py-2 text-foreground">
                 <span className="font-semibold text-[hsl(var(--stat-number))]">1000+</span> Stories
               </div>
             </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
             Discover Larne
           </h1>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#062c59]">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#062c59]">
             People & Places
           </h1>
-          <h5 className="text-1xl md:text-2xl lg:text-2xl font-bold leading-tight">
+          <h5 className="text-lg md:text-2xl lg:text-2xl font-bold leading-tight">
            on the Causeway Coastal Route
           </h5>
 
-          <form onSubmit={onSearch} className="space-y-2 md:space-y-3 animate-scale-in">
-            <div className="flex items-center bg-card border rounded-full px-2 md:px-3 py-0.5 md:py-1 shadow-sm">
-              <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="What are you looking for?" aria-label="What are you looking for?" className="flex-1 h-10 md:h-12 border-0 bg-transparent shadow-none px-2 md:px-3 text-xs sm:text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0" />
+          <form onSubmit={onSearch} className="animate-scale-in">
+            <div className="flex items-center bg-card border rounded-2xl px-2 md:px-3 py-1 md:py-2 shadow-sm w-full">
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                className="p-2 h-8 w-8 rounded-full hover:bg-muted shrink-0"
+                aria-label="Filter search"
+              >
+                <Filter className="h-4 w-4" />
+              </Button>
+              <Input 
+                value={query} 
+                onChange={e => setQuery(e.target.value)} 
+                placeholder="What are you looking for?" 
+                aria-label="What are you looking for?" 
+                className="flex-1 h-8 md:h-10 border-0 bg-transparent shadow-none px-2 md:px-3 text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0" 
+              />
+              <Button 
+                type="submit" 
+                variant="default" 
+                size="sm" 
+                className="rounded-xl h-8 md:h-10 px-4 md:px-6 text-sm md:text-base shrink-0 ml-2"
+              >
+                <Search className="h-4 w-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Search</span>
+              </Button>
             </div>
-            <Button type="submit" variant="brand" className="rounded-full h-10 md:h-12 px-5 md:px-6 text-sm md:text-base">
-              Search
-            </Button>
           </form>
         </div>
 
