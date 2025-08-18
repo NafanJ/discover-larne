@@ -108,7 +108,7 @@ const ListingDetail = () => {
         <header className="mb-6">
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">{listing.name}</h1>
           <div className="mt-2 flex items-center gap-3 text-muted-foreground">
-            <Badge variant="secondary">{listing.category}</Badge>
+            <Badge variant="secondary">{listing.category?.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}</Badge>
             {typeof listing.rating === 'number' && (
               <span className="text-sm">Rating: {listing.rating.toFixed(1)}</span>
             )}
