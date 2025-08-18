@@ -8,22 +8,31 @@ import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const HighlightSection = () => {
+  const featuredBusinessNames = [
+    'Olderfleet Rowing Club',
+    'The Black Arch', 
+    'Wear It Out',
+    'The Rinkha Ice Cream and Toys'
+  ];
+
   const { data: businesses = [], isLoading } = useQuery({
     queryKey: ['featured-businesses'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('businesses')
         .select('*')
-        .order('created_at', { ascending: false })
-        .limit(50); // Get more businesses to randomize from
+        .in('name', featuredBusinessNames)
+        .order('name');
       
       if (error) throw error;
       
-      // Shuffle and take 4 random businesses
-      const shuffled = data?.sort(() => Math.random() - 0.5) || [];
-      return shuffled.slice(0, 4);
+      // Sort by the desired order
+      const orderedBusinesses = featuredBusinessNames.map(name => 
+        data?.find(business => business.name === name)
+      ).filter(Boolean);
+      
+      return orderedBusinesses;
     },
-    staleTime: 1000 * 60 * 5, // Cache for 5 minutes, then refetch for new random selection
   });
 
   if (isLoading) {
