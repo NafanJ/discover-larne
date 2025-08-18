@@ -95,23 +95,21 @@ const HighlightSection = () => {
                   className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
                 />
               </div>
-              <CardHeader className="space-y-3 pb-4">
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="text-base sm:text-sm leading-tight font-medium line-clamp-2 flex-1 min-h-[2.5rem] sm:min-h-[2.25rem] overflow-wrap-anywhere">
-                      {business.name}
-                    </CardTitle>
-                    {business.category && (
-                      <Badge variant="secondary" className="shrink-0 text-xs mt-0.5">
-                        {business.category.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
-                      </Badge>
+              <CardHeader className="space-y-1">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <CardTitle className="text-base truncate">{business.name}</CardTitle>
+                    {typeof business.rating === 'number' && (
+                      <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
+                        <Star className="h-4 w-4 text-primary" />
+                        <span className="text-sm">{business.rating.toFixed(1)}</span>
+                      </div>
                     )}
                   </div>
-                  {typeof business.rating === 'number' && (
-                    <div className="flex items-center gap-1 text-muted-foreground">
-                      <Star className="h-4 w-4 text-primary" />
-                      <span className="text-sm">{business.rating.toFixed(1)}</span>
-                    </div>
+                  {business.category && (
+                    <Badge variant="secondary" className="shrink-0 text-xs">
+                      {business.category.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+                    </Badge>
                   )}
                 </div>
               </CardHeader>
