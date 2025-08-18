@@ -27,10 +27,10 @@ export const BusinessImagePlaceholders: React.FC<BusinessImagePlaceholdersProps>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Camera className="w-5 h-5" />
-            Upload Business Images
+            Upload Images for this Business
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Add professional images to showcase your business. All images should be high-quality and relevant to your business.
+            Help improve this listing by adding high-quality images that showcase this business.
           </p>
         </CardHeader>
         <CardContent className="space-y-8">

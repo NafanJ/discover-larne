@@ -8,12 +8,10 @@ import type { BusinessImage } from '@/hooks/use-business-images';
 
 interface BusinessImageSectionProps {
   businessId: string;
-  isOwner: boolean;
 }
 
 export const BusinessImageSection: React.FC<BusinessImageSectionProps> = ({
   businessId,
-  isOwner,
 }) => {
   const { data: images = [], isLoading } = useBusinessImagesQuery(businessId);
   const invalidateImages = useInvalidateBusinessImages();
@@ -35,10 +33,6 @@ export const BusinessImageSection: React.FC<BusinessImageSectionProps> = ({
     // We just need to invalidate the query to refetch
     setTimeout(() => invalidateImages(businessId), 100);
   };
-
-  if (!isOwner) {
-    return null; // Only show to business owners
-  }
 
   if (isLoading) {
     return (
