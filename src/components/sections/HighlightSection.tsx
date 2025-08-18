@@ -63,7 +63,7 @@ const HighlightSection = () => {
             <Card className="overflow-hidden group">
               <div className="aspect-[4/3] overflow-hidden">
                 <BusinessTileImage 
-                  businessId={slugify(item.name)} 
+                  businessId={item.name} 
                   fallbackSrc={item.img}
                   className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
                 />

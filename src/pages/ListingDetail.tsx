@@ -8,6 +8,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BusinessCoverImage, BusinessGallery } from "@/components/business/BusinessImageDisplay";
 import { BusinessImageSection } from "@/components/business/BusinessImageSection";
+import { BusinessImagePlaceholders } from "@/components/business/BusinessImagePlaceholders";
+import { Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const ListingDetail = () => {
@@ -177,11 +179,23 @@ const ListingDetail = () => {
         <BusinessGallery businessId={listing.id} className="mb-8" />
 
         {/* Image Management for Owners */}
-        {isOwner && (
+        {isOwner ? (
           <BusinessImageSection 
             businessId={listing.id} 
             isOwner={isOwner} 
           />
+        ) : (
+          // Show upload placeholders for demonstration (in real app, this would only show to owners)
+          <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center space-y-4">
+            <div className="flex flex-col items-center space-y-2">
+              <Upload className="w-12 h-12 text-muted-foreground/50" />
+              <h3 className="font-medium text-muted-foreground">Business Owner Image Upload</h3>
+              <p className="text-sm text-muted-foreground/75 max-w-md">
+                This section is only visible to business owners. If this is your business, 
+                please log in to upload and manage your images.
+              </p>
+            </div>
+          </div>
         )}
 
       </main>

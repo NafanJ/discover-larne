@@ -80,6 +80,7 @@ const ExploreListings = () => {
   // Transform businesses data to match the expected listing format (optimized)
   const listings = useMemo(() => {
     return businesses.map(b => ({
+      id: b.id,
       slug: b.id,
       name: b.name,
       category: toTitleCase(b.category || 'Business'),
@@ -461,7 +462,7 @@ const ListingCard = memo(({
     <Card className="overflow-hidden group w-full h-full">
       <div className="aspect-[4/3] overflow-hidden">
         <BusinessTileImage 
-          businessId={listing.slug} 
+          businessId={listing.id} 
           fallbackSrc={listing.image}
           className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" 
         />
