@@ -1,11 +1,8 @@
 import { Facebook, Instagram, Twitter, Youtube, MapPin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-
 const currentYear = new Date().getFullYear();
-
 const Footer = () => {
-  return (
-    <footer className="border-t bg-background">
+  return <footer className="border-t bg-background">
       <div className="container py-10">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
@@ -20,9 +17,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" aria-hidden="true" />
-                <a href="mailto:hello@discoverlarne.example" className="underline underline-offset-4">
-                  hello@discoverlarne.example
-                </a>
+                <a href="mailto:hello@discoverlarne.example" className="underline underline-offset-4">discoverlarne@gmail.com</a>
               </li>
             </ul>
           </div>
@@ -80,8 +75,6 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground">Built for fast, accessible browsing on any device.</p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
