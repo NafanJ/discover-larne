@@ -132,7 +132,11 @@ const ListingDetail = () => {
               <h2 className="text-xl font-semibold">Contact</h2>
               <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                 {listing.phone && <li>Phone: <a className="underline underline-offset-4" href={`tel:${listing.phone}`}>{listing.phone}</a></li>}
+                {listing.site && <li>Website: <a className="underline underline-offset-4" href={listing.site} target="_blank" rel="noopener noreferrer">{listing.site}</a></li>}
                 {listing.full_address && <li>Address: {listing.full_address}</li>}
+                {typeof listing.wheelchair_accessible === 'boolean' && (
+                  <li>Wheelchair accessible: {listing.wheelchair_accessible ? '✓ Yes' : '✗ No'}</li>
+                )}
               </ul>
             </div>
 
