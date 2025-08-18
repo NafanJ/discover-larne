@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Star, Accessibility } from "lucide-react";
 import { Link } from "react-router-dom";
+import { BusinessTileImage } from "@/components/business/BusinessImageDisplay";
 
 // Minimal, relevant business fields for highlights
 const items = [
@@ -61,10 +62,9 @@ const HighlightSection = () => {
           >
             <Card className="overflow-hidden group">
               <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={item.img}
-                  alt={`${item.name} – ${item.category} in Larne`}
-                  loading="lazy"
+                <BusinessTileImage 
+                  businessId={slugify(item.name)} 
+                  fallbackSrc={item.img}
                   className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
                 />
               </div>

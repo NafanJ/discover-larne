@@ -7,13 +7,48 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
   }
   public: {
     Tables: {
+      business_images: {
+        Row: {
+          business_id: string
+          created_at: string
+          id: string
+          sort_order: number
+          storage_path: string
+          type: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          id?: string
+          sort_order?: number
+          storage_path: string
+          type: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          id?: string
+          sort_order?: number
+          storage_path?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_images_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       businesses: {
         Row: {
           business_status: string | null
@@ -25,6 +60,7 @@ export type Database = {
           latitude: number | null
           longitude: number | null
           name: string
+          owner_id: string | null
           phone: string | null
           photo: string | null
           rating: number | null
@@ -43,6 +79,7 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           name: string
+          owner_id?: string | null
           phone?: string | null
           photo?: string | null
           rating?: number | null
@@ -61,6 +98,7 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           name?: string
+          owner_id?: string | null
           phone?: string | null
           photo?: string | null
           rating?: number | null

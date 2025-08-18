@@ -6,9 +6,22 @@ import Footer from "@/components/layout/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { BusinessCoverImage, BusinessGallery } from "@/components/business/BusinessImageDisplay";
+import { BusinessImageSection } from "@/components/business/BusinessImageSection";
+import { useEffect, useState } from "react";
 
 const ListingDetail = () => {
   const { slug } = useParams();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  // Get current user
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setCurrentUser(user);
+    };
+    getUser();
+  }, []);
   
   const { data: listing, isLoading, error } = useQuery({
     queryKey: ['listing', slug],
@@ -65,6 +78,7 @@ const ListingDetail = () => {
   const metaTitle = `${listing.name} | Discover Larne`;
   const metaDescription = `${listing.description || ''}`.slice(0, 155);
   const canonical = typeof window !== "undefined" ? window.location.href : `/listings/${listing.id}`;
+  const isOwner = currentUser && listing.owner_id === currentUser.id;
 
   const jsonLd: Record<string, any> = {
     '@context': 'https://schema.org',
@@ -114,18 +128,10 @@ const ListingDetail = () => {
           </div>
         </header>
 
-        {listing.photo && (
-          <section aria-label="Gallery" className="mb-8">
-            <div className="overflow-hidden rounded-md">
-              <img
-                src={listing.photo}
-                alt={`${listing.name} - ${listing.category} in Larne`}
-                loading="lazy"
-                className="h-64 md:h-96 w-full object-cover"
-              />
-            </div>
-          </section>
-        )}
+        {/* Cover and Profile Images */}
+        <section aria-label="Business Images" className="mb-8">
+          <BusinessCoverImage businessId={listing.id} />
+        </section>
 
         <section className="grid md:grid-cols-3 gap-8">
           <article className="md:col-span-2 space-y-4">
@@ -166,6 +172,17 @@ const ListingDetail = () => {
             })()}
           </aside>
         </section>
+
+        {/* Gallery */}
+        <BusinessGallery businessId={listing.id} className="mb-8" />
+
+        {/* Image Management for Owners */}
+        {isOwner && (
+          <BusinessImageSection 
+            businessId={listing.id} 
+            isOwner={isOwner} 
+          />
+        )}
 
       </main>
       <Footer />

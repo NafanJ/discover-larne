@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { ListingsGridSkeleton } from "@/components/ui/loading-skeleton";
 import { useOptimizedImage } from "@/hooks/use-optimized-image";
 import { categoryGroups, getGroupForCategory, getGroupInfo } from "@/data/categoryGroups";
+import { BusinessTileImage } from "@/components/business/BusinessImageDisplay";
 
 // Utility function to convert text to title case (memoized)
 const toTitleCase = (() => {
@@ -459,7 +460,11 @@ const ListingCard = memo(({
 }) => <Link to={`/listings/${listing.slug}`} className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" aria-label={`${listing.name} details`}>
     <Card className="overflow-hidden group w-full h-full">
       <div className="aspect-[4/3] overflow-hidden">
-        <OptimizedImage src={listing.image} alt={`${listing.name} listing photo`} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
+        <BusinessTileImage 
+          businessId={listing.slug} 
+          fallbackSrc={listing.image}
+          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" 
+        />
       </div>
       <CardHeader className="space-y-1 min-w-0">
         <div className="flex items-center justify-between gap-3 min-w-0">
