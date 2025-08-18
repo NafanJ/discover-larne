@@ -105,6 +105,11 @@ const ListingDetail = () => {
           <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         </Helmet>
 
+        {/* Cover and Profile Images */}
+        <section aria-label="Business Images" className="mb-6">
+          <BusinessCoverImage businessId={listing.id} />
+        </section>
+
         <header className="mb-6">
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">{listing.name}</h1>
           <div className="mt-2 flex items-center gap-3 text-muted-foreground">
@@ -115,11 +120,6 @@ const ListingDetail = () => {
             {listing.full_address && <span className="text-sm">• {listing.full_address}</span>}
           </div>
         </header>
-
-        {/* Cover and Profile Images */}
-        <section aria-label="Business Images" className="mb-8">
-          <BusinessCoverImage businessId={listing.id} />
-        </section>
 
         <section className="grid md:grid-cols-3 gap-8">
           <article className="md:col-span-2 space-y-4">
