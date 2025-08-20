@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BusinessCoverImage, BusinessGallery } from "@/components/business/BusinessImageDisplay";
 import { BusinessImagePlaceholders } from "@/components/business/BusinessImagePlaceholders";
+import { isBusinessOpenNow, getCurrentDayName, formatBusinessHours } from "@/utils/businessHours";
 
 const ListingDetail = () => {
   const { slug } = useParams();
@@ -67,6 +68,10 @@ const ListingDetail = () => {
   const metaTitle = `${listing.name} | Discover Larne`;
   const metaDescription = `${listing.description || ''}`.slice(0, 155);
   const canonical = typeof window !== "undefined" ? window.location.href : `/listings/${listing.id}`;
+  
+  const isOpen = isBusinessOpenNow(listing.working_hours);
+  const currentDay = getCurrentDayName();
+  const businessHours = formatBusinessHours(listing.working_hours);
 
   const jsonLd: Record<string, any> = {
     '@context': 'https://schema.org',
@@ -140,28 +145,39 @@ const ListingDetail = () => {
               </ul>
             </div>
 
-            {listing.working_hours && (() => {
-              try {
-                const hours = JSON.parse(listing.working_hours as string);
-                if (Array.isArray(hours)) {
-                  return (
-                    <div>
-                      <h2 className="text-xl font-semibold">Business hours</h2>
-                      <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
-                        {hours.map((h: any, i: number) => (
-                          <li key={i} className="flex justify-between">
-                            <span>{h.day}</span>
-                            <span>{h.closed ? 'Closed' : `${h.open} – ${h.close}`}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                }
-              } catch (e) {
-                return null;
-              }
-            })()}
+            {businessHours && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <h2 className="text-xl font-semibold">Business hours</h2>
+                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    isOpen 
+                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                      : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                  }`}>
+                    {isOpen ? 'Open now' : 'Closed'}
+                  </div>
+                </div>
+                <ul className="space-y-2 text-sm">
+                  {businessHours.map((h: any, i: number) => (
+                    <li 
+                      key={i} 
+                      className={`flex justify-between p-2 rounded ${
+                        h.day === currentDay 
+                          ? 'bg-muted/50 font-medium' 
+                          : ''
+                      }`}
+                    >
+                      <span className={h.day === currentDay ? 'text-foreground' : 'text-muted-foreground'}>
+                        {h.day}
+                      </span>
+                      <span className={h.day === currentDay ? 'text-foreground' : 'text-muted-foreground'}>
+                        {h.closed ? 'Closed' : `${h.open} – ${h.close}`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </aside>
         </section>
 
