@@ -145,10 +145,10 @@ const ListingDetail = () => {
               </ul>
             </div>
 
-            {businessHours && (
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <h2 className="text-xl font-semibold">Business hours</h2>
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <h2 className="text-xl font-semibold">Business hours</h2>
+                {businessHours && (
                   <div className={`px-2 py-1 rounded-full text-xs font-medium ${
                     isOpen 
                       ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
@@ -156,7 +156,9 @@ const ListingDetail = () => {
                   }`}>
                     {isOpen ? 'Open now' : 'Closed'}
                   </div>
-                </div>
+                )}
+              </div>
+              {businessHours ? (
                 <ul className="space-y-2 text-sm">
                   {businessHours.map((h: any, i: number) => (
                     <li 
@@ -176,8 +178,10 @@ const ListingDetail = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
-            )}
+              ) : (
+                <p className="text-sm text-muted-foreground">Business hours not available</p>
+              )}
+            </div>
           </aside>
         </section>
 
