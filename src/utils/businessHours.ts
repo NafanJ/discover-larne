@@ -9,22 +9,49 @@ const dayNames = [
   'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 ];
 
+const dayAbbreviations: { [key: string]: string } = {
+  'Su': 'Sunday',
+  'Mo': 'Monday', 
+  'Tu': 'Tuesday',
+  'We': 'Wednesday',
+  'Th': 'Thursday',
+  'Fr': 'Friday',
+  'Sa': 'Saturday'
+};
+
+const parseBusinessHoursString = (hoursArray: string[]): BusinessHour[] => {
+  return hoursArray.map(hourString => {
+    const parts = hourString.split(' ');
+    const dayAbbr = parts[0];
+    const timeInfo = parts[1];
+    
+    const day = dayAbbreviations[dayAbbr] || dayAbbr;
+    
+    if (timeInfo === 'Closed') {
+      return { day, closed: true };
+    } else {
+      const [open, close] = timeInfo.split('-');
+      return { day, closed: false, open, close };
+    }
+  });
+};
+
 export const isBusinessOpenNow = (workingHours: string | null | any): boolean => {
   if (!workingHours) return false;
   
   try {
-    let hours: BusinessHour[];
+    let hoursArray: string[];
     
     // Handle different data types from database
     if (Array.isArray(workingHours)) {
-      hours = workingHours;
+      hoursArray = workingHours;
     } else if (typeof workingHours === 'string') {
-      hours = JSON.parse(workingHours);
-    } else if (typeof workingHours === 'object') {
-      hours = workingHours;
+      hoursArray = JSON.parse(workingHours);
     } else {
       return false;
     }
+    
+    const hours = parseBusinessHoursString(hoursArray);
     const now = new Date();
     const currentDay = dayNames[now.getDay()];
     const currentTime = now.getHours() * 60 + now.getMinutes(); // minutes since midnight
@@ -59,15 +86,18 @@ export const formatBusinessHours = (workingHours: string | null | any): Business
   if (!workingHours) return null;
   
   try {
+    let hoursArray: string[];
+    
     // Handle different data types from database
     if (Array.isArray(workingHours)) {
-      return workingHours;
+      hoursArray = workingHours;
     } else if (typeof workingHours === 'string') {
-      return JSON.parse(workingHours);
-    } else if (typeof workingHours === 'object') {
-      return workingHours;
+      hoursArray = JSON.parse(workingHours);
+    } else {
+      return null;
     }
-    return null;
+    
+    return parseBusinessHoursString(hoursArray);
   } catch (e) {
     return null;
   }
