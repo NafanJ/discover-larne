@@ -110,7 +110,7 @@ const ListingDetail = () => {
         </Helmet>
 
         {/* Hero Section */}
-        <HeroSection business={listing} />
+        <HeroSection businessId={listing.id} business={listing} />
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
