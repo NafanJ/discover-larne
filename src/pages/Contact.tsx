@@ -10,33 +10,34 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
 import Footer from "@/components/layout/Footer";
-
-
 const ContactSchema = z.object({
   name: z.string().min(2, "Please enter your full name"),
   email: z.string().email("Please enter a valid email"),
-  message: z.string().min(10, "Please include at least 10 characters"),
+  message: z.string().min(10, "Please include at least 10 characters")
 });
-
 type ContactValues = z.infer<typeof ContactSchema>;
-
 const siteUrl = typeof window !== "undefined" ? window.location.origin : "";
-
 const Contact = () => {
   const form = useForm<ContactValues>({
     resolver: zodResolver(ContactSchema),
-    defaultValues: { name: "", email: "", message: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      message: ""
+    }
   });
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const onSubmit = (values: ContactValues) => {
     // No backend yet — acknowledge and reset
-    toast({ title: "Message sent", description: "Thanks for reaching out. We’ll reply soon." });
+    toast({
+      title: "Message sent",
+      description: "Thanks for reaching out. We’ll reply soon."
+    });
     form.reset();
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container py-10">
         <Helmet>
@@ -45,26 +46,21 @@ const Contact = () => {
           <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : '/contact'} />
           <script type="application/ld+json">{JSON.stringify({
             "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "ContactPage",
-                name: "Contact Discover Larne",
-                url: `${siteUrl}/contact`
-              },
-              {
-                "@type": "Organization",
-                name: "Discover Larne",
-                url: siteUrl,
-                contactPoint: [
-                  {
-                    "@type": "ContactPoint",
-                    contactType: "customer support",
-                    email: "hello@discoverlarne.example",
-                    telephone: "+44 0000 000000"
-                  }
-                ]
-              }
-            ]
+            "@graph": [{
+              "@type": "ContactPage",
+              name: "Contact Discover Larne",
+              url: `${siteUrl}/contact`
+            }, {
+              "@type": "Organization",
+              name: "Discover Larne",
+              url: siteUrl,
+              contactPoint: [{
+                "@type": "ContactPoint",
+                contactType: "customer support",
+                email: "hello@discoverlarne.example",
+                telephone: "+44 0000 000000"
+              }]
+            }]
           })}</script>
         </Helmet>
 
@@ -77,47 +73,35 @@ const Contact = () => {
           <article className="md:col-span-2 p-6 rounded-xl border bg-card">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="name" render={({
+                field
+              }) => <FormItem>
                       <FormLabel>Your name</FormLabel>
                       <FormControl>
                         <Input placeholder="Jane Doe" aria-label="Your name" {...field} />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="email" render={({
+                field
+              }) => <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input type="email" placeholder="you@example.com" aria-label="Your email" {...field} />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="message" render={({
+                field
+              }) => <FormItem>
                       <FormLabel>Message</FormLabel>
                       <FormControl>
                         <Textarea rows={6} placeholder="How can we help?" aria-label="Your message" {...field} />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
                 <Button type="submit" variant="brand" className="justify-self-start">Send message</Button>
               </form>
@@ -130,7 +114,7 @@ const Contact = () => {
                 <Mail className="h-5 w-5 text-foreground/80" aria-hidden="true" />
                 <div>
                   <p className="text-sm font-medium">Email</p>
-                  <a href="mailto:hello@discoverlarne.example" className="text-sm text-muted-foreground underline underline-offset-2">hello@discoverlarne.example</a>
+                  <a href="mailto:hello@discoverlarne.example" className="text-sm text-muted-foreground underline underline-offset-2">discoverlarne@gmail.com</a>
                 </div>
               </div>
               <div className="mt-4 flex items-start gap-3">
@@ -152,9 +136,6 @@ const Contact = () => {
         </section>
       </main>
       <Footer />
-    </div>
-
-  );
+    </div>;
 };
-
 export default Contact;
