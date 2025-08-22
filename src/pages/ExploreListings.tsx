@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Accessibility, Star, MapPin, ChevronDown } from "lucide-react";
+import { Accessibility, Star, MapPin, ChevronDown, Clock } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import { ListingsGridSkeleton } from "@/components/ui/loading-skeleton";
 import { useOptimizedImage } from "@/hooks/use-optimized-image";
 import { categoryGroups, getGroupForCategory, getGroupInfo } from "@/data/categoryGroups";
 import { BusinessTileImage } from "@/components/business/BusinessImageDisplay";
+import { isBusinessOpenNow } from "@/utils/businessHours";
 
 // Utility function to convert text to title case (memoized)
 const toTitleCase = (() => {
@@ -71,7 +72,7 @@ const ExploreListings = () => {
       const {
         data,
         error
-      } = await supabase.from('businesses').select('id, name, category, rating, full_address, wheelchair_accessible, photo').order('name');
+      } = await supabase.from('businesses').select('id, name, category, rating, full_address, wheelchair_accessible, photo, working_hours').order('name');
       if (error) throw error;
       return data || [];
     }
@@ -87,7 +88,8 @@ const ExploreListings = () => {
       rating: b.rating,
       address: b.full_address,
       wheelchair: b.wheelchair_accessible,
-      image: b.photo || '/placeholder.svg'
+      image: b.photo || '/placeholder.svg',
+      working_hours: b.working_hours
     }));
   }, [businesses]);
 
@@ -116,6 +118,7 @@ const ExploreListings = () => {
   }, [listings]);
   const [selectedCategoryGroups, setSelectedCategoryGroups] = useState<string[]>([]);
   const [wheelchairOnly, setWheelchairOnly] = useState(false);
+  const [openNowOnly, setOpenNowOnly] = useState(false);
   const [minRating, setMinRating] = useState<number>(0);
   const [sortBy, setSortBy] = useState<"relevance" | "rating_desc" | "rating_asc" | "name_asc" | "name_desc" | "category">("relevance");
   const filtered = useMemo(() => {
@@ -135,10 +138,11 @@ const ExploreListings = () => {
         }
       }
       if (wheelchairOnly && !l.wheelchair) return false;
+      if (openNowOnly && !isBusinessOpenNow(l.working_hours)) return false;
       if ((l.rating ?? 0) < minRating) return false;
       return true;
     });
-  }, [listings, searchQuery, selectedCategoryGroups, wheelchairOnly, minRating]);
+  }, [listings, searchQuery, selectedCategoryGroups, wheelchairOnly, openNowOnly, minRating]);
   const sorted = useMemo(() => {
     const arr = [...filtered];
     switch (sortBy) {
@@ -167,6 +171,7 @@ const ExploreListings = () => {
   const clearFilters = useCallback(() => {
     setSelectedCategoryGroups([]);
     setWheelchairOnly(false);
+    setOpenNowOnly(false);
     setMinRating(0);
     setSortBy("relevance");
     setCurrentPage(1);
@@ -180,7 +185,7 @@ const ExploreListings = () => {
   // Reset page when filters change
   useMemo(() => {
     setCurrentPage(1);
-  }, [selectedCategoryGroups, wheelchairOnly, minRating, sortBy]);
+  }, [selectedCategoryGroups, wheelchairOnly, openNowOnly, minRating, sortBy]);
   const title = "Explore Listings in Larne";
   const description = "Browse all Larne listings with filters for category, rating, and accessibility.";
   const canonical = typeof window !== "undefined" ? `${window.location.origin}/explore/listings` : "/explore/listings";
@@ -264,10 +269,16 @@ const ExploreListings = () => {
                   </div>
                 </div>
                 <div>
-                  <Label className="text-sm">Accessibility</Label>
+                  <Label className="text-sm">Hours & Accessibility</Label>
                   <div className="mt-3 space-y-2">
                     <label className="flex items-center gap-2 text-sm">
+                      <Checkbox checked={openNowOnly} onCheckedChange={v => setOpenNowOnly(!!v)} />
+                      <Clock className="h-4 w-4 text-emerald-600" />
+                      <span>Open now</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm">
                       <Checkbox checked={wheelchairOnly} onCheckedChange={v => setWheelchairOnly(!!v)} />
+                      <Accessibility className="h-4 w-4 text-blue-600" />
                       <span>Wheelchair accessible only</span>
                     </label>
                   </div>
@@ -375,10 +386,16 @@ const ExploreListings = () => {
               </div>
 
               <div>
-                <Label className="text-sm">Accessibility</Label>
+                <Label className="text-sm">Hours & Accessibility</Label>
                 <div className="mt-3 space-y-2">
                   <label className="flex items-center gap-2 text-sm">
+                    <Checkbox checked={openNowOnly} onCheckedChange={v => setOpenNowOnly(!!v)} />
+                    <Clock className="h-4 w-4 text-emerald-600" />
+                    <span>Open now</span>
+                  </label>
+                  <label className="flex items-center gap-2 text-sm">
                     <Checkbox checked={wheelchairOnly} onCheckedChange={v => setWheelchairOnly(!!v)} />
+                    <Accessibility className="h-4 w-4 text-blue-600" />
                     <span>Wheelchair accessible only</span>
                   </label>
                 </div>
