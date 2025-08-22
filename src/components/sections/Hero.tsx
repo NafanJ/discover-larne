@@ -42,18 +42,13 @@ const images = [{
 const Tile = ({
   src,
   alt,
-  label,
   className = ""
 }: {
   src: string;
   alt: string;
-  label?: string;
   className?: string;
 }) => <div className={`relative overflow-hidden rounded-xl transition-transform duration-200 ${className}`}>
     <img src={src} alt={`${alt} – Discover Larne`} loading="lazy" className="block w-full h-full object-cover transition-transform duration-200 hover:scale-105" />
-    {label ? <span className="absolute bottom-2 left-2 rounded-full bg-background/80 text-foreground text-xs px-2 py-1 shadow-sm border">
-        {label}
-      </span> : null}
   </div>;
 const Hero = () => {
   const {
@@ -113,7 +108,7 @@ const Hero = () => {
               {/* Column 1 */}
               <div className="flex flex-col gap-3 md:gap-4">
                 <Tile src={portrait1} alt="Local resident portrait" className="h-36" />
-                <Tile src={place1} alt="Causeway coastal cliffs" className="h-[10.5rem]" label="The Black Arch" />
+                <Tile src={place1} alt="Causeway coastal cliffs" className="h-[10.5rem]" />
                 <Tile src={portrait2} alt="Fisherman portrait" className="h-36" />
                 <Tile src={place3} alt="Historic stone building" className="h-[10.5rem]" />
                 <Tile src={portrait3} alt="Café owner portrait" className="h-36" />
@@ -121,7 +116,7 @@ const Hero = () => {
               {/* Column 2 */}
               <div className="flex flex-col gap-3 md:gap-4 mt-4">
                 <Tile src={portrait4} alt="Artisan portrait" className="h-[10.5rem]" />
-                <Tile src={place2} alt="Larne harbour scene" className="h-36" label="Chaine Memorial Tower" />
+                <Tile src={place2} alt="Larne harbour scene" className="h-36" />
                 <Tile src={portrait5} alt="Coastal hiker portrait" className="h-[10.5rem]" />
                 <Tile src={portrait1} alt="Local resident portrait" className="h-36" />
                 <Tile src={place1} alt="Causeway coastal cliffs" className="h-[10.5rem]" />
