@@ -423,9 +423,17 @@ const ExploreListings = () => {
            <div className="md:col-span-3">
              {totalItems === 0 ? <p className="text-muted-foreground">No listings match your filters.</p> : <>
                  <div className="flex items-center justify-between mb-4">
-                   <p className="text-sm text-muted-foreground">
-                     Showing {startIndex + 1}-{endIndex} of {totalItems} results
-                   </p>
+                   <div className="space-y-1">
+                     <p className="text-sm text-muted-foreground">
+                       Showing {startIndex + 1}-{endIndex} of {totalItems} results
+                     </p>
+                     {openNowOnly && (
+                       <div className="flex items-center gap-1">
+                         <Clock className="h-3 w-3 text-emerald-600" />
+                         <span className="text-xs text-emerald-600 font-medium">Showing only businesses open now</span>
+                       </div>
+                     )}
+                   </div>
                    {totalPages > 1}
                  </div>
                  
