@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { useBusinessImagesQuery, useInvalidateBusinessImages } from '@/hooks/use-business-images-query';
+import { useBusinessImages } from '@/hooks/use-business-images';
 import { GalleryUploader } from '@/components/business/GalleryUploader';
 import type { BusinessImage } from '@/hooks/use-business-images';
 
@@ -16,6 +17,7 @@ export const ModernGallery = ({ businessId }: ModernGalleryProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { data: images = [] } = useBusinessImagesQuery(businessId);
   const invalidateImages = useInvalidateBusinessImages();
+  const { getImageUrl } = useBusinessImages();
   
   // Filter gallery images
   const galleryImages = images.filter(img => img.type === 'gallery');
@@ -76,7 +78,7 @@ export const ModernGallery = ({ businessId }: ModernGalleryProps) => {
                 }`}
               >
                 <img
-                  src={image.storage_path}
+                  src={getImageUrl(image.storage_path)}
                   alt={`Gallery image ${index + 1}`}
                   className={`w-full object-cover transition-transform duration-200 group-hover:scale-105 ${
                     index === 0 ? 'h-64 md:h-80' : 'h-32 md:h-40'
@@ -138,7 +140,7 @@ export const ModernGallery = ({ businessId }: ModernGalleryProps) => {
 
             {/* Main Image */}
             <img
-              src={galleryImages[currentImageIndex]?.storage_path}
+              src={getImageUrl(galleryImages[currentImageIndex]?.storage_path)}
               alt={`Gallery image ${currentImageIndex + 1}`}
               className="w-full max-h-[80vh] object-contain"
             />

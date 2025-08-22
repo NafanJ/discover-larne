@@ -2,6 +2,7 @@ import { Phone, Globe, Navigation, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useBusinessImagesByType } from '@/hooks/use-business-images-query';
+import { useBusinessImages } from '@/hooks/use-business-images';
 
 interface HeroSectionProps {
   businessId: string;
@@ -18,6 +19,7 @@ interface HeroSectionProps {
 export const HeroSection = ({ businessId, business }: HeroSectionProps) => {
   const { data: coverImages = [] } = useBusinessImagesByType(businessId, 'cover');
   const { data: profileImages = [] } = useBusinessImagesByType(businessId, 'profile');
+  const { getImageUrl } = useBusinessImages();
   const handleCall = () => {
     if (business.phone) {
       window.open(`tel:${business.phone}`, '_self');
@@ -37,9 +39,9 @@ export const HeroSection = ({ businessId, business }: HeroSectionProps) => {
     }
   };
 
-  // Get cover and profile images
-  const coverImage = coverImages[0]?.storage_path;
-  const profileImage = profileImages[0]?.storage_path;
+  // Get cover and profile images with proper URLs
+  const coverImage = coverImages[0]?.storage_path ? getImageUrl(coverImages[0].storage_path) : null;
+  const profileImage = profileImages[0]?.storage_path ? getImageUrl(profileImages[0].storage_path) : null;
 
   // Generate mock review count for demo
   const reviewCount = Math.floor(Math.random() * 500) + 50;
