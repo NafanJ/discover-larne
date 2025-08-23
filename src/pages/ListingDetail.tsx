@@ -101,7 +101,7 @@ const ListingDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container py-10 space-y-8">
+      <main className="container py-4 md:py-10 space-y-6 md:space-y-8">
         <Helmet>
           <title>{metaTitle}</title>
           <meta name="description" content={metaDescription} />
@@ -113,9 +113,9 @@ const ListingDetail = () => {
         <HeroSection businessId={listing.id} business={listing} />
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Left Column - Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 lg:space-y-8">
             {/* About Section */}
             <AboutSection business={listing} />
             
@@ -127,7 +127,7 @@ const ListingDetail = () => {
           </div>
 
           {/* Right Column - Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             {/* Contact Card */}
             <ContactCard business={listing} />
             
