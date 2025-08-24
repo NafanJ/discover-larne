@@ -137,7 +137,7 @@ const ListingDetail = () => {
         </div>
 
         {/* Call to Action Section */}
-        <CTASection />
+        <CTASection businessOwnerId={listing.owner_id} />
       </main>
       <Footer />
     </div>

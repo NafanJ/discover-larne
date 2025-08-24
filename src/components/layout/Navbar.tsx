@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { UserMenu } from "@/components/layout/UserMenu";
 
 const Navbar = () => {
   return (
@@ -38,6 +39,10 @@ const Navbar = () => {
 
             <Link to="/about" className="hover-scale story-link">About</Link>
             <Link to="/contact" className="hover-scale story-link">Contact</Link>
+          </div>
+
+          <div className="hidden md:flex items-center">
+            <UserMenu />
           </div>
 
           {/* Mobile menu */}
