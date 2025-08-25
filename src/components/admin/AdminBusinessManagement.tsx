@@ -64,13 +64,10 @@ export const AdminBusinessManagement = () => {
           created_at,
           latitude,
           longitude,
-          working_hours,
-          profiles:owner_id (
-            full_name,
-            email
-          )
+          working_hours
         `)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
       if (searchTerm) {
         query = query.ilike('name', `%${searchTerm}%`);
@@ -84,15 +81,25 @@ export const AdminBusinessManagement = () => {
         query = query.eq('business_status', statusFilter);
       }
 
-      const from = (currentPage - 1) * itemsPerPage;
-      const to = from + itemsPerPage - 1;
-      query = query.range(from, to);
-
-      const { data, error, count } = await query;
+      const { data: businessesData, error } = await query;
       if (error) throw error;
 
+      // Get owner profiles separately
+      const ownerIds = businessesData?.filter(b => b.owner_id).map(b => b.owner_id) || [];
+      let profiles = [];
+      
+      if (ownerIds.length > 0) {
+        const { data: profilesData, error: profilesError } = await supabase
+          .from('profiles')
+          .select('id, full_name, email')
+          .in('id', ownerIds);
+        
+        if (profilesError) throw profilesError;
+        profiles = profilesData || [];
+      }
+
       // Transform the data to match our Business type
-      const businesses: Business[] = (data || []).map((item: any) => ({
+      const businesses: Business[] = (businessesData || []).map((item: any) => ({
         id: item.id,
         name: item.name,
         category: item.category,
@@ -108,8 +115,13 @@ export const AdminBusinessManagement = () => {
         latitude: item.latitude,
         longitude: item.longitude,
         working_hours: item.working_hours,
-        profiles: item.profiles || null
+        profiles: item.owner_id ? profiles.find(p => p.id === item.owner_id) || null : null
       }));
+
+      // Get total count for pagination
+      const { count } = await supabase
+        .from('businesses')
+        .select('id', { count: 'exact', head: true });
 
       return {
         businesses,

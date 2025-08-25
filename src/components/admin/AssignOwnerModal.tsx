@@ -34,24 +34,33 @@ export const AssignOwnerModal = ({
   const { data: users } = useQuery({
     queryKey: ['admin-users'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
-        .select(`
-          id,
-          full_name,
-          email,
-          user_roles!inner(role)
-        `)
-        .in('user_roles.role', ['visitor', 'business_owner']);
+        .select('id, full_name, email');
 
-      if (error) throw error;
+      if (profilesError) throw profilesError;
 
-      return data.map((user: any) => ({
-        id: user.id,
-        full_name: user.full_name,
-        email: user.email,
-        role: user.user_roles[0]?.role || 'visitor'
-      })) as User[];
+      const { data: rolesData, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id, role')
+        .in('role', ['visitor', 'business_owner']);
+
+      if (rolesError) throw rolesError;
+
+      // Combine the data
+      const usersWithRoles = (profilesData || [])
+        .map(profile => {
+          const userRole = (rolesData || []).find(r => r.user_id === profile.id);
+          return {
+            id: profile.id,
+            full_name: profile.full_name,
+            email: profile.email,
+            role: userRole?.role || 'visitor'
+          };
+        })
+        .filter(user => ['visitor', 'business_owner'].includes(user.role));
+
+      return usersWithRoles as User[];
     },
     enabled: isOpen,
   });

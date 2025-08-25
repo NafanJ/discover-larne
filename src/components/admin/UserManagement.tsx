@@ -32,13 +32,7 @@ export const UserManagement = () => {
     queryFn: async () => {
       let query = supabase
         .from('profiles')
-        .select(`
-          id,
-          full_name,
-          email,
-          created_at,
-          user_roles!inner(role)
-        `)
+        .select('id, full_name, email, created_at')
         .order('created_at', { ascending: false })
         .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
 
@@ -46,20 +40,49 @@ export const UserManagement = () => {
         query = query.or(`full_name.ilike.%${searchTerm}%,email.ilike.%${searchTerm}%`);
       }
 
-      if (roleFilter && roleFilter !== 'all') {
-        query = query.eq('user_roles.role', roleFilter as 'visitor' | 'business_owner' | 'admin');
+      const { data: profilesData, error: profilesError } = await query;
+      if (profilesError) throw profilesError;
+
+      if (!profilesData || profilesData.length === 0) {
+        return [];
       }
 
-      const { data, error } = await query;
-      if (error) throw error;
+      // Get user roles separately
+      const userIds = profilesData.map(p => p.id);
+      const { data: rolesData, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id, role')
+        .in('user_id', userIds);
 
-      return data.map((user: any) => ({
-        id: user.id,
-        full_name: user.full_name,
-        email: user.email,
-        created_at: user.created_at,
-        user_roles: user.user_roles || []
-      })) as User[];
+      if (rolesError) throw rolesError;
+
+      // Filter by role if specified
+      let filteredRoles = rolesData || [];
+      if (roleFilter && roleFilter !== 'all') {
+        filteredRoles = filteredRoles.filter(r => r.role === roleFilter);
+      }
+
+      // Combine the data
+      const usersWithRoles = profilesData
+        .map(profile => {
+          const userRoles = (rolesData || []).filter(r => r.user_id === profile.id);
+          return {
+            id: profile.id,
+            full_name: profile.full_name,
+            email: profile.email,
+            created_at: profile.created_at,
+            user_roles: userRoles
+          };
+        })
+        .filter(user => {
+          // Apply role filter
+          if (roleFilter && roleFilter !== 'all') {
+            return user.user_roles.some(r => r.role === roleFilter);
+          }
+          return true;
+        });
+
+      return usersWithRoles as User[];
     },
   });
 
@@ -68,20 +91,27 @@ export const UserManagement = () => {
     queryFn: async () => {
       let query = supabase
         .from('profiles')
-        .select('id', { count: 'exact', head: true })
-        .not('user_roles', 'is', null);
+        .select('id', { count: 'exact', head: true });
 
       if (searchTerm) {
         query = query.or(`full_name.ilike.%${searchTerm}%,email.ilike.%${searchTerm}%`);
       }
 
+      const { count: profileCount, error: profileError } = await query;
+      if (profileError) throw profileError;
+
+      // If we have a role filter, we need to check user_roles table
       if (roleFilter && roleFilter !== 'all') {
-        query = query.eq('user_roles.role', roleFilter as 'visitor' | 'business_owner' | 'admin');
+        const { count: roleCount, error: roleError } = await supabase
+          .from('user_roles')
+          .select('user_id', { count: 'exact', head: true })
+          .eq('role', roleFilter as 'visitor' | 'business_owner' | 'admin');
+
+        if (roleError) throw roleError;
+        return roleCount || 0;
       }
 
-      const { count, error } = await query;
-      if (error) throw error;
-      return count || 0;
+      return profileCount || 0;
     },
   });
 
