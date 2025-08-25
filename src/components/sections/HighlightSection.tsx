@@ -6,6 +6,7 @@ import { BusinessTileImage } from "@/components/business/BusinessImageDisplay";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { normalizeCategory } from "@/lib/utils";
 
 const HighlightSection = () => {
   const featuredBusinessNames = [
@@ -108,7 +109,7 @@ const HighlightSection = () => {
                   </div>
                   {business.category && (
                     <Badge variant="secondary" className="shrink-0 text-xs">
-                      {business.category.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+                      {normalizeCategory(business.category)}
                     </Badge>
                   )}
                 </div>

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useBusinessImagesByType } from '@/hooks/use-business-images-query';
 import { useBusinessImages } from '@/hooks/use-business-images';
+import { normalizeCategory } from "@/lib/utils";
 
 interface HeroSectionProps {
   businessId: string;
@@ -80,9 +81,7 @@ export const HeroSection = ({ businessId, business }: HeroSectionProps) => {
             {/* Category Badge */}
             {business.category && (
               <Badge variant="secondary" className="w-fit bg-white/20 text-white border-white/30 hover:bg-white/30">
-                {business.category.split(' ').map(word => 
-                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                ).join(' ')}
+                {normalizeCategory(business.category)}
               </Badge>
             )}
             

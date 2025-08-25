@@ -20,6 +20,7 @@ import { useOptimizedImage } from "@/hooks/use-optimized-image";
 import { categoryGroups, getGroupForCategory, getGroupInfo } from "@/data/categoryGroups";
 import { BusinessTileImage } from "@/components/business/BusinessImageDisplay";
 import { isBusinessOpenNow } from "@/utils/businessHours";
+import { normalizeCategory } from "@/lib/utils";
 
 // Utility function to convert text to title case (memoized)
 const toTitleCase = (() => {
@@ -84,7 +85,7 @@ const ExploreListings = () => {
       id: b.id,
       slug: b.id,
       name: b.name,
-      category: toTitleCase(b.category || 'Business'),
+      category: normalizeCategory(b.category),
       rating: b.rating,
       address: b.full_address,
       wheelchair: b.wheelchair_accessible,
@@ -501,7 +502,7 @@ const ListingCard = memo(({
                 <span className="text-sm">{listing.rating.toFixed(1)}</span>
               </div>}
           </div>
-          <Badge variant="secondary" className="shrink-0 text-xs max-w-[80px] truncate">{listing.category}</Badge>
+          <Badge variant="secondary" className="shrink-0 text-xs max-w-[80px] truncate">{normalizeCategory(listing.category)}</Badge>
         </div>
       </CardHeader>
       <CardContent className="-mt-2 min-w-0">

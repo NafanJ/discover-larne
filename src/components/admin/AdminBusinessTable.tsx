@@ -23,6 +23,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { ListingsGridSkeleton } from "@/components/ui/loading-skeleton";
+import { normalizeCategory } from "@/lib/utils";
 
 interface AdminBusinessTableProps {
   businesses: Business[];
@@ -154,7 +155,7 @@ export const AdminBusinessTable = ({
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline">{business.category || 'Uncategorized'}</Badge>
+                    <Badge variant="outline">{normalizeCategory(business.category)}</Badge>
                   </TableCell>
                   <TableCell>
                     {getStatusBadge(business.business_status)}

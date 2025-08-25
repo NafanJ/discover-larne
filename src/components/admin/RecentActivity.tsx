@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { UserPlus, Building, Calendar } from "lucide-react";
 import { format, isToday, isYesterday } from "date-fns";
+import { normalizeCategory } from "@/lib/utils";
 
 export const RecentActivity = () => {
   const { data: recentActivity } = useQuery({
@@ -42,7 +43,7 @@ export const RecentActivity = () => {
           type: 'business_added' as const,
           id: business.id,
           title: business.name,
-          subtitle: business.category || 'No category',
+          subtitle: normalizeCategory(business.category),
           timestamp: business.created_at,
           icon: Building
         }))
