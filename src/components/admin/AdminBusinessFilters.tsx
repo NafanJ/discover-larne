@@ -42,7 +42,7 @@ export const AdminBusinessFilters = ({
             <SelectValue placeholder="All categories" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All categories</SelectItem>
+            <SelectItem value="all">All categories</SelectItem>
                         {allCategories.map((category, index) => (
                           <SelectItem key={index} value={category}>
                             {category}
@@ -59,7 +59,7 @@ export const AdminBusinessFilters = ({
             <SelectValue placeholder="All statuses" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All statuses</SelectItem>
+            <SelectItem value="all">All statuses</SelectItem>
             <SelectItem value="Open">Open</SelectItem>
             <SelectItem value="Closed">Closed</SelectItem>
             <SelectItem value="Pending">Pending</SelectItem>

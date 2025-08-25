@@ -34,8 +34,8 @@ export interface Business {
 
 export const AdminBusinessManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [selectedBusinesses, setSelectedBusinesses] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [editingBusiness, setEditingBusiness] = useState<Business | null>(null);
@@ -76,11 +76,11 @@ export const AdminBusinessManagement = () => {
         query = query.ilike('name', `%${searchTerm}%`);
       }
 
-      if (categoryFilter) {
+      if (categoryFilter && categoryFilter !== 'all') {
         query = query.eq('category', categoryFilter);
       }
 
-      if (statusFilter) {
+      if (statusFilter && statusFilter !== 'all') {
         query = query.eq('business_status', statusFilter);
       }
 
