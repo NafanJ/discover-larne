@@ -1,7 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { categoryGroups } from "@/data/categoryGroups";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { normalizeCategory } from "@/lib/utils";
 
 interface AdminBusinessFiltersProps {
   searchTerm: string;
@@ -20,8 +22,28 @@ export const AdminBusinessFilters = ({
   statusFilter,
   onStatusChange
 }: AdminBusinessFiltersProps) => {
-  // Get all unique categories from categoryGroups
-  const allCategories = categoryGroups.flatMap(group => group.categories);
+  // Get all unique categories from the database and normalize them
+  const { data: dbCategories = [] } = useQuery({
+    queryKey: ['admin-categories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('businesses')
+        .select('category')
+        .not('category', 'is', null);
+      
+      if (error) throw error;
+      
+      const uniqueCategories = Array.from(
+        new Set(
+          data
+            .map(item => normalizeCategory(item.category))
+            .filter(Boolean)
+        )
+      ).sort();
+      
+      return uniqueCategories;
+    },
+  });
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -43,11 +65,11 @@ export const AdminBusinessFilters = ({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All categories</SelectItem>
-                        {allCategories.map((category, index) => (
-                          <SelectItem key={index} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
+            {dbCategories.map((category, index) => (
+              <SelectItem key={index} value={category}>
+                {category}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>

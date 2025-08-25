@@ -9,6 +9,7 @@ import { AssignOwnerModal } from "./AssignOwnerModal";
 import { BulkActionsToolbar } from "./BulkActionsToolbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { normalizeCategory } from "@/lib/utils";
 
 export interface Business {
   id: string;
@@ -66,15 +67,21 @@ export const AdminBusinessManagement = () => {
           longitude,
           working_hours
         `)
-        .order('created_at', { ascending: false })
-        .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+        .order('created_at', { ascending: false });
+
+      // Only apply pagination if no category filter is active
+      // (since we need to filter categories client-side)
+      if (!categoryFilter || categoryFilter === 'all') {
+        query = query.range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+      }
 
       if (searchTerm) {
         query = query.ilike('name', `%${searchTerm}%`);
       }
 
       if (categoryFilter && categoryFilter !== 'all') {
-        query = query.eq('category', categoryFilter);
+        // Get all businesses first, then filter by normalized category on the client side
+        // This is necessary because we can't normalize categories in PostgreSQL easily
       }
 
       if (statusFilter && statusFilter !== 'all') {
@@ -118,13 +125,25 @@ export const AdminBusinessManagement = () => {
         profiles: item.owner_id ? profiles.find(p => p.id === item.owner_id) || null : null
       }));
 
-      // Get total count for pagination
+      // Apply client-side category filtering if needed
+      let filteredBusinesses = businesses;
+      if (categoryFilter && categoryFilter !== 'all') {
+        filteredBusinesses = businesses.filter(business => 
+          normalizeCategory(business.category) === categoryFilter
+        );
+        // Apply pagination for filtered results
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        filteredBusinesses = filteredBusinesses.slice(startIndex, endIndex);
+      }
+
+      // Get total count for pagination (need to adjust for filtering)
       const { count } = await supabase
         .from('businesses')
         .select('id', { count: 'exact', head: true });
 
       return {
-        businesses,
+        businesses: filteredBusinesses,
         totalCount: count || 0
       };
     },
