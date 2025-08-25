@@ -70,6 +70,9 @@ const Navbar = () => {
                   <SheetClose asChild>
                     <Link to="/contact" className="story-link">Contact</Link>
                   </SheetClose>
+                  <div className="mt-4 pt-4 border-t">
+                    <UserMenu />
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
