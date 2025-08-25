@@ -136,7 +136,7 @@ export const BusinessEditModal = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="">No category</SelectItem>
+                        <SelectItem value="no-category">No category</SelectItem>
                         {allCategories.map((category, index) => (
                           <SelectItem key={index} value={category}>
                             {category}
@@ -162,7 +162,7 @@ export const BusinessEditModal = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="">No status</SelectItem>
+                        <SelectItem value="no-status">No status</SelectItem>
                         <SelectItem value="Open">Open</SelectItem>
                         <SelectItem value="Closed">Closed</SelectItem>
                         <SelectItem value="Pending">Pending</SelectItem>
