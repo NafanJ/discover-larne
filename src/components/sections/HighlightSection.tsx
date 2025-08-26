@@ -89,19 +89,12 @@ const HighlightSection = () => {
             aria-label={`${business.name} details`}
           >
             <Card className="overflow-hidden group">
-              <div className="relative">
-                {business.category && (
-                  <Badge variant="secondary" className="absolute top-2 left-2 z-10 text-xs">
-                    {normalizeCategory(business.category)}
-                  </Badge>
-                )}
-                <div className="aspect-[4/3] overflow-hidden">
-                  <BusinessTileImage 
-                    businessId={business.id} 
-                    fallbackSrc={business.photo}
-                    className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                  />
-                </div>
+              <div className="aspect-[4/3] overflow-hidden">
+                <BusinessTileImage 
+                  businessId={business.id} 
+                  fallbackSrc={business.photo}
+                  className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                />
               </div>
               <CardHeader className="space-y-1">
                 <div className="flex items-center justify-between gap-3">
@@ -122,12 +115,11 @@ const HighlightSection = () => {
                       <span className="truncate">{business.full_address}</span>
                     </div>
                   )}
-                  {business.wheelchair_accessible && (
+                  {business.category && (
                     <>
                       <span className="h-1 w-1 rounded-full bg-border" />
                       <Badge variant="outline" className="gap-1">
-                        <Accessibility className="h-3.5 w-3.5" />
-                        Accessible
+                        {normalizeCategory(business.category)}
                       </Badge>
                     </>
                   )}
