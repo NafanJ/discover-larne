@@ -486,23 +486,27 @@ const ListingCard = memo(({
   listing: any;
 }) => <Link to={`/listings/${listing.slug}`} className="block rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" aria-label={`${listing.name} details`}>
     <Card className="overflow-hidden group w-full h-full">
-      <div className="aspect-[4/3] overflow-hidden">
-        <BusinessTileImage 
-          businessId={listing.id} 
-          fallbackSrc={listing.image}
-          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" 
-        />
+      <div className="relative">
+        <Badge variant="secondary" className="absolute top-2 left-2 z-10 text-xs max-w-[80px] truncate">
+          {normalizeCategory(listing.category)}
+        </Badge>
+        <div className="aspect-[4/3] overflow-hidden">
+          <BusinessTileImage 
+            businessId={listing.id} 
+            fallbackSrc={listing.image}
+            className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" 
+          />
+        </div>
       </div>
       <CardHeader className="space-y-1 min-w-0">
         <div className="flex items-center justify-between gap-3 min-w-0">
-          <div className="flex items-center gap-2 min-w-0 flex-1">
-            <CardTitle className="text-base truncate min-w-0">{listing.name}</CardTitle>
-            {typeof listing.rating === "number" && <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
-                <Star className="h-4 w-4 text-primary" />
-                <span className="text-sm">{listing.rating.toFixed(1)}</span>
-              </div>}
-          </div>
-          <Badge variant="secondary" className="shrink-0 text-xs max-w-[80px] truncate">{normalizeCategory(listing.category)}</Badge>
+          <CardTitle className="text-base truncate flex-1">{listing.name}</CardTitle>
+          {typeof listing.rating === "number" && (
+            <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
+              <Star className="h-4 w-4 text-primary" />
+              <span className="text-sm">{listing.rating.toFixed(1)}</span>
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent className="-mt-2 min-w-0">
@@ -511,13 +515,15 @@ const ListingCard = memo(({
             <MapPin className="h-4 w-4 opacity-70 shrink-0" />
             <span className="truncate min-w-0">{listing.address || 'No address available'}</span>
           </div>
-          {listing.wheelchair && <>
+          {listing.wheelchair && (
+            <>
               <span className="h-1 w-1 rounded-full bg-border shrink-0" />
               <Badge variant="outline" className="gap-1 shrink-0 text-xs">
                 <Accessibility className="h-3.5 w-3.5" />
                 Accessible
               </Badge>
-            </>}
+            </>
+          )}
         </div>
       </CardContent>
     </Card>
