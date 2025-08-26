@@ -89,23 +89,23 @@ const HighlightSection = () => {
             aria-label={`${business.name} details`}
           >
             <Card className="overflow-hidden group">
-              <div className="relative">
-                {business.category && (
-                  <Badge variant="secondary" className="absolute top-2 left-2 z-10 text-xs">
-                    {normalizeCategory(business.category)}
-                  </Badge>
-                )}
-                <div className="aspect-[4/3] overflow-hidden">
-                  <BusinessTileImage 
-                    businessId={business.id} 
-                    fallbackSrc={business.photo}
-                    className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                  />
-                </div>
+              <div className="aspect-[4/3] overflow-hidden">
+                <BusinessTileImage 
+                  businessId={business.id} 
+                  fallbackSrc={business.photo}
+                  className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                />
               </div>
               <CardHeader className="space-y-1">
                 <div className="flex items-center justify-between gap-3">
-                  <CardTitle className="text-base truncate flex-1">{business.name}</CardTitle>
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    {business.category && (
+                      <Badge variant="secondary" className="shrink-0 text-xs">
+                        {normalizeCategory(business.category)}
+                      </Badge>
+                    )}
+                    <CardTitle className="text-base truncate">{business.name}</CardTitle>
+                  </div>
                   {typeof business.rating === 'number' && (
                     <div className="flex items-center gap-1 shrink-0 text-muted-foreground">
                       <Star className="h-4 w-4 text-primary" />
