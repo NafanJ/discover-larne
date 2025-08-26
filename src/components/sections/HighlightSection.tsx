@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Star, Accessibility } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BusinessTileImage } from "@/components/business/BusinessImageDisplay";
 import { useQuery } from "@tanstack/react-query";
@@ -89,12 +89,19 @@ const HighlightSection = () => {
             aria-label={`${business.name} details`}
           >
             <Card className="overflow-hidden group">
-              <div className="aspect-[4/3] overflow-hidden">
-                <BusinessTileImage 
-                  businessId={business.id} 
-                  fallbackSrc={business.photo}
-                  className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                />
+              <div className="relative">
+                {business.category && (
+                  <Badge variant="secondary" className="absolute top-2 left-2 z-10 text-xs">
+                    {normalizeCategory(business.category)}
+                  </Badge>
+                )}
+                <div className="aspect-[4/3] overflow-hidden">
+                  <BusinessTileImage 
+                    businessId={business.id} 
+                    fallbackSrc={business.photo}
+                    className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                  />
+                </div>
               </div>
               <CardHeader className="space-y-1">
                 <div className="flex items-center justify-between gap-3">
@@ -114,14 +121,6 @@ const HighlightSection = () => {
                       <MapPin className="h-4 w-4 opacity-70" />
                       <span className="truncate">{business.full_address}</span>
                     </div>
-                  )}
-                  {business.category && (
-                    <>
-                      <span className="h-1 w-1 rounded-full bg-border" />
-                      <Badge variant="outline" className="gap-1">
-                        {normalizeCategory(business.category)}
-                      </Badge>
-                    </>
                   )}
                 </div>
               </CardContent>
