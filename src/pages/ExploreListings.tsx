@@ -21,6 +21,7 @@ import { categoryGroups, getGroupForCategory, getGroupInfo } from "@/data/catego
 import { BusinessTileImage } from "@/components/business/BusinessImageDisplay";
 import { isBusinessOpenNow } from "@/utils/businessHours";
 import { normalizeCategory } from "@/lib/utils";
+import { useAnalytics } from '@/hooks/use-analytics';
 
 // Utility function to convert text to title case (memoized)
 const toTitleCase = (() => {
@@ -63,6 +64,7 @@ const ExploreListings = () => {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
   const [currentPage, setCurrentPage] = useState(1);
+  const { trackSearch } = useAnalytics();
   const {
     data: businesses = [],
     isLoading,
@@ -183,10 +185,24 @@ const ExploreListings = () => {
     setCurrentPage(1);
   }, []);
 
-  // Reset page when filters change
+  // Reset page when filters change and track search analytics
   useMemo(() => {
     setCurrentPage(1);
-  }, [selectedCategoryGroups, wheelchairOnly, openNowOnly, minRating, sortBy]);
+    
+    // Track search analytics when filters or search changes
+    const filters = {
+      categories: selectedCategoryGroups,
+      wheelchair_only: wheelchairOnly,
+      open_now_only: openNowOnly,
+      min_rating: minRating,
+      sort_by: sortBy
+    };
+    
+    // Only track if there's a search query or active filters
+    if (searchQuery || selectedCategoryGroups.length > 0 || wheelchairOnly || openNowOnly || minRating > 0 || sortBy !== 'relevance') {
+      trackSearch(searchQuery || undefined, filters, sorted.length);
+    }
+  }, [selectedCategoryGroups, wheelchairOnly, openNowOnly, minRating, sortBy, searchQuery, sorted.length, trackSearch]);
   const title = "Explore Listings in Larne";
   const description = "Browse all Larne listings with filters for category, rating, and accessibility.";
   const canonical = typeof window !== "undefined" ? `${window.location.origin}/explore/listings` : "/explore/listings";

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AnalyticsOverview } from "./AnalyticsOverview";
+import { AnalyticsDisplay } from "./AnalyticsDisplay";
 import { RecentActivity } from "./RecentActivity";
 import { SystemHealthMetrics } from "./SystemHealthMetrics";
 
@@ -13,6 +14,8 @@ export const SystemAnalytics = () => {
       </div>
 
       <AnalyticsOverview />
+      
+      <AnalyticsDisplay />
       
       <div className="grid gap-6 md:grid-cols-2">
         <RecentActivity />

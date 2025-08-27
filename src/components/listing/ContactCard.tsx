@@ -1,9 +1,11 @@
 import { Phone, Globe, MapPin, Accessibility } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 interface ContactCardProps {
   business: {
+    id: string;
     phone?: string;
     site?: string;
     full_address?: string;
@@ -12,19 +14,26 @@ interface ContactCardProps {
 }
 
 export const ContactCard = ({ business }: ContactCardProps) => {
+  const { trackOutboundClick } = useAnalytics();
   const contactItems = [
     {
       icon: Phone,
       label: 'Phone',
       value: business.phone,
-      action: business.phone ? () => window.open(`tel:${business.phone}`, '_self') : undefined,
+      action: business.phone ? () => {
+        trackOutboundClick(business.id, 'call', `tel:${business.phone}`);
+        window.open(`tel:${business.phone}`, '_self');
+      } : undefined,
       className: 'text-sky-600 dark:text-sky-400'
     },
     {
       icon: Globe,
       label: 'Website',
       value: business.site,
-      action: business.site ? () => window.open(business.site, '_blank', 'noopener noreferrer') : undefined,
+      action: business.site ? () => {
+        trackOutboundClick(business.id, 'website', business.site!);
+        window.open(business.site, '_blank', 'noopener noreferrer');
+      } : undefined,
       className: 'text-emerald-600 dark:text-emerald-400'
     },
     {
@@ -33,7 +42,9 @@ export const ContactCard = ({ business }: ContactCardProps) => {
       value: business.full_address,
       action: business.full_address ? () => {
         const encodedAddress = encodeURIComponent(business.full_address!);
-        window.open(`https://maps.google.com/maps?q=${encodedAddress}`, '_blank', 'noopener noreferrer');
+        const mapsUrl = `https://maps.google.com/maps?q=${encodedAddress}`;
+        trackOutboundClick(business.id, 'directions', mapsUrl);
+        window.open(mapsUrl, '_blank', 'noopener noreferrer');
       } : undefined,
       className: 'text-rose-600 dark:text-rose-400'
     }

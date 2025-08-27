@@ -1,9 +1,11 @@
 import Navbar from "@/components/layout/Navbar";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 import Footer from "@/components/layout/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useAnalytics } from '@/hooks/use-analytics';
 import { Skeleton } from "@/components/ui/skeleton";
 import { HeroSection } from "@/components/listing/HeroSection";
 import { AboutSection } from "@/components/listing/AboutSection";
@@ -15,7 +17,8 @@ import { CTASection } from "@/components/listing/CTASection";
 
 const ListingDetail = () => {
   const { slug } = useParams();
-  
+  const { trackPageView } = useAnalytics();
+
   const { data: listing, isLoading, error } = useQuery({
     queryKey: ['listing', slug],
     queryFn: async () => {
@@ -30,6 +33,13 @@ const ListingDetail = () => {
     },
     enabled: !!slug,
   });
+
+  // Track page view when listing loads
+  useEffect(() => {
+    if (listing && listing.id && listing.name) {
+      trackPageView(listing.id, listing.name);
+    }
+  }, [listing, trackPageView]);
 
   if (isLoading) {
     return (
@@ -129,7 +139,7 @@ const ListingDetail = () => {
           {/* Right Column - Sidebar */}
           <div className="space-y-4 lg:space-y-6">
             {/* Contact Card */}
-            <ContactCard business={listing} />
+            <ContactCard business={{ ...listing, id: listing.id }} />
             
             {/* Business Hours Card */}
             <BusinessHoursCard workingHours={listing.working_hours} />

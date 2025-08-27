@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      analytics_events: {
+        Row: {
+          business_id: string | null
+          created_at: string
+          date: string
+          event_data: Json | null
+          event_type: string
+          id: string
+          session_id: string | null
+        }
+        Insert: {
+          business_id?: string | null
+          created_at?: string
+          date?: string
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          session_id?: string | null
+        }
+        Update: {
+          business_id?: string | null
+          created_at?: string
+          date?: string
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_analytics_events_business_id"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       business_images: {
         Row: {
           business_id: string
