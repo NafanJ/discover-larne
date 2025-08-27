@@ -9,6 +9,26 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { UserMenu } from "@/components/layout/UserMenu";
+import { useAuth } from "@/hooks/use-auth";
+
+const MobileUserMenu = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return (
+      <div className="flex gap-2">
+        <Button asChild variant="outline" size="sm" className="flex-1">
+          <Link to="/auth">Sign In</Link>
+        </Button>
+        <Button asChild variant="default" size="sm" className="flex-1">
+          <Link to="/auth?mode=signup">Sign Up</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  return <UserMenu />;
+};
 
 const Navbar = () => {
   return (
@@ -71,7 +91,7 @@ const Navbar = () => {
                     <Link to="/contact" className="story-link">Contact</Link>
                   </SheetClose>
                   <div className="mt-4 pt-4 border-t">
-                    <UserMenu />
+                    <MobileUserMenu />
                   </div>
                 </nav>
               </SheetContent>
