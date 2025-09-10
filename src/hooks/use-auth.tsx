@@ -140,8 +140,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
+    // Force clear all auth state
+    localStorage.removeItem('supabase.auth.token');
+    localStorage.removeItem('sb-yggncfjphyywfkrqfkyi-auth-token');
+    setUser(null);
+    setSession(null);
+    setRole(null);
     await supabase.auth.signOut();
-    // Let React Router handle navigation instead of forcing page reload
+    // Force page reload to clear any cached state
+    window.location.href = '/';
   };
 
   const hasRole = (requiredRole: AppRole): boolean => {
