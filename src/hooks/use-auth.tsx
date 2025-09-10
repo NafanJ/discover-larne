@@ -41,6 +41,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error && error.code !== 'PGRST116') {
         console.error('Error fetching user role:', error);
+        // If user doesn't exist in database, sign them out
+        if (error.message?.includes('JWT') || error.code === 'PGRST301') {
+          console.log('User deleted from database, signing out...');
+          await supabase.auth.signOut();
+          return null;
+        }
         return null;
       }
 
