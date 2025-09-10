@@ -59,13 +59,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (session?.user) {
           // Fetch user role after setting session
-          console.log('Auth state changed - fetching role for user:', session.user.id);
           const userRole = await fetchUserRole(session.user.id);
-          console.log('User role fetched:', userRole);
           setRole(userRole);
           setLoading(false);
         } else {
-          console.log('No session/user found');
           setRole(null);
           setLoading(false);
         }
@@ -78,14 +75,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        console.log('Initial session found - fetching role for user:', session.user.id);
         fetchUserRole(session.user.id).then((userRole) => {
-          console.log('Initial user role fetched:', userRole);
           setRole(userRole);
           setLoading(false);
         });
       } else {
-        console.log('No initial session found');
         setLoading(false);
       }
     });
@@ -138,7 +132,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    window.location.href = '/';
+    // Let React Router handle navigation instead of forcing page reload
   };
 
   const hasRole = (requiredRole: AppRole): boolean => {
