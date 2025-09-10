@@ -20,12 +20,9 @@ export const ContactCard = ({ business }: ContactCardProps) => {
   const { user, hasRole } = useAuth();
   const { data: contacts } = useBusinessContacts(business.id);
 
-  // Check if user can view sensitive contact info
-  const canViewContacts = user && (hasRole('admin') || hasRole('business_owner'));
-  
-  // Use secured contact data if available and user is authorized, otherwise show limited info
-  const phoneValue = canViewContacts && contacts?.phone ? contacts.phone : null;
-  const addressValue = canViewContacts && contacts?.full_address ? contacts.full_address : null;
+  // Use public contact info from business, fallback to secured contacts if needed
+  const phoneValue = business.phone || contacts?.phone;
+  const addressValue = business.full_address || contacts?.full_address;
 
   const contactItems = [
     {
@@ -37,7 +34,7 @@ export const ContactCard = ({ business }: ContactCardProps) => {
         window.open(`tel:${phoneValue}`, '_self');
       } : undefined,
       className: 'text-sky-600 dark:text-sky-400',
-      protected: !canViewContacts && (contacts?.phone || business.phone)
+      protected: false
     },
     {
       icon: Globe,
@@ -61,7 +58,7 @@ export const ContactCard = ({ business }: ContactCardProps) => {
         window.open(mapsUrl, '_blank', 'noopener noreferrer');
       } : undefined,
       className: 'text-rose-600 dark:text-rose-400',
-      protected: !canViewContacts && (contacts?.full_address || business.full_address)
+      protected: false
     }
   ];
 
