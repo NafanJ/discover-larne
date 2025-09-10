@@ -72,11 +72,16 @@ const ExploreListings = () => {
   } = useQuery({
     queryKey: ['businesses'],
     queryFn: async () => {
+      console.log('Fetching businesses...');
       const {
         data,
         error
       } = await supabase.from('businesses').select('id, name, category, rating, full_address, wheelchair_accessible, photo, working_hours').order('name');
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching businesses:', error);
+        throw error;
+      }
+      console.log('Fetched businesses:', data?.length || 0, 'results');
       return data || [];
     }
   });
