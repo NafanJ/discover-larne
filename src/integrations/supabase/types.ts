@@ -52,6 +52,33 @@ export type Database = {
           },
         ]
       }
+      business_contacts: {
+        Row: {
+          business_id: string
+          created_at: string
+          full_address: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          full_address?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          full_address?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       business_images: {
         Row: {
           business_id: string

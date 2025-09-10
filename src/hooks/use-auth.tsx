@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuthMonitoring } from './use-auth-monitoring';
 
 type AppRole = 'visitor' | 'business_owner' | 'admin';
 
@@ -23,6 +24,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [role, setRole] = useState<AppRole | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Enable auth monitoring
+  useAuthMonitoring();
 
   const fetchUserRole = async (userId: string) => {
     try {
@@ -90,6 +94,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email,
       password,
     });
+
+    // Track failed login attempts for security monitoring
+    if (error) {
+      try {
+        await supabase.from('analytics_events').insert({
+          event_type: 'auth_failed_login',
+          event_data: {
+            email: email,
+            error_message: error.message,
+            timestamp: new Date().toISOString(),
+            user_agent: navigator.userAgent
+          }
+        });
+      } catch (analyticsError) {
+        // Silent fail for analytics - don't block auth flow
+        console.warn('Failed to track failed login:', analyticsError);
+      }
+    }
+
     return { error };
   };
 
