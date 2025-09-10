@@ -30,6 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchUserRole = async (userId: string) => {
     try {
+      console.log('Fetching role for user:', userId);
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
@@ -43,7 +44,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return null;
       }
 
-      return data?.role as AppRole || 'visitor';
+      const role = data?.role as AppRole || 'visitor';
+      console.log('Fetched role:', role);
+      return role;
     } catch (error) {
       console.error('Error fetching user role:', error);
       return 'visitor';
@@ -59,11 +62,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (session?.user) {
           // Fetch user role after setting session
-          setTimeout(async () => {
-            const userRole = await fetchUserRole(session.user.id);
-            setRole(userRole);
-            setLoading(false);
-          }, 0);
+          const userRole = await fetchUserRole(session.user.id);
+          setRole(userRole);
+          setLoading(false);
         } else {
           setRole(null);
           setLoading(false);
@@ -134,7 +135,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    window.location.href = '/';
+    // Let React Router handle navigation instead of forcing page reload
   };
 
   const hasRole = (requiredRole: AppRole): boolean => {

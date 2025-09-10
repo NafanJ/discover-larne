@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 export default function Auth() {
@@ -15,6 +15,7 @@ export default function Auth() {
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const { user, signIn, signUp } = useAuth();
+  const navigate = useNavigate();
 
   // Redirect if already authenticated
   if (user) {
@@ -32,7 +33,7 @@ export default function Auth() {
           toast.error(error.message);
         } else {
           toast.success('Successfully signed in!');
-          window.location.href = '/';
+          navigate('/');
         }
       } else {
         const { error } = await signUp(email, password, fullName);
