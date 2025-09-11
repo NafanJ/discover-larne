@@ -50,6 +50,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return null;
       }
 
+      // If no role found (user deleted from database), sign them out
+      if (!data) {
+        console.log('No role found for user, signing out...');
+        await supabase.auth.signOut();
+        return null;
+      }
+
       const role = data?.role as AppRole || 'visitor';
       console.log('Fetched role:', role);
       return role;
