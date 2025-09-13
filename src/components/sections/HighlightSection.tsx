@@ -38,7 +38,7 @@ const HighlightSection = () => {
 
   if (isLoading) {
     return (
-      <section className="container pt-0 pb-6">
+      <section className="container pt-0 pb-2">
         <div className="flex justify-center items-center py-8 mb-6">
           <h2 className="text-2xl md:text-3xl font-semibold text-center">Featured People & Places</h2>
         </div>
@@ -64,7 +64,7 @@ const HighlightSection = () => {
 
   if (businesses.length === 0) {
     return (
-      <section className="container pt-0 pb-6">
+      <section className="container pt-0 pb-2">
         <div className="flex justify-center items-center py-8 mb-6">
           <h2 className="text-2xl md:text-3xl font-semibold text-center">Featured People & Places</h2>
         </div>
@@ -76,7 +76,7 @@ const HighlightSection = () => {
   }
 
   return (
-    <section className="container pt-0 pb-6">
+    <section className="container pt-0 pb-2">
       <div className="flex justify-center items-center py-8 mb-6">
         <h2 className="text-2xl md:text-3xl font-semibold text-center">Featured People & Places</h2>
       </div>
