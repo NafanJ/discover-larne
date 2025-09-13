@@ -37,27 +37,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') {
+      if (error) {
         console.error('Error fetching user role:', error);
-        // If user doesn't exist in database, sign them out
-        if (error.message?.includes('JWT') || error.code === 'PGRST301') {
+        // If user doesn't exist in database or token invalid, sign them out
+        if ((error as any)?.message?.includes('JWT') || (error as any)?.code === 'PGRST301') {
           console.log('User deleted from database, signing out...');
           await supabase.auth.signOut();
           return null;
         }
-        return null;
+        // Non-fatal errors: treat as visitor to keep public access working
+        return 'visitor';
       }
 
-      // If no role found (user deleted from database), sign them out
       if (!data) {
-        console.log('No role found for user, signing out...');
-        await supabase.auth.signOut();
-        return null;
+        // No role row found: default to visitor (do not sign out)
+        return 'visitor';
       }
 
-      const role = data?.role as AppRole || 'visitor';
+      const role = (data?.role as AppRole) || 'visitor';
       console.log('Fetched role:', role);
       return role;
     } catch (error) {
@@ -68,22 +67,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
 
-        if (session?.user) {
-          // Fetch user role after setting session
-          const userRole = await fetchUserRole(session.user.id);
-          setRole(userRole);
-          setLoading(false);
-        } else {
-          setRole(null);
-          setLoading(false);
-        }
+      if (session?.user) {
+        // Defer Supabase calls to avoid deadlocks in the callback
+        setTimeout(() => {
+          fetchUserRole(session.user!.id).then((userRole) => {
+            setRole(userRole);
+            setLoading(false);
+          });
+        }, 0);
+      } else {
+        setRole(null);
+        setLoading(false);
       }
-    );
+    });
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
