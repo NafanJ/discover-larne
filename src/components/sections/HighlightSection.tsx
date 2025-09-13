@@ -39,8 +39,8 @@ const HighlightSection = () => {
   if (isLoading) {
     return (
       <section className="container pt-0 pb-6">
-        <div className="flex items-end justify-between mb-6">
-          <h2 className="text-2xl md:text-3xl font-semibold">Featured People & Places</h2>
+        <div className="flex justify-center items-center py-8 mb-6">
+          <h2 className="text-2xl md:text-3xl font-semibold text-center">Featured People & Places</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map((i) => (
@@ -65,8 +65,8 @@ const HighlightSection = () => {
   if (businesses.length === 0) {
     return (
       <section className="container pt-0 pb-6">
-        <div className="flex items-end justify-between mb-6">
-          <h2 className="text-2xl md:text-3xl font-semibold">Featured People & Places</h2>
+        <div className="flex justify-center items-center py-8 mb-6">
+          <h2 className="text-2xl md:text-3xl font-semibold text-center">Featured People & Places</h2>
         </div>
         <div className="text-center py-12 text-muted-foreground">
           <p>No businesses available to showcase at the moment.</p>
@@ -77,8 +77,8 @@ const HighlightSection = () => {
 
   return (
     <section className="container pt-0 pb-6">
-      <div className="flex items-end justify-between mb-6">
-        <h2 className="text-2xl md:text-3xl font-semibold">Featured People & Places</h2>
+      <div className="flex justify-center items-center py-8 mb-6">
+        <h2 className="text-2xl md:text-3xl font-semibold text-center">Featured People & Places</h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {businesses.map((business) => (
