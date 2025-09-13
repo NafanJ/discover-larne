@@ -65,6 +65,53 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // Ensure the user has a role row. If none exist in the system, bootstrap current user as admin.
+  const ensureUserRole = async (userId: string): Promise<AppRole> => {
+    try {
+      // Check if user already has a role
+      const { data: existing, error: existingError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (existingError) {
+        console.warn('ensureUserRole: read existing role error:', existingError);
+      }
+      if (existing?.role) {
+        return existing.role as AppRole;
+      }
+
+      // Determine if this is the first role in the system
+      const { count, error: countError } = await supabase
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true });
+
+      if (countError) {
+        console.warn('ensureUserRole: count error:', countError);
+      }
+
+      const assignedRole: AppRole = (count || 0) === 0 ? 'admin' : 'visitor';
+
+      const { error: insertError } = await supabase
+        .from('user_roles')
+        .insert({ user_id: userId, role: assignedRole });
+
+      if (insertError) {
+        console.error('ensureUserRole: insert error:', insertError);
+        return 'visitor';
+      }
+
+      console.log('ensureUserRole: assigned role', assignedRole, 'to user', userId);
+      return assignedRole;
+    } catch (e) {
+      console.error('ensureUserRole: unexpected error', e);
+      return 'visitor';
+    }
+  };
+
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -74,7 +121,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user) {
         // Defer Supabase calls to avoid deadlocks in the callback
         setTimeout(() => {
-          fetchUserRole(session.user!.id).then((userRole) => {
+          ensureUserRole(session.user!.id).then((userRole) => {
             setRole(userRole);
             setLoading(false);
           });
@@ -91,7 +138,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        fetchUserRole(session.user.id).then((userRole) => {
+        ensureUserRole(session.user.id).then((userRole) => {
           setRole(userRole);
           setLoading(false);
         });
